@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using Microsoft.Xaml.Behaviors;
 using System;

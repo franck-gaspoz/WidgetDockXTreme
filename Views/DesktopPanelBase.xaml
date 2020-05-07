@@ -229,7 +229,10 @@
 
                     </StackPanel>
 
-                    <controls:WidgetStackPanelDropPlaceHolder x:Name="PermanentWidgetDropPlaceHolder" PlaceHolderMargin="{DynamicResource DesktopPanelContent_LastWidgetDropPlaceHolderMargin}">
+                    <controls:WidgetStackPanelDropPlaceHolder
+                        x:Name="PermanentWidgetDropPlaceHolder"
+                        DropSensitiveAreahighlightBackgroundBrush="{DynamicResource DropAreaSensitiveAreaHighlightBackground}"
+                        PlaceHolderMargin="{DynamicResource DesktopPanelContent_LastWidgetDropPlaceHolderMargin}">
                         <behaviors:Interaction.Behaviors>
                             <frameworkelementbehaviors:MaximizeStackPanelChildSizeFrameworkElementBehavior Container="{Binding ElementName=RootStackPanel}" />
                         </behaviors:Interaction.Behaviors>

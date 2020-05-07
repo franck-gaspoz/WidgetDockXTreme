@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using DesktopPanelTool.Models;
 using Microsoft.Xaml.Behaviors;

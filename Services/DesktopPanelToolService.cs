@@ -109,7 +109,7 @@ namespace DesktopPanelTool.Services
                 var idxTargetStack = targetStack.Children.IndexOf(target);
 #if dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"--------------- drop: {widget.ViewModel.Title} ------------ before:");
-                DesktopPanelTool.Lib.Debug.WriteLine($"idxTargetStack={idxTargetStack} target={target}");
+                DesktopPanelTool.Lib.Debug.WriteLine($"idxTargetStack={idxTargetStack} target={target} targetStack={targetStack} idxSourceStack={idxSourceStack} sourceStack={sourceStack}");
                // widget.ViewModel.PanelViewModel.DumpWidgetsPanelChildren();
 #endif
                 widget.ViewModel.PanelViewModel.CloseWidget(widget);

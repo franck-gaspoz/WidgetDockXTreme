@@ -154,7 +154,11 @@ namespace DesktopPanelTool.ViewModels
         WidgetStackPanelDropPlaceHolder GetNewWidgetStackPanelDropPlaceHolder()
         {
             var viewModel = new WidgetStackPanelDropPlaceHolderViewModel(this);
-            return new WidgetStackPanelDropPlaceHolder(viewModel);
+
+            var view = new WidgetStackPanelDropPlaceHolder(viewModel);
+            view.SetResourceReference(WidgetStackPanelDropPlaceHolder.DropSensitiveAreahighlightBackgroundBrushProperty,
+                (string)View.FindResource("DropAreaSensitiveAreaSmallHighlightBackgroundKey"));
+            return view;
         }
 
         public void CloseWidget(WidgetControl widget)

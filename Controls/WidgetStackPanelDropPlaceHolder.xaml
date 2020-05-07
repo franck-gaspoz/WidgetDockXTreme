@@ -29,7 +29,7 @@
         <Border
             x:Name="VisibleHitArea"
             Margin="2"
-            Background="{DynamicResource DropAreaSensitiveAreaHighlightBackground}"
+            Background="{Binding Path=DropSensitiveAreahighlightBackgroundBrush, RelativeSource={RelativeSource AncestorType={x:Type local:WidgetStackPanelDropPlaceHolder}}}"
             CornerRadius="2"
             Opacity="0.003921" />
 

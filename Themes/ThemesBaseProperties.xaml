@@ -67,13 +67,22 @@
 
     <Color x:Key="WindowShadowBrush">Black</Color>
 
-    <LinearGradientBrush x:Key="DropAreaSensitiveAreaHighlightBackground" StartPoint="0.2,0" EndPoint="0.8,1">
+    <LinearGradientBrush x:Key="DropAreaSensitiveAreaHighlightBackground" StartPoint="0.2,0" EndPoint="0.5,1">
         <LinearGradientBrush.GradientStops>
             <GradientStop Offset="0" Color="#33FFFFFF" />
             <GradientStop Offset="1" Color="#00FFFFFF" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
+    <LinearGradientBrush x:Key="DropAreaSensitiveAreaSmallHighlightBackground" StartPoint="0,0" EndPoint="1,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#33FFFFFF" />
+            <GradientStop Offset="0.9" Color="#33FFFFFF" />
+            <GradientStop Offset="1" Color="#00FFFFFF" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <sys:String x:Key="DropAreaSensitiveAreaSmallHighlightBackgroundKey">DropAreaSensitiveAreaSmallHighlightBackground</sys:String>
     <sys:Double x:Key="DropAreaSensitiveAreaHighlightOpacity">1</sys:Double>
 
     <!--#region  ##### colors and transparency #####-->
