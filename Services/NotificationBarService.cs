@@ -19,7 +19,7 @@ namespace DesktopPanelTool.Services
         public static bool IsContextMenuOpened => _contextMenu.IsVisible;
         static DesktopPanelToolViewModel _toolViewModel;
 
-        public static void Initialize(DesktopPanelToolViewModel toolViewModel)
+        internal static void Initialize(DesktopPanelToolViewModel toolViewModel)
         {
             _toolViewModel = toolViewModel;
             _toolTipTitle = $"{AppSettings.AppTitle} {AppSettings.AppVersionExternal}";
@@ -67,7 +67,7 @@ namespace DesktopPanelTool.Services
             _contextMenu.Show();
         }
 
-        public static void HideNotifyIcon()
+        internal static void HideNotifyIcon()
         {
             _notifyIcon.Visible = false;
         }

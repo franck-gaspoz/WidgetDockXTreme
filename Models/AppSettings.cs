@@ -44,6 +44,10 @@ namespace DesktopPanelTool.Models
 
         public static string GetWidgetWebPageUri { get; private set; } = "http://franckgaspoz.fr";
 
+        public static bool EnableNotifications { get; protected set; } = true;
+
+        public static string SettingsSaveLastPath { get; set; }
+
         // TODO: use this to init behaviors
         public static int MouseWatcherScrutationDelay = 100;
     }

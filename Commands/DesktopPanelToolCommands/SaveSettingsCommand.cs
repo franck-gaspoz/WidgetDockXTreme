@@ -1,4 +1,5 @@
-﻿using DesktopPanelTool.Services;
+﻿using DesktopPanelTool.Models;
+using DesktopPanelTool.Services;
 using System;
 using System.Windows.Input;
 
@@ -26,7 +27,7 @@ namespace DesktopPanelTool.Commands.DesktopPanelToolCommands
         {
             var p = GetParameter(parameter).Value;
             DesktopPanelToolService.SaveSettings();
-            if (p)
+            if (p && AppSettings.EnableNotifications)
                 NotificationBarService.Notify("settings have been saved");
         }
 

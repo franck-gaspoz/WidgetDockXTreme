@@ -170,7 +170,7 @@
                 <MenuItem x:Name="MI_SaveAs" Header="Save as…">
                     <behaviors:Interaction.Triggers>
                         <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_SaveAs}">
-                            <behaviors:InvokeCommandAction Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.SaveAsLayoutSettings}" />
+                            <behaviors:InvokeCommandAction Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.SaveAsLayoutSettings}" CommandParameter="{StaticResource True}" />
                             <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.CloseWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
                         </behaviors:EventTrigger>
                     </behaviors:Interaction.Triggers>
@@ -179,7 +179,7 @@
                 <MenuItem x:Name="MI_Load" Header="Load">
                     <behaviors:Interaction.Triggers>
                         <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_Load}">
-                            <behaviors:InvokeCommandAction Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.LoadLayoutSettings}" />
+                            <behaviors:InvokeCommandAction Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.LoadLayoutSettings}" CommandParameter="{StaticResource True}" />
                             <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.CloseWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
                         </behaviors:EventTrigger>
                     </behaviors:Interaction.Triggers>
