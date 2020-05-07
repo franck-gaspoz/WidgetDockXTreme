@@ -57,7 +57,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                     }
                 }
 
-                var w = Container.ActualWidth - tw - 8d;
+                var w = Container.ActualWidth - tw /*- 8d*/;
                 AssociatedObject.Width = w;
                 AssociatedObject.SetValue(FrameworkElement.HeightProperty, DependencyProperty.UnsetValue);
 
