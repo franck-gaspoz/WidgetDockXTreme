@@ -18,7 +18,7 @@ namespace DesktopPanelTool.Behaviors.PanelBehaviors
         }
        
         public static readonly DependencyProperty WidgetSpacingProperty =
-            DependencyProperty.Register("WidgetSpacing", typeof(double), typeof(WidgetsStackPanelBehavior), new PropertyMetadata(8d));
+            DependencyProperty.Register("WidgetSpacing", typeof(double), typeof(WidgetsStackPanelBehavior), new PropertyMetadata(0d));
 
         public double PanelPadding
         {

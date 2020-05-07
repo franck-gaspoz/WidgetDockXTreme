@@ -202,7 +202,11 @@
             <Border Style="{DynamicResource DesktopPanelContentBackgroundLayer}">
 
                 <!--  panel layout  -->
-                <StackPanel Orientation="Vertical">
+                <StackPanel
+                    x:Name="RootStackPanel"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Orientation="Vertical">
 
                     <behaviors:Interaction.Behaviors>
                         <panelbehaviors:DesktopPanelOrientableStackPanelBehavior />
@@ -212,13 +216,23 @@
                     <controls:DesktopPanelTitleBar />
 
                     <!--  stack of widgets  -->
-                    <StackPanel x:Name="WidgetsPanel" Orientation="Horizontal">
+                    <StackPanel
+                        x:Name="WidgetsPanel"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Orientation="Horizontal">
 
                         <behaviors:Interaction.Behaviors>
                             <panelbehaviors:WidgetsStackPanelBehavior PanelPadding="{DynamicResource DesktopPanelContent_Padding}" WidgetSpacing="{DynamicResource Widget_Spacing}" />
                         </behaviors:Interaction.Behaviors>
 
                     </StackPanel>
+
+                    <controls:WidgetStackPanelDropPlaceHolder x:Name="PermanentWidgetDropPlaceHolder">
+                        <behaviors:Interaction.Behaviors>
+                            <frameworkelementbehaviors:MaximizeStackPanelChildSizeFrameworkElementBehavior Container="{Binding ElementName=RootStackPanel}" />
+                        </behaviors:Interaction.Behaviors>
+                    </controls:WidgetStackPanelDropPlaceHolder>
 
                 </StackPanel>
 

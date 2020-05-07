@@ -1,16 +1,5 @@
 ﻿using DesktopPanelTool.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DesktopPanelTool.Controls
 {
@@ -19,7 +8,12 @@ namespace DesktopPanelTool.Controls
     /// </summary>
     public partial class WidgetStackPanelDropPlaceHolder : UserControl
     {
-        public WidgetStackPanelDropPlaceHolderViewModel ViewModel { get; protected set; }
+        public WidgetStackPanelDropPlaceHolderViewModel ViewModel { get; set; }
+
+        public WidgetStackPanelDropPlaceHolder()
+        {
+            InitializeComponent();
+        }
 
         public WidgetStackPanelDropPlaceHolder(WidgetStackPanelDropPlaceHolderViewModel viewModel)
         {

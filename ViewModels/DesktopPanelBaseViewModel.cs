@@ -143,10 +143,10 @@ namespace DesktopPanelTool.ViewModels
         {
             WidgetsViewModels.Add(widget.ViewModel);
             widget.ViewModel.PanelViewModel = this;
-            if (View.WidgetsPanel.Children.Count==0)
-                View.WidgetsPanel.Children.Add(GetNewWidgetStackPanelDropPlaceHolder());
-            View.WidgetsPanel.Children.Add(widget);
+            //if (View.WidgetsPanel.Children.Count==0)
             View.WidgetsPanel.Children.Add(GetNewWidgetStackPanelDropPlaceHolder());
+            View.WidgetsPanel.Children.Add(widget);
+            //View.WidgetsPanel.Children.Add(GetNewWidgetStackPanelDropPlaceHolder());
         }
 
         WidgetStackPanelDropPlaceHolder GetNewWidgetStackPanelDropPlaceHolder()
@@ -161,7 +161,7 @@ namespace DesktopPanelTool.ViewModels
             {
                 var index = View.WidgetsPanel.Children.IndexOf(widget);
                 View.WidgetsPanel.Children.Remove(widget);
-                if (View.WidgetsPanel.Children[index] is WidgetStackPanelDropPlaceHolder)
+                if (index < View.WidgetsPanel.Children.Count && View.WidgetsPanel.Children[index] is WidgetStackPanelDropPlaceHolder)
                     View.WidgetsPanel.Children.Remove(View.WidgetsPanel.Children[index]);
                 if (View.WidgetsPanel.Children.Count == 1)
                     View.WidgetsPanel.Children.Clear();
@@ -187,6 +187,7 @@ namespace DesktopPanelTool.ViewModels
         {
             SettingsBackup = info.GetValues(this, _members);
             View = new DesktopPanelBase(this);
+            View.Loaded += (o,e) => InitializePermanentWidgetDropPlaceHolder();
         }
 
         [OnDeserialized]
@@ -208,6 +209,12 @@ namespace DesktopPanelTool.ViewModels
         public DesktopPanelBaseViewModel(DesktopPanelBase view)
         {
             View = view;
+            View.Loaded += (o,e) => InitializePermanentWidgetDropPlaceHolder();
+        }
+
+        void InitializePermanentWidgetDropPlaceHolder()
+        {
+            //View.PermanentWidgetDropPlaceHolder.ViewModel = new WidgetStackPanelDropPlaceHolderViewModel(this);
         }
     }
 }

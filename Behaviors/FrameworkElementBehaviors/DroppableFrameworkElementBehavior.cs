@@ -14,6 +14,14 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
             base.OnAttached();
             AssociatedObject.AllowDrop = true;
             AssociatedObject.Drop += AssociatedObject_Drop;
+            AssociatedObject.MouseEnter += AssociatedObject_MouseEnter;
+        }
+
+        private void AssociatedObject_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+#if dbg
+            DesktopPanelTool.Lib.Debug.WriteLine($"enter");
+#endif
         }
 
         protected override void OnDetaching()

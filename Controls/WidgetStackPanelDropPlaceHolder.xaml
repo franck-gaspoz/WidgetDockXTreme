@@ -9,10 +9,11 @@
     d:DesignHeight="8"
     d:DesignWidth="100"
     mc:Ignorable="d">
+    <!--  Background="CornflowerBlue"  -->
     <Grid
         MinWidth="8"
         MinHeight="8"
-        Background="CornflowerBlue">
+        Background="#01000000">
         <behaviors:Interaction.Behaviors>
             <frameworkelementbehaviors:DroppableFrameworkElementBehavior />
         </behaviors:Interaction.Behaviors>

@@ -3,13 +3,22 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace DesktopPanelTool.Behaviors.PanelBehaviors
+namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
 {
-    public class GridRotationOrientedBehavior
-        : Behavior<Grid>
+    public class KeepOrientationWhenInRotationOrientedPanelFrameworkElementBehavior
+        : Behavior<FrameworkElement>
     {
         Window Window;
         RotateTransform RotateTransform;
+
+        public bool IsEnabled
+        {
+            get { return (bool)GetValue(IsEnabledProperty); }
+            set { SetValue(IsEnabledProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsEnabledProperty =
+            DependencyProperty.Register("IsEnabled", typeof(bool), typeof(KeepOrientationWhenInRotationOrientedPanelFrameworkElementBehavior), new PropertyMetadata(false));
 
         public Orientation? CurrentOrientation { get; protected set; }
 
@@ -36,19 +45,19 @@ namespace DesktopPanelTool.Behaviors.PanelBehaviors
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (AssociatedObject.Parent != null)
+            if (AssociatedObject.Parent != null && IsEnabled)
             {
                 var newOrientation = Window.Width >= Window.Height ? Orientation.Horizontal : Orientation.Vertical;
 
                 if (!CurrentOrientation.HasValue || CurrentOrientation.Value != newOrientation)
                 {
                     CurrentOrientation = newOrientation;
-                    ApplyPanelOrientation();
+                    ApplyRevertPanelOrientation();
                 }
             }
         }
 
-        void ApplyPanelOrientation()
+        void ApplyRevertPanelOrientation()
         {
             if (CurrentOrientation.HasValue)
             {
@@ -58,14 +67,11 @@ namespace DesktopPanelTool.Behaviors.PanelBehaviors
                     RotateTransform = new RotateTransform();
                     AssociatedObject.LayoutTransform = RotateTransform;
                 }
-                RotateTransform.Angle = orientation == Orientation.Horizontal?
-                    -90:0;
-                AssociatedObject.VerticalAlignment = orientation == Orientation.Horizontal ?
-                    VerticalAlignment.Stretch : VerticalAlignment.Top;
-                AssociatedObject.HorizontalAlignment = orientation == Orientation.Horizontal ?
-                    HorizontalAlignment.Right : HorizontalAlignment.Stretch;
+                RotateTransform.Angle = orientation == Orientation.Horizontal ?
+                    90 : 0;
             }
         }
 
     }
 }
+

@@ -24,11 +24,11 @@
                 </behaviors:EventTrigger>
             </behaviors:Interaction.Triggers>
             <behaviors:Interaction.Behaviors>
-                <frameworkelementbehaviors:MouseOverOpacityChangeBehavior
+                <frameworkelementbehaviors:MouseOverOpacityChangeFrameworkElementBehavior
                     MouseOutOpacity="{Binding MouseOutOpacity}"
                     MouseOverOpacity="{Binding MouseOverOpacity}"
                     OpacityTransitionAnimationDuration="{Binding MouseOverOpacityTransitionAnimationDuration}" />
-                <frameworkelementbehaviors:KeepOrientationWhenInRotationOrientedPanelBehavior IsEnabled="{Binding EnableKeepOrientationWhenInRotationOrientedPanelBehavior, RelativeSource={RelativeSource AncestorType={x:Type local:IconButton}}}" />
+                <frameworkelementbehaviors:KeepOrientationWhenInRotationOrientedPanelFrameworkElementBehavior IsEnabled="{Binding EnableKeepOrientationWhenInRotationOrientedPanelBehavior, RelativeSource={RelativeSource AncestorType={x:Type local:IconButton}}}" />
             </behaviors:Interaction.Behaviors>
         </Image>
     </Grid>

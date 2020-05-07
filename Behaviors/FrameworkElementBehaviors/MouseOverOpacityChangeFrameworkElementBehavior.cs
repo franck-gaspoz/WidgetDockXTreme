@@ -6,7 +6,7 @@ using System.Windows.Media.Animation;
 
 namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
 {
-    public class MouseOverOpacityChangeBehavior
+    public class MouseOverOpacityChangeFrameworkElementBehavior
         : Behavior<FrameworkElement>
     {
         public double MouseOverOpacity
@@ -16,7 +16,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         }
 
         public static readonly DependencyProperty MouseOverOpacityProperty =
-            DependencyProperty.Register("MouseOverOpacity", typeof(double), typeof(MouseOverOpacityChangeBehavior), new PropertyMetadata(1d));
+            DependencyProperty.Register("MouseOverOpacity", typeof(double), typeof(MouseOverOpacityChangeFrameworkElementBehavior), new PropertyMetadata(1d));
 
         public double MouseOutOpacity
         {
@@ -25,7 +25,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         }
 
         public static readonly DependencyProperty MouseOutOpacityProperty =
-            DependencyProperty.Register("MouseOutOpacity", typeof(double), typeof(MouseOverOpacityChangeBehavior), new PropertyMetadata(0.5d));
+            DependencyProperty.Register("MouseOutOpacity", typeof(double), typeof(MouseOverOpacityChangeFrameworkElementBehavior), new PropertyMetadata(0.5d));
 
         public double OpacityTransitionAnimationDuration
         {
@@ -34,7 +34,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         }
 
         public static readonly DependencyProperty OpacityTransitionAnimationDurationProperty =
-            DependencyProperty.Register("OpacityTransitionAnimationDuration", typeof(double), typeof(MouseOverOpacityChangeBehavior), new PropertyMetadata(1000d));
+            DependencyProperty.Register("OpacityTransitionAnimationDuration", typeof(double), typeof(MouseOverOpacityChangeFrameworkElementBehavior), new PropertyMetadata(1000d));
 
         public bool OpacityEffectOnClickEnabled
         {
@@ -43,7 +43,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         }
 
         public static readonly DependencyProperty OpacityEffectOnClickEnabledProperty =
-            DependencyProperty.Register("OpacityEffectOnClickEnabled", typeof(bool), typeof(MouseOverOpacityChangeBehavior), new PropertyMetadata(true));
+            DependencyProperty.Register("OpacityEffectOnClickEnabled", typeof(bool), typeof(MouseOverOpacityChangeFrameworkElementBehavior), new PropertyMetadata(true));
 
         bool AvoidNextMouseLeaveTransition = false;
 

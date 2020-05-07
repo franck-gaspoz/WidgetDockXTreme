@@ -5,7 +5,7 @@
 
     <!--#region  ##### layout #####-->
 
-    <sys:Double x:Key="Widget_Spacing">8</sys:Double>
+    <sys:Double x:Key="Widget_Spacing">0</sys:Double>
     <Thickness x:Key="Widget_ContentPanel_Margin">4</Thickness>
     <Thickness x:Key="Widget_TitleText_Margin">8,-2,8,0</Thickness>
     <Thickness x:Key="DesktopPanel_TitleText_Margin">8,-2,8,0</Thickness>
@@ -41,7 +41,7 @@
     <Thickness x:Key="DropShadow_Margin">0,0,5,5</Thickness>
 
     <Thickness x:Key="WindowShadowAreaSize">16</Thickness>
-    <Thickness x:Key="WindowContentAreaShadowAreaSize">16,16,17,17</Thickness>
+    <Thickness x:Key="WindowContentAreaShadowAreaSize">16,16,16,16</Thickness>
     <sys:Double x:Key="WindowShadowWidth">1</sys:Double>
     <sys:Double x:Key="WindowBottomRightShadowBlur">12</sys:Double>
     <sys:Double x:Key="WindowTopLeftShadowBlur">12</sys:Double>
