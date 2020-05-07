@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Behaviors.WindowBehaviors.DockableBehavior;
@@ -162,14 +162,16 @@ namespace DesktopPanelTool.ViewModels
             if (WidgetsViewModels.Remove(widget.ViewModel))
             {
                 var index = View.WidgetsPanel.Children.IndexOf(widget);
+                var dropholder = View.WidgetsPanel.Children[index - 1];
                 View.WidgetsPanel.Children.Remove(widget);
+                View.WidgetsPanel.Children.Remove(dropholder);
 #if dbg
                 DumpWidgetsPanelChildren();
 #endif
-                if (index < View.WidgetsPanel.Children.Count && View.WidgetsPanel.Children[index] is WidgetStackPanelDropPlaceHolder)
+                /*if (index < View.WidgetsPanel.Children.Count && View.WidgetsPanel.Children[index] is WidgetStackPanelDropPlaceHolder)
                     View.WidgetsPanel.Children.Remove(View.WidgetsPanel.Children[index]);
                 if (View.WidgetsPanel.Children.Count == 1)
-                    View.WidgetsPanel.Children.Clear();
+                    View.WidgetsPanel.Children.Clear();*/
             }
         }
 
