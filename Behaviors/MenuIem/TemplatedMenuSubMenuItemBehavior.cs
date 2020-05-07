@@ -29,7 +29,8 @@ namespace DesktopPanelTool.Behaviors.MenuIem
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            AssociatedObject.PreviewMouseDown -= AssociatedObject_PreviewMouseDown;            
+            AssociatedObject.PreviewMouseDown -= AssociatedObject_PreviewMouseDown;
+            AssociatedObject.IsVisibleChanged -= AssociatedObject_IsVisibleChanged;
         }
 
         private void AssociatedObject_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

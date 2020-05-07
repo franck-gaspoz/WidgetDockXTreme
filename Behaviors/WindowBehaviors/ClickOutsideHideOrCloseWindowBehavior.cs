@@ -3,6 +3,7 @@
 using DesktopPanelTool.Lib;
 using Microsoft.Xaml.Behaviors;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using static DesktopPanelTool.Lib.NativeMethods;
@@ -18,6 +19,8 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
         bool _canMove;
         HookProc _callbackDelegate = null;
         IntPtr _hookHandle;
+
+        public bool IsEnabled = true; 
 
         public bool CloseOnClick
         {
@@ -81,6 +84,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
 #endif
 
             if ((r== WM_LBUTTONDOWN || r==WM_RBUTTONDOWN)
+                && IsEnabled
                 && CheckMouseOutWindow())
             {
 #if dbg
@@ -128,6 +132,16 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
             _top = AssociatedObject.Top;
             _right = AssociatedObject.Left + AssociatedObject.Width - 1;
             _bottom = AssociatedObject.Top + AssociatedObject.Height - 1;
+        }
+
+        public static void SetIsEnabled(Window window,bool isEnabled)
+        {
+            if (window == null) return;
+            var o = Interaction.GetBehaviors(window)
+                .OfType<ClickOutsideHideOrCloseWindowBehavior>()
+                .FirstOrDefault();
+            if (o != null)
+                o.IsEnabled = isEnabled;
         }
     }
 }

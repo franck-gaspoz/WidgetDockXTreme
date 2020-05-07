@@ -22,10 +22,10 @@
     mc:Ignorable="d">
 
     <Window.Resources />
-    <!--  258  -->
 
     <behaviors:Interaction.Behaviors>
         <windowbehaviors:FixSizeOfShadowedWindowBehavior />
+        <windowbehaviors:CloseAnySubmenuOnHiddingWindowBehavior />
         <windowbehaviors:CloseAnySubmenuOnClosingWindowBehavior />
         <windowbehaviors:ClickOutsideHideOrCloseWindowBehavior CloseOnClick="True" />
     </behaviors:Interaction.Behaviors>
@@ -170,6 +170,8 @@
                 <MenuItem x:Name="MI_SaveAs" Header="Save as…">
                     <behaviors:Interaction.Triggers>
                         <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_SaveAs}">
+                            <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.DisableClickOutsideHideOrCloseWindowBehavior}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                            <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.HideWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
                             <behaviors:InvokeCommandAction Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.SaveAsLayoutSettings}" CommandParameter="{StaticResource True}" />
                             <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.CloseWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
                         </behaviors:EventTrigger>

@@ -47,8 +47,13 @@ namespace DesktopPanelTool.Models
         public static bool EnableNotifications { get; protected set; } = true;
 
         public static string SettingsSaveLastPath { get; set; }
+        public static readonly string UserSettingsFileName = "settings.dat";
+        public static readonly string AppSettingsFileName = "appSettings.dat";
 
         // TODO: use this to init behaviors
         public static int MouseWatcherScrutationDelay = 100;
+        public readonly static string AppLocalDataFolderName = "Widget Dock XTreme";
+        internal static readonly string SettingsFilesExt = ".dat";
+        internal static readonly string SettingsFileDialogFilter = "dat files (*.dat)|*.dat|All files (*.*)|*.*";
     }
 }

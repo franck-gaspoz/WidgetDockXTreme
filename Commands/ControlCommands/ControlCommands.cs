@@ -12,5 +12,11 @@ namespace DesktopPanelTool.Commands.ControlCommands
 
         public static ICommand CloseWindow { get; } = new CloseWindowCommand();
 
+        public static ICommand SetIsEnabledBehavior { get; } = new SetIsEnabledBehaviorCommand();
+
+        public static ICommand EnableClickOutsideHideOrCloseWindowBehavior { get; } = new EnableClickOutsideHideOrCloseWindowBehaviorCommand();
+
+        public static ICommand DisableClickOutsideHideOrCloseWindowBehavior { get; } = new DisableClickOutsideHideOrCloseWindowBehaviorCommand();
+
     }
 }

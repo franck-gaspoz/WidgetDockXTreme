@@ -16,10 +16,7 @@ namespace DesktopPanelTool.Services
     {
         public static DesktopPanelToolViewModel DesktopPanelToolViewModel { get; private set; }
             = new DesktopPanelToolViewModel();
-
-        static readonly string UserSettingsFileName = "settings.dat";
-        static readonly string AppSettingsFileName = "appSettings.dat";
-
+        
         internal static void Initialize()
         {
             var cursorDragging = Application.Current.Resources["CursorDragging"];
@@ -80,8 +77,8 @@ namespace DesktopPanelTool.Services
                 .Add(panel.ViewModel);
             panel.Close();
         }
-        static string UserSettingsFullPath => Path.Combine(Environment.CurrentDirectory, UserSettingsFileName);
-        static string AppSettingsFullPath => Path.Combine(Environment.CurrentDirectory, AppSettingsFileName);
+        static string UserSettingsFullPath => Path.Combine(Environment.CurrentDirectory, AppSettings.UserSettingsFileName);
+        static string AppSettingsFullPath => Path.Combine(Environment.CurrentDirectory, AppSettings.AppSettingsFileName);
 
         static internal bool UserSettingsFileExists =>
              File.Exists(UserSettingsFullPath);
@@ -106,11 +103,16 @@ namespace DesktopPanelTool.Services
 
         internal static void SaveSettings()
         {
+            SaveSettingsAs(UserSettingsFullPath);
+        }
+        
+        internal static void SaveSettingsAs(string path)
+        {
             DesktopPanelToolViewModel
                .RecentPanelsViewModels
                .Clear();
             var formatter = new BinaryFormatter();
-            using FileStream fs = File.Create(UserSettingsFullPath);
+            using FileStream fs = File.Create(path);
             formatter.Serialize(fs, DesktopPanelToolViewModel);
             SaveAppSettings();
         }
