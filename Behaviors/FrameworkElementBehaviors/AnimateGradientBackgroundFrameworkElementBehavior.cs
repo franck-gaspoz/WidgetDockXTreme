@@ -94,9 +94,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                     Storyboard.SetTargetProperty(fadeIn, new PropertyPath(FrameworkElement.OpacityProperty));
 
                     var leftToRight = new DoubleAnimation(0d, endOffset, leftToRightDur) { 
-                        AutoReverse = leftToRightAutoReverseMul==2,
-                        //EasingFunction  = new BounceEase() { Bounces = 5, Bounciness=2.5, EasingMode=EasingMode.EaseInOut }
-                        //EasingFunction = new BackEase() { Amplitude = 1 }
+                        AutoReverse = leftToRightAutoReverseMul==2
                     };
                     Storyboard.SetTargetName(leftToRight, gradientAn);
                     Storyboard.SetTargetProperty(leftToRight, new PropertyPath(GradientStop.OffsetProperty));

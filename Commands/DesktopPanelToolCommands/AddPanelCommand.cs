@@ -16,7 +16,7 @@ namespace DesktopPanelTool.Commands.DesktopPanelToolCommands
         public void Execute(object parameter)
         {
             var panel = DesktopPanelToolService.AddDesktopPanel(null, DockName.None);
-            panel.ViewModel.Title = $"dock {DesktopPanelToolService.DesktopPanelToolViewModel.PanelsViewModels.Count}";
+            panel.ViewModel.Title = $"dock {DesktopPanelToolService.DesktopPanelToolViewModel.PanelsViewModels.Count + DesktopPanelToolService.DesktopPanelToolViewModel.RecentPanelsViewModels.Count}";
             panel.Show();
         }
 
