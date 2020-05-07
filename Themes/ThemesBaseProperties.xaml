@@ -1,0 +1,273 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <!--#region  ##### layout #####-->
+
+    <sys:Double x:Key="Widget_Spacing">8</sys:Double>
+    <Thickness x:Key="Widget_ContentPanel_Margin">4</Thickness>
+    <Thickness x:Key="Widget_TitleText_Margin">8,-2,8,0</Thickness>
+    <Thickness x:Key="DesktopPanel_TitleText_Margin">8,-2,8,0</Thickness>
+    <Thickness x:Key="ToolTip_Content_Margin">4,2,4,4</Thickness>
+    <sys:Double x:Key="Widget_TitleBar_Height">20</sys:Double>
+    <sys:Double x:Key="DesktopPanel_TitleBar_Height">20</sys:Double>
+    <sys:Double x:Key="DesktopPanelContent_Padding">8</sys:Double>
+
+    <Thickness x:Key="ContextMenu_Padding">2</Thickness>
+
+    <!--#endregion-->
+
+    <!--#region  ##### sizes and shapes #####-->
+
+    <sys:Double x:Key="Widget_Border_Size">1</sys:Double>
+    <sys:Double x:Key="Widget_Border_CornerRadius">6</sys:Double>
+
+    <CornerRadius x:Key="PanelBackgroundLayer_CornerRadius">0</CornerRadius>
+
+    <sys:Double x:Key="PanelWindow_Docked_DefaultWidth">256</sys:Double>
+    <sys:Double x:Key="PanelWindow_Docked_DefaultHeight">164</sys:Double>
+
+    <Thickness x:Key="PanelBackgroundLayer2_BorderThickness">1</Thickness>
+
+    <Thickness x:Key="ToolTip_Border_Thickness">1</Thickness>
+    <CornerRadius x:Key="ToolTip_Border_CornerRadius">4</CornerRadius>
+
+    <Thickness x:Key="ContextMenu_Border_Thickness">1</Thickness>
+    <CornerRadius x:Key="ContextMenu_Border_CornerRadius">6</CornerRadius>
+
+    <Thickness x:Key="SubMenuPopupPadding">6</Thickness>
+
+    <Thickness x:Key="DropShadow_Margin">0,0,5,5</Thickness>
+
+    <Thickness x:Key="WindowShadowAreaSize">16</Thickness>
+    <Thickness x:Key="WindowContentAreaShadowAreaSize">16,16,17,17</Thickness>
+    <sys:Double x:Key="WindowShadowWidth">1</sys:Double>
+    <sys:Double x:Key="WindowBottomRightShadowBlur">12</sys:Double>
+    <sys:Double x:Key="WindowTopLeftShadowBlur">12</sys:Double>
+
+    <!--#endregion-->
+
+    <!--#region  ##### images #####-->
+
+    <!--<ImageSource x:Key="PanelBackgroundImage_Source">/Images/Backgrounds/Avanti.jpg</ImageSource>-->
+    <ImageSource x:Key="PanelBackgroundImage_Source">/Images/Backgrounds/abstract-technology-art-backgrounds.jpg</ImageSource>
+    <!--<ImageSource x:Key="PanelBackgroundImage_Source">/Images/Backgrounds/cinema-dark-green-abstract-quality-presentation.jpeg</ImageSource>-->
+    <!--<ImageSource x:Key="PanelBackgroundImage_Source">/Images/Backgrounds/black-leather-texture-dark-embossed.jpg</ImageSource>-->
+
+    <!--#endregion-->
+
+    <!--#region  ##### effects #####-->
+
+    <sys:Boolean x:Key="DropShadow">True</sys:Boolean>
+    <sys:Double x:Key="PanelBackgroundImage_BlurRadius">10</sys:Double>
+
+    <!--#endregion-->
+
+    <Color x:Key="WindowShadowBrush">Black</Color>
+
+    <!--#region  ##### colors and transparency #####-->
+    <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="{DynamicResource TextForeground_Color}" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.WindowTextBrushKey}" Color="{DynamicResource TextForeground_Color}" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}">Transparent</SolidColorBrush>
+
+    <!--
+    <Color x:Key="{x:Static SystemColors.HighlightTextColorKey}">Red</Color>
+    <Color x:Key="{x:Static SystemColors.HighlightColorKey}">Red</Color>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}">Red</SolidColorBrush>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}">Red</SolidColorBrush>
+    <SolidColorBrush x:Key="{x:Static SystemColors.MenuHighlightBrushKey}" Color="Red" />
+    -->
+
+    <!--
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Red" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Green" />
+    -->
+
+    <!--#region menu and contest menu-->
+
+    <Color x:Key="DropShadow_Color">#99000000</Color>
+
+    <SolidColorBrush x:Key="ContextMenu_Background">#BB000000</SolidColorBrush>
+    <SolidColorBrush x:Key="ContextMenu_LeftMargin_Background">#BB000000</SolidColorBrush>
+    <sys:Double x:Key="ContextMenu_LeftMargin_RadiusX">2</sys:Double>
+    <sys:Double x:Key="ContextMenu_LeftMargin_RadiusY">2</sys:Double>
+    <SolidColorBrush x:Key="ContextMenu_LeftMargin_EmbossedVerticalSeparator_Brush">Transparent</SolidColorBrush>
+    <SolidColorBrush x:Key="ContextMenu_LeftMargin_DepressedVerticalSeparator_Brush">#BB555555</SolidColorBrush>
+    <SolidColorBrush x:Key="ContextMenu_Border_Brush">#BBCCCCCC</SolidColorBrush>
+
+    <SolidColorBrush x:Key="Menu.Static.Background" Color="#AA000000" />
+    <SolidColorBrush x:Key="Menu.Static.Border" Color="#FF999999" />
+    <!--  sub menu open glyph  -->
+    <SolidColorBrush x:Key="Menu.Static.Foreground" Color="White" />
+
+    <SolidColorBrush x:Key="Menu.Static.Separator" Color="#CCCCCCCC" />
+
+    <SolidColorBrush x:Key="Menu.Disabled.Background" Color="#3DDADADA" />
+    <SolidColorBrush x:Key="Menu.Disabled.Border" Color="#FFDADADA" />
+    <SolidColorBrush x:Key="Menu.Disabled.Foreground" Color="#CC777777" />
+
+    <SolidColorBrush x:Key="MenuItem.Selected.Background" Color="#3D26A0DA" />
+    <SolidColorBrush x:Key="MenuItem.Selected.Border" Color="#FF26A0DA" />
+
+    <!--<SolidColorBrush x:Key="MenuItem.Highlight.Background" Color="#CC777777" />-->
+    <!--<LinearGradientBrush x:Key="MenuItem.Highlight.Background" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#CC555555" />
+            <GradientStop Offset="1" Color="#CC777777" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>-->
+
+    <LinearGradientBrush x:Key="MenuItem.Highlight.Background" StartPoint="0,0" EndPoint="0,1">
+        <!--  CC6495ED  -->
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#661E90FF" />
+            <GradientStop Offset="0.4" Color="#CC1E90FF" />
+            <GradientStop Offset="0.6" Color="#CC1E90FF" />
+            <GradientStop Offset="1" Color="#661E90FF" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="MenuItem.Highlight.Border" Color="Transparent" />
+
+    <SolidColorBrush x:Key="MenuItem.Highlight.Disabled.Background" Color="#0A000000" />
+    <SolidColorBrush x:Key="MenuItem.Highlight.Disabled.Border" Color="#21000000" />
+
+    <!--#endregion-->
+
+    <SolidColorBrush x:Key="ToolTip_Background">#AA000000</SolidColorBrush>
+    <SolidColorBrush x:Key="ToolTip_Border_Brush">#AACCCCCC</SolidColorBrush>
+
+    <sys:Double x:Key="IconButtonMouseOverOpacity">1</sys:Double>
+    <sys:Double x:Key="IconButtonMouseOutOpacity">0.5</sys:Double>
+
+    <SolidColorBrush x:Key="Widget_Border_TopColor">#666666</SolidColorBrush>
+    <SolidColorBrush x:Key="Widget_Border_LeftColor">#666666</SolidColorBrush>
+    <SolidColorBrush x:Key="Widget_Border_RightColor">#444444</SolidColorBrush>
+    <SolidColorBrush x:Key="Widget_Border_BottomColor">#444444</SolidColorBrush>
+    <sys:Double x:Key="Widget_Border_Opacity">0.9</sys:Double>
+    <sys:Double x:Key="Widget_Background_Opacity">0.2</sys:Double>
+    <SolidColorBrush x:Key="Widget_Background">Black</SolidColorBrush>
+    <SolidColorBrush x:Key="Widget_TitleText_Brush">White</SolidColorBrush>
+    <LinearGradientBrush x:Key="Widget_TitleBar_Background" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#444444" />
+            <GradientStop Offset="1" Color="#222222" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!--  DesktopPanelBase  -->
+
+    <SolidColorBrush x:Key="DesktopPanel_TitleText_Brush">White</SolidColorBrush>
+    <LinearGradientBrush x:Key="DesktopPanel_TitleBar_Background" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#444444" />
+            <GradientStop Offset="1" Color="#222222" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <sys:Double x:Key="PanelBackgroundImage_Opacity">1</sys:Double>
+
+    <!--<SolidColorBrush x:Key="DesktopPanelContentBackgroundLayer_Background">#44000000</SolidColorBrush>-->
+    <!--<SolidColorBrush x:Key="DesktopPanelContentBackgroundLayer_Background">#77000000</SolidColorBrush>-->
+    <!--<SolidColorBrush x:Key="DesktopPanelContentBackgroundLayer_Background">#DD000000</SolidColorBrush>-->
+    <!--<SolidColorBrush x:Key="DesktopPanelContentBackgroundLayer_Background">#BB000000</SolidColorBrush>-->
+    <!--<SolidColorBrush x:Key="DesktopPanelContentBackgroundLayer_Background">#66000000</SolidColorBrush>-->
+    <SolidColorBrush x:Key="DesktopPanelContentBackgroundLayer_Background">#22000000</SolidColorBrush>
+    <!--<SolidColorBrush x:Key="DesktopPanelContentBackgroundLayer_Background">#00000000</SolidColorBrush>-->
+
+    <!--  back pic  -->
+    <Visibility x:Key="PanelBackgroundImage_Visibility">Collapsed</Visibility>
+    <!--  gradients  -->
+    <Visibility x:Key="PanelBackgroundLayer0_Visibility">Visible</Visibility>
+    <Visibility x:Key="PanelBackgroundLayer1_Visibility">Visible</Visibility>
+    <Visibility x:Key="PanelBackgroundLayer1b_Visibility">Visible</Visibility>
+    <!--  border  -->
+    <Visibility x:Key="PanelBackgroundLayer2_Visibility">Visible</Visibility>
+
+    <sys:Double x:Key="PanelWindow_Activated_Transparency">1</sys:Double>
+    <sys:Double x:Key="PanelWindow_Deactivated_Transparency">0.9</sys:Double>
+
+    <sys:Double x:Key="PanelBackgroundLayer2_Opacity">1</sys:Double>
+
+    <Color x:Key="PanelBackgroundLayer2_BorderBrush_GradientStop0">#FF555555</Color>
+    <Color x:Key="PanelBackgroundLayer2_BorderBrush_GradientStop1">#FF000000</Color>
+    <Color x:Key="PanelBackgroundLayer2_BorderBrush_GradientStop2">#FFAAAAAA</Color>
+
+    <sys:Double x:Key="PanelBackgroundLayer1_Opacity">0.8</sys:Double>
+    <Color x:Key="PanelBackgroundLayer1_Background_GradientStop0">Black</Color>
+    <Color x:Key="PanelBackgroundLayer1_Background_GradientStop1">#FF444444</Color>
+
+    <Color x:Key="PanelBackgroundLayer1b_Background_GradientStop0">Black</Color>
+    <Color x:Key="PanelBackgroundLayer1b_Background_GradientStop1">White</Color>
+    <Color x:Key="PanelBackgroundLayer1b_Background_GradientStop2">Black</Color>
+    <sys:Double x:Key="PanelBackgroundLayer1b_Opacity">0</sys:Double>
+
+    <sys:Double x:Key="PanelBackgroundLayer0_Opacity">0.8</sys:Double>
+    <Color x:Key="PanelBackgroundLayer0_Background_GradientStop0">#FF000000</Color>
+    <!--<Color x:Key="PanelBackgroundLayer0_Background_GradientStop1">Red</Color>-->
+    <Color x:Key="PanelBackgroundLayer0_Background_GradientStop1">#FF999999</Color>
+    <Color x:Key="PanelBackgroundLayer0_Background_GradientStop2">#FF000000</Color>
+
+    <!--  dock hit  -->
+
+    <Color x:Key="DockHit_GradientStop0">#BBFFFFFF</Color>
+    <Color x:Key="DockHit_GradientStop1">#44FFFFFF</Color>
+    <Color x:Key="DockHit_GradientStop2">#00000000</Color>
+
+    <!--  texts  -->
+
+    <SolidColorBrush x:Key="TextForeground_Brush">White</SolidColorBrush>
+    <Color x:Key="TextForeground_Color">White</Color>
+
+    <!--#endregion-->
+
+    <!--#region  ##### fonts fam and size #####-->
+
+    <sys:Double x:Key="FontSizeSmall">10</sys:Double>
+    <sys:Double x:Key="FontSizeNormal">12</sys:Double>
+    <sys:Double x:Key="Widget_TitleText_FontSize">9</sys:Double>
+    <sys:Double x:Key="DesktopPanel_TitleText_FontSize">9</sys:Double>
+    <sys:Double x:Key="{x:Static SystemFonts.MenuFontSizeKey}">10</sys:Double>
+
+    <!--#endregion-->
+
+    <!--#region  ##### cursors #####-->
+
+    <Cursor x:Key="CursorDragging">Hand</Cursor>
+    <Cursor x:Key="CursorDefault">Arrow</Cursor>
+    <Cursor x:Key="IconButtonMouseOverCursor">Hand</Cursor>
+
+    <!--#endregion-->
+
+    <!--#region  ##### animation #####-->
+
+    <sys:Double x:Key="ShowHitAnimationDuration">200</sys:Double>
+    <sys:Double x:Key="HideHitAnimationDuration">150</sys:Double>
+
+    <sys:Double x:Key="ShowWindowPanelAnimationDuration">200</sys:Double>
+    <sys:Double x:Key="HideWindowPanelAnimationDuration">250</sys:Double>
+
+    <sys:Double x:Key="ScreenMouseSensitiveAreaTriggerDelay">100</sys:Double>
+
+    <sys:Double x:Key="PanelWindowTransparencyChangeDuration">150</sys:Double>
+
+    <sys:Double x:Key="IconButtonMouseOverOpacityTransitionAnimationDuration">200</sys:Double>
+
+    <!--#endregion-->
+
+    <!--#region  #### performance ####-->
+
+    <BitmapScalingMode x:Key="BitmapScalingMode">LowQuality</BitmapScalingMode>
+    <RenderingBias x:Key="RenderingBias">Performance</RenderingBias>
+
+    <!--#endregion-->
+
+    <!--#region  ##### consts #####-->
+
+    <sys:Boolean x:Key="True">True</sys:Boolean>
+    <sys:Boolean x:Key="False">False</sys:Boolean>
+
+    <!--#endregion-->
+
+</ResourceDictionary>

@@ -1,0 +1,20 @@
+﻿<UserControl
+    x:Class="DesktopPanelTool.Controls.WidgetStackPanelDropPlaceHolder"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:frameworkelementbehaviors="clr-namespace:DesktopPanelTool.Behaviors.FrameworkElementBehaviors"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="8"
+    d:DesignWidth="100"
+    mc:Ignorable="d">
+    <Grid
+        MinWidth="8"
+        MinHeight="8"
+        Background="CornflowerBlue">
+        <behaviors:Interaction.Behaviors>
+            <frameworkelementbehaviors:DroppableFrameworkElementBehavior />
+        </behaviors:Interaction.Behaviors>
+    </Grid>
+</UserControl>

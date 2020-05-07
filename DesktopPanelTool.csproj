@@ -1,0 +1,127 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Images\Icons\add_hardware.ico</ApplicationIcon>
+    <Platforms>AnyCPU;x86</Platforms>
+    <AssemblyName>Widget Dock XTreme</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Behaviors\MenuIem\CloseSelfSubMenuOnPreviewMouseDownBehavior.cs" />
+    <Compile Remove="Behaviors\MenuIem\CloseSubMenuOnPreviewMouseDownBehavior.cs" />
+    <Compile Remove="Behaviors\WindowBehaviors\HideWindowIfMenuItemClickedWindowBehavior.cs" />
+    <Compile Remove="Behaviors\WindowBehaviors\ShadowLayerBehindWindowBehavior.cs" />
+    <Compile Remove="Converters\DesktopPanelBaseViewModelToNotifyIconContextMenuItem.cs" />
+    <Compile Remove="Converters\DoubleToGridLengthConverter.cs" />
+    <Compile Remove="Services\DesktopPanelService.cs" />
+    <Compile Remove="Views\WindowShadowLayer.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Images\1.jpg" />
+    <None Remove="Images\abstract-technology-art-backgrounds.jpg" />
+    <None Remove="Images\aluminum-brushed-metal-texture-polished-wall-surface.jpg" />
+    <None Remove="Images\Avanti.jpg" />
+    <None Remove="Images\black-leather-texture-dark-embossed.jpg" />
+    <None Remove="Images\brushed-silver-metal-texture-tile-surface-clean-aluminum-surface.jpg" />
+    <None Remove="Images\cinema-dark-green-abstract-quality-presentation.jpeg" />
+    <None Remove="Images\dark-scratched-metal-texture-polished-steel-table.jpg" />
+    <None Remove="Images\galvanized-metal-texture-steel-plate-high-resolution-wallpaper.jpg" />
+    <None Remove="Images\Icons\add_hardware.ico" />
+    <None Remove="Images\Icons\icons8-add-column-20.png" />
+    <None Remove="Images\Icons\icons8-add-property-20.png" />
+    <None Remove="Images\Icons\icons8-downloading-updates-20.png" />
+    <None Remove="Images\Icons\icons8-help-20.png" />
+    <None Remove="Images\Icons\icons8-high-importance-20.png" />
+    <None Remove="Images\Icons\icons8-imac-exit-20.png" />
+    <None Remove="Images\Icons\icons8-info-20.png" />
+    <None Remove="Images\Icons\icons8-macos-close-20.png" />
+    <None Remove="Images\Icons\icons8-paramètres-512.ico" />
+    <None Remove="Images\Icons\icons8-pin-20.png" />
+    <None Remove="Images\Icons\icons8-popup-20.png" />
+    <None Remove="Images\Icons\icons8-recieve-20.png" />
+    <None Remove="Images\Icons\icons8-settings-20.png" />
+    <None Remove="Images\Icons\icons8-unpin-20.png" />
+    <None Remove="Images\Icons\Papirus-Team-Papirus-Apps-Chromium-app-list.ico" />
+    <None Remove="Images\metal-shed-roofing.jpeg" />
+    <None Remove="Images\sanded-metal-texture-brushed-swirl-stainless-steel.jpg" />
+    <None Remove="Images\texturex-aluminum-silver-hole-metal-circle-steel.jpg" />
+    <None Remove="Images\texturex-brushed-titanium-aluminum-silver-metal.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Views\WindowShadowLayer.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\1.jpg" />
+    <Resource Include="Images\Backgrounds\abstract-technology-art-backgrounds.jpg" />
+    <Resource Include="Images\Backgrounds\aluminum-brushed-metal-texture-polished-wall-surface.jpg" />
+    <Resource Include="Images\Backgrounds\Avanti.jpg" />
+    <Resource Include="Images\Backgrounds\black-leather-texture-dark-embossed.jpg" />
+    <Resource Include="Images\Backgrounds\brushed-silver-metal-texture-tile-surface-clean-aluminum-surface.jpg" />
+    <Resource Include="Images\Backgrounds\cinema-dark-green-abstract-quality-presentation.jpeg" />
+    <Resource Include="Images\Backgrounds\dark-scratched-metal-texture-polished-steel-table.jpg" />
+    <Resource Include="Images\Backgrounds\galvanized-metal-texture-steel-plate-high-resolution-wallpaper.jpg" />
+    <Resource Include="Images\Backgrounds\metal-shed-roofing.jpeg" />
+    <Resource Include="Images\Backgrounds\sanded-metal-texture-brushed-swirl-stainless-steel.jpg" />
+    <Resource Include="Images\Backgrounds\texturex-aluminum-silver-hole-metal-circle-steel.jpg" />
+    <Resource Include="Images\Backgrounds\texturex-brushed-titanium-aluminum-silver-metal.jpg" />
+    <Resource Include="Images\Icons\add_hardware.ico" />
+    <Resource Include="Images\Icons\icons8-add-column-20.png" />
+    <Resource Include="Images\Icons\icons8-add-property-20.png" />
+    <Resource Include="Images\Icons\icons8-downloading-updates-20.png" />
+    <Resource Include="Images\Icons\icons8-help-20.png" />
+    <Resource Include="Images\Icons\icons8-high-importance-20.png" />
+    <Resource Include="Images\Icons\icons8-imac-exit-20.png" />
+    <Resource Include="Images\Icons\icons8-info-20.png" />
+    <Resource Include="Images\Icons\icons8-macos-close-20.png" />
+    <Resource Include="Images\Icons\icons8-paramètres-512.ico" />
+    <Resource Include="Images\Icons\icons8-pin-20.png" />
+    <Resource Include="Images\Icons\icons8-popup-20.png" />
+    <Resource Include="Images\Icons\icons8-recieve-20.png" />
+    <Resource Include="Images\Icons\icons8-settings-20.png" />
+    <Resource Include="Images\Icons\icons8-unpin-20.png" />
+    <Resource Include="Images\Icons\Papirus-Team-Papirus-Apps-Chromium-app-list.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\DesktopPanelToolButtonsBar.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\DesktopPanelButtonsBar.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\DesktopPanelToolTitleBar.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Controls\DesktopPanelToolButtonsBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\DesktopPanelButtonsBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\DesktopPanelToolTitleBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\drafts\Menu Templates (NETF4.8).xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

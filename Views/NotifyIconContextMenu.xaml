@@ -1,0 +1,272 @@
+﻿<Window
+    x:Class="DesktopPanelTool.Views.NotifyIconContextMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:controlcommands="clr-namespace:DesktopPanelTool.Commands.ControlCommands"
+    xmlns:converters="clr-namespace:DesktopPanelTool.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:desktoppanelcommands="clr-namespace:DesktopPanelTool.Commands.DesktopPanelCommands"
+    xmlns:desktoppaneltoolcommands="clr-namespace:DesktopPanelTool.Commands.DesktopPanelToolCommands"
+    xmlns:lib="clr-namespace:DesktopPanelTool.Lib"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:menuitembehaviors="clr-namespace:DesktopPanelTool.Behaviors.MenuIem"
+    xmlns:viewmodels="clr-namespace:DesktopPanelTool.ViewModels"
+    xmlns:views="clr-namespace:DesktopPanelTool.Views"
+    xmlns:windowbehaviors="clr-namespace:DesktopPanelTool.Behaviors.WindowBehaviors"
+    Title="NotifyIconContextMenu"
+    Width="220"
+    Height="290"
+    ShowActivated="True"
+    Style="{DynamicResource WindowBase}"
+    mc:Ignorable="d">
+
+    <Window.Resources />
+    <!--  258  -->
+
+    <behaviors:Interaction.Behaviors>
+        <windowbehaviors:FixSizeOfShadowedWindowBehavior />
+        <windowbehaviors:CloseAnySubmenuOnClosingWindowBehavior />
+        <windowbehaviors:ClickOutsideHideOrCloseWindowBehavior CloseOnClick="True" />
+    </behaviors:Interaction.Behaviors>
+
+    <Grid>
+
+        <Grid.Resources>
+
+            <Style x:Key="Title" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+
+            <SolidColorBrush x:Key="ContextMenu_LeftMargin_EmbossedVerticalSeparator_Brush">Transparent</SolidColorBrush>
+            <SolidColorBrush x:Key="ContextMenu_LeftMargin_DepressedVerticalSeparator_Brush">Transparent</SolidColorBrush>
+
+            <LinearGradientBrush x:Key="NotifyIconContextMenuTitleBackground" StartPoint="0,0" EndPoint="0,1">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStop Offset="0" Color="Black" />
+                    <GradientStop Offset="0.9" Color="#661E90FF" />
+                    <GradientStop Offset="1" Color="#221E90FF" />
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+
+            <Style
+                x:Key="SubMenuItemBase"
+                BasedOn="{StaticResource MenuItemBase}"
+                TargetType="{x:Type MenuItem}">
+                <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}" />
+            </Style>
+
+            <Style BasedOn="{StaticResource MenuItemBase}" TargetType="{x:Type MenuItem}" />
+
+            <DataTemplate x:Key="MenuPanelSubMenuItemTemplate" DataType="{x:Type viewmodels:DesktopPanelBaseViewModel}">
+                <MenuItem Header="{Binding Title}">
+                    <MenuItem x:Name="MI_Show" Header="Show">
+                        <behaviors:Interaction.Behaviors>
+                            <menuitembehaviors:TemplatedMenuSubMenuItemBehavior ParentWindow="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </behaviors:Interaction.Behaviors>
+                        <behaviors:Interaction.Triggers>
+                            <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_Show}">
+                                <behaviors:InvokeCommandAction Command="{x:Static desktoppanelcommands:DesktopPanelCommands.Show}" CommandParameter="{Binding View}" />
+                            </behaviors:EventTrigger>
+                        </behaviors:Interaction.Triggers>
+                    </MenuItem>
+                    <MenuItem x:Name="MI_Reset" Header="Reset">
+                        <behaviors:Interaction.Behaviors>
+                            <menuitembehaviors:TemplatedMenuSubMenuItemBehavior ParentWindow="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </behaviors:Interaction.Behaviors>
+                        <behaviors:Interaction.Triggers>
+                            <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_Reset}">
+                                <behaviors:InvokeCommandAction Command="{x:Static desktoppanelcommands:DesktopPanelCommands.Reset}" CommandParameter="{Binding View}" />
+                            </behaviors:EventTrigger>
+                        </behaviors:Interaction.Triggers>
+                    </MenuItem>
+                    <MenuItem x:Name="MI_PanelMenuClose" Header="Close">
+                        <behaviors:Interaction.Behaviors>
+                            <menuitembehaviors:TemplatedMenuSubMenuItemBehavior ParentWindow="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </behaviors:Interaction.Behaviors>
+                        <behaviors:Interaction.Triggers>
+                            <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_PanelMenuClose}">
+                                <behaviors:InvokeCommandAction Command="{x:Static desktoppanelcommands:DesktopPanelCommands.Close}" CommandParameter="{Binding View}" />
+                            </behaviors:EventTrigger>
+                        </behaviors:Interaction.Triggers>
+                    </MenuItem>
+                </MenuItem>
+            </DataTemplate>
+
+            <lib:NotifyIconContextMenuPanelSubMenuItemTemplateSelector x:Key="CurrentPanelsSubMenuContainerTemplateSelector" />
+
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Background="{DynamicResource NotifyIconContextMenuTitleBackground}">
+            <TextBlock Style="{StaticResource Title}" Text="{Binding AppSettings.AppTitle, FallbackValue='Widget Dock XTreme'}" />
+        </Grid>
+
+        <ItemsControl
+            x:Name="IC"
+            Grid.Row="1"
+            Margin="8">
+
+            <MenuItem x:Name="MI_AddPanel" Header="Add a dock…">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_AddPanel}">
+                        <behaviors:InvokeCommandAction Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.AddPanel}" />
+                        <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.CloseWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+                <MenuItem.Icon>
+                    <Image Source="/Images/Icons/icons8-add-column-20.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem
+                Header="Current docks"
+                ItemContainerTemplateSelector="{StaticResource CurrentPanelsSubMenuContainerTemplateSelector}"
+                ItemsSource="{Binding PanelsViewModels}"
+                UsesItemContainerTemplate="True">
+                <behaviors:Interaction.Behaviors>
+                    <menuitembehaviors:OpenSubMenuOnPreviewMouseDownBehavior />
+                </behaviors:Interaction.Behaviors>
+            </MenuItem>
+
+            <MenuItem
+                Header="Recent docks"
+                ItemsSource="{Binding RecentPanelsViewModels}"
+                UsesItemContainerTemplate="False">
+                <MenuItem.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource SubMenuItemBase}" TargetType="{x:Type MenuItem}">
+                        <Setter Property="Header" Value="{Binding Title}" />
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+                <behaviors:Interaction.Behaviors>
+                    <menuitembehaviors:OpenSubMenuOnPreviewMouseDownBehavior />
+                </behaviors:Interaction.Behaviors>
+            </MenuItem>
+
+            <Separator />
+
+            <MenuItem Header="Layout">
+                <behaviors:Interaction.Behaviors>
+                    <menuitembehaviors:OpenSubMenuOnPreviewMouseDownBehavior />
+                </behaviors:Interaction.Behaviors>
+
+                <MenuItem x:Name="MI_Save" Header="Save">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_Save}">
+                            <behaviors:InvokeCommandAction Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.SaveSettings}" CommandParameter="{StaticResource True}" />
+                            <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.CloseWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+                </MenuItem>
+
+                <MenuItem x:Name="MI_SaveAs" Header="Save as…">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_SaveAs}">
+                            <behaviors:InvokeCommandAction Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.SaveAsLayoutSettings}" />
+                            <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.CloseWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+                </MenuItem>
+
+                <MenuItem x:Name="MI_Load" Header="Load">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_Load}">
+                            <behaviors:InvokeCommandAction Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.LoadLayoutSettings}" />
+                            <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.CloseWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+                </MenuItem>
+
+            </MenuItem>
+
+            <MenuItem x:Name="MI_AppSettings" Header="Application settings…">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_AppSettings}">
+                        <behaviors:InvokeCommandAction Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.Settings}" />
+                        <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.CloseWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+                <MenuItem.Icon>
+                    <Image Source="/Images/Icons/icons8-settings-20.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <Separator />
+
+            <MenuItem x:Name="MI_GetWidgets" Header="Get widgets">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_GetWidgets}">
+                        <behaviors:InvokeCommandAction Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.OpenWebPage}" CommandParameter="{Binding AppSettings.GetWidgetWebPageUri}" />
+                        <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.CloseWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+                <MenuItem.Icon>
+                    <Image Source="/Images/Icons/icons8-recieve-20.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem x:Name="MI_CheckUpdates" Header="CheckUpdates">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_CheckUpdates}">
+                        <behaviors:InvokeCommandAction Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.CheckUpdates}" CommandParameter="{Binding AppSettings.GetWidgetWebPageUri}" />
+                        <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.CloseWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+                <MenuItem.Icon>
+                    <Image Source="/Images/Icons/icons8-downloading-updates-20.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <Separator />
+
+            <MenuItem x:Name="MI_Help" Header="Help">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_Help}">
+                        <behaviors:InvokeCommandAction Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.OpenWebPage}" CommandParameter="{Binding AppSettings.GetWidgetWebPageUri}" />
+                        <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.CloseWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+                <MenuItem.Icon>
+                    <Image Source="/Images/Icons/icons8-help-20.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem x:Name="MI_About" Header="About…">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_About}">
+                        <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.OpenWindow}" CommandParameter="{x:Type views:About}" />
+                        <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.CloseWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+                <MenuItem.Icon>
+                    <Image Source="/Images/Icons/icons8-info-20.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <Separator />
+
+            <MenuItem
+                x:Name="MI_Close"
+                Command="{x:Static desktoppaneltoolcommands:DesktopPanelToolCommands.Exit}"
+                Header="Exit">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="Click" SourceObject="{Binding ElementName=MI_About}">
+                        <behaviors:InvokeCommandAction Command="{x:Static controlcommands:ControlCommands.CloseWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+                <MenuItem.Icon>
+                    <Image Source="/Images/Icons/icons8-imac-exit-20.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+        </ItemsControl>
+    </Grid>
+</Window>

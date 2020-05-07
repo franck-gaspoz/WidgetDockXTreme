@@ -1,0 +1,149 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--#region desktop panel-->
+
+    <Style x:Key="DesktopPanelWindowBase" TargetType="Window">
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Topmost" Value="True" />
+        <Setter Property="MinWidth" Value="{DynamicResource PanelWindow_Docked_DefaultWidth}" />
+        <Setter Property="MinHeight" Value="{DynamicResource PanelWindow_Docked_DefaultHeight}" />
+        <Setter Property="ShowInTaskbar" Value="False" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <!--#region layers-->
+
+    <Style x:Key="DesktopPanelContentBackgroundLayer" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource DesktopPanelContentBackgroundLayer_Background}" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style x:Key="PanelBackgroundImage" TargetType="Image">
+        <Setter Property="Stretch" Value="UniformToFill" />
+        <Setter Property="Opacity" Value="{DynamicResource PanelBackgroundImage_Opacity}" />
+        <Setter Property="Visibility" Value="{DynamicResource PanelBackgroundImage_Visibility}" />
+        <Setter Property="Source" Value="{DynamicResource PanelBackgroundImage_Source}" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <BlurEffect
+                    Radius="{DynamicResource PanelBackgroundImage_BlurRadius}"
+                    RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}"
+                    RenderingBias="{DynamicResource RenderingBias}" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PanelBackgroundLayer2" TargetType="Border">
+        <Setter Property="Visibility" Value="{DynamicResource PanelBackgroundLayer2_Visibility}" />
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <LinearGradientBrush RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}" StartPoint="0,0" EndPoint="1,1">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Offset="0" Color="{DynamicResource PanelBackgroundLayer2_BorderBrush_GradientStop0}" />
+                        <GradientStop Offset="0.7" Color="{DynamicResource PanelBackgroundLayer2_BorderBrush_GradientStop1}" />
+                        <GradientStop Offset="1" Color="{DynamicResource PanelBackgroundLayer2_BorderBrush_GradientStop2}" />
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Opacity" Value="{DynamicResource PanelBackgroundLayer2_Opacity}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource PanelBackgroundLayer2_BorderThickness}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource PanelBackgroundLayer_CornerRadius}" />
+    </Style>
+
+    <Style x:Key="PanelBackgroundLayer1" TargetType="Border">
+        <Setter Property="Visibility" Value="{DynamicResource PanelBackgroundLayer1_Visibility}" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}" StartPoint="0,0" EndPoint="1,1">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Offset="0" Color="{DynamicResource PanelBackgroundLayer1_Background_GradientStop0}" />
+                        <GradientStop Offset="1" Color="{DynamicResource PanelBackgroundLayer1_Background_GradientStop1}" />
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Opacity" Value="{DynamicResource PanelBackgroundLayer1_Opacity}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource PanelBackgroundLayer_CornerRadius}" />
+    </Style>
+
+    <Style x:Key="PanelBackgroundLayer1b" TargetType="Border">
+        <Setter Property="Visibility" Value="{DynamicResource PanelBackgroundLayer1b_Visibility}" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}" StartPoint="0,0" EndPoint="1,1">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Offset="0" Color="#00000000" />
+                        <GradientStop Offset="0.5" Color="#FFFFFFFF" />
+                        <GradientStop Offset="1" Color="#00000000" />
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Opacity" Value="{DynamicResource PanelBackgroundLayer1b_Opacity}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource PanelBackgroundLayer_CornerRadius}" />
+    </Style>
+
+    <Style x:Key="PanelBackgroundLayer0" TargetType="Border">
+        <Setter Property="Visibility" Value="{DynamicResource PanelBackgroundLayer0_Visibility}" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}" StartPoint="-0.5,-0.5" EndPoint="0.5,0.5">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Offset="0" Color="{DynamicResource PanelBackgroundLayer0_Background_GradientStop0}" />
+                        <GradientStop Offset="0.92" Color="{DynamicResource PanelBackgroundLayer0_Background_GradientStop1}" />
+                        <GradientStop Offset="1" Color="{DynamicResource PanelBackgroundLayer0_Background_GradientStop2}" />
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Opacity" Value="{DynamicResource PanelBackgroundLayer0_Opacity}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="{DynamicResource PanelBackgroundLayer_CornerRadius}" />
+    </Style>
+
+    <Style x:Key="DesktopPanel_TitleBar" TargetType="Grid">
+        <Setter Property="Background" Value="{DynamicResource DesktopPanel_TitleBar_Background}" />
+        <Setter Property="Height" Value="{DynamicResource DesktopPanel_TitleBar_Height}" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+    </Style>
+
+    <Style x:Key="DesktopPanel_TitleText" TargetType="TextBlock">
+        <Setter Property="Margin" Value="{DynamicResource DesktopPanel_TitleText_Margin}" />
+        <Setter Property="FontSize" Value="{DynamicResource DesktopPanel_TitleText_FontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource DesktopPanel_TitleText_Brush}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#endregion-->
+
+    <!--#region widget-->
+
+    <Style x:Key="Widget_TitleBar" TargetType="Grid">
+        <Setter Property="Background" Value="{DynamicResource Widget_TitleBar_Background}" />
+        <Setter Property="Height" Value="{DynamicResource Widget_TitleBar_Height}" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+    </Style>
+
+    <Style x:Key="Widget_TitleText" TargetType="TextBlock">
+        <Setter Property="Margin" Value="{DynamicResource Widget_TitleText_Margin}" />
+        <Setter Property="FontSize" Value="{DynamicResource Widget_TitleText_FontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource Widget_TitleText_Brush}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <!--<Setter Property="Foreground" Value="{DynamicResource TextForeground}" />-->
+    <!--<Style TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>-->
+
+    <!--#endregion-->
+
+</ResourceDictionary>

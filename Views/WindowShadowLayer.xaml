@@ -1,0 +1,208 @@
+﻿<Window
+    x:Class="DesktopPanelTool.Views.WindowShowLayer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:DesktopPanelTool.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+    xmlns:windowbehaviors="clr-namespace:DesktopPanelTool.Behaviors.WindowBehaviors"
+    Title="WindowShowLayer"
+    Width="260"
+    Height="200"
+    AllowsTransparency="True"
+    Background="Transparent"
+    ShowActivated="False"
+    ShowInTaskbar="False"
+    WindowStartupLocation="Manual"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <behaviors:Interaction.Behaviors>
+        <windowbehaviors:MovableTransparentWindowBehavior />
+    </behaviors:Interaction.Behaviors>
+
+    <Window.Resources>
+        <sys:Double x:Key="WindowShadowWidth">1</sys:Double>
+        <sys:Double x:Key="WindowBottomRightShadowBlur">12</sys:Double>
+        <sys:Double x:Key="WindowTopLeftShadowBlur">12</sys:Double>
+        <Color x:Key="WindowShadowBrush">Black</Color>
+    </Window.Resources>
+
+    <Grid>
+        <Grid Margin="{DynamicResource WindowShadowAreaSize}">
+            <Grid
+                Width="{DynamicResource WindowShadowWidth}"
+                HorizontalAlignment="Right"
+                Background="Black">
+                <Grid.Effect>
+                    <DropShadowEffect
+                        BlurRadius="{DynamicResource WindowBottomRightShadowBlur}"
+                        Direction="-45"
+                        RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}"
+                        RenderingBias="{DynamicResource RenderingBias}"
+                        Color="{DynamicResource WindowShadowBrush}" />
+                </Grid.Effect>
+            </Grid>
+            <Grid
+                Width="{DynamicResource WindowShadowWidth}"
+                HorizontalAlignment="Right"
+                Background="Black">
+                <Grid.Effect>
+                    <DropShadowEffect
+                        BlurRadius="{DynamicResource WindowBottomRightShadowBlur}"
+                        Direction="-45"
+                        RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}"
+                        RenderingBias="{DynamicResource RenderingBias}"
+                        Color="{DynamicResource WindowShadowBrush}" />
+                </Grid.Effect>
+            </Grid>
+            <Grid
+                Width="{DynamicResource WindowShadowWidth}"
+                HorizontalAlignment="Right"
+                Background="Black">
+                <Grid.Effect>
+                    <!--<DropShadowEffect
+                        BlurRadius="{DynamicResource WindowBottomRightShadowBlur}"
+                        Direction="-45"
+                        RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}"
+                        RenderingBias="{DynamicResource RenderingBias}"
+                        Color="{DynamicResource WindowShadowBrush}" />
+                    -->
+                    <BlurEffect Radius="16" />
+                </Grid.Effect>
+            </Grid>
+
+            <Grid
+                Width="{DynamicResource WindowShadowWidth}"
+                HorizontalAlignment="Left"
+                Background="Black">
+                <Grid.Effect>
+                    <DropShadowEffect
+                        BlurRadius="{DynamicResource WindowTopLeftShadowBlur}"
+                        Direction="135"
+                        RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}"
+                        RenderingBias="{DynamicResource RenderingBias}"
+                        Color="{DynamicResource WindowShadowBrush}" />
+                </Grid.Effect>
+            </Grid>
+            <Grid
+                Width="{DynamicResource WindowShadowWidth}"
+                HorizontalAlignment="Left"
+                Background="Black">
+                <Grid.Effect>
+                    <DropShadowEffect
+                        BlurRadius="{DynamicResource WindowTopLeftShadowBlur}"
+                        Direction="135"
+                        RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}"
+                        RenderingBias="{DynamicResource RenderingBias}"
+                        Color="{DynamicResource WindowShadowBrush}" />
+                </Grid.Effect>
+            </Grid>
+            <Grid
+                Width="{DynamicResource WindowShadowWidth}"
+                HorizontalAlignment="Left"
+                Background="Black">
+                <Grid.Effect>
+                    <!--<DropShadowEffect
+                        BlurRadius="{DynamicResource WindowTopLeftShadowBlur}"
+                        Direction="135"
+                        RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}"
+                        RenderingBias="{DynamicResource RenderingBias}"
+                        Color="{DynamicResource WindowShadowBrush}" />-->
+                    <BlurEffect Radius="16" />
+                </Grid.Effect>
+            </Grid>
+
+            <Grid
+                Height="{DynamicResource WindowShadowWidth}"
+                VerticalAlignment="Top"
+                Background="Black">
+                <Grid.Effect>
+                    <DropShadowEffect
+                        BlurRadius="{DynamicResource WindowTopLeftShadowBlur}"
+                        Direction="90"
+                        RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}"
+                        RenderingBias="{DynamicResource RenderingBias}"
+                        Color="{DynamicResource WindowShadowBrush}" />
+                </Grid.Effect>
+            </Grid>
+            <Grid
+                Height="{DynamicResource WindowShadowWidth}"
+                VerticalAlignment="Top"
+                Background="Black">
+                <Grid.Effect>
+                    <DropShadowEffect
+                        BlurRadius="{DynamicResource WindowTopLeftShadowBlur}"
+                        Direction="90"
+                        RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}"
+                        RenderingBias="{DynamicResource RenderingBias}"
+                        Color="{DynamicResource WindowShadowBrush}" />
+                </Grid.Effect>
+            </Grid>
+            <Grid
+                Height="{DynamicResource WindowShadowWidth}"
+                VerticalAlignment="Top"
+                Background="Black">
+                <Grid.Effect>
+                    <!--<DropShadowEffect
+                        BlurRadius="{DynamicResource WindowTopLeftShadowBlur}"
+                        Direction="90"
+                        RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}"
+                        RenderingBias="{DynamicResource RenderingBias}"
+                        Color="{DynamicResource WindowShadowBrush}" />-->
+                    <BlurEffect Radius="16" />
+                </Grid.Effect>
+            </Grid>
+
+            <Grid
+                Height="{DynamicResource WindowShadowWidth}"
+                VerticalAlignment="Bottom"
+                Background="Black">
+                <Grid.Effect>
+                    <DropShadowEffect
+                        BlurRadius="{DynamicResource WindowBottomRightShadowBlur}"
+                        Direction="-45"
+                        RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}"
+                        RenderingBias="{DynamicResource RenderingBias}"
+                        Color="{DynamicResource WindowShadowBrush}" />
+                </Grid.Effect>
+            </Grid>
+            <Grid
+                Height="{DynamicResource WindowShadowWidth}"
+                VerticalAlignment="Bottom"
+                Background="Black">
+                <Grid.Effect>
+                    <DropShadowEffect
+                        BlurRadius="{DynamicResource WindowBottomRightShadowBlur}"
+                        Direction="-45"
+                        RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}"
+                        RenderingBias="{DynamicResource RenderingBias}"
+                        Color="{DynamicResource WindowShadowBrush}" />
+                </Grid.Effect>
+            </Grid>
+            <Grid
+                Height="{DynamicResource WindowShadowWidth}"
+                VerticalAlignment="Bottom"
+                Background="Black">
+                <Grid.Effect>
+                    <!--<DropShadowEffect
+                        BlurRadius="{DynamicResource WindowBottomRightShadowBlur}"
+                        Direction="-45"
+                        RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}"
+                        RenderingBias="{DynamicResource RenderingBias}"
+                        Color="{DynamicResource WindowShadowBrush}" />-->
+                    <BlurEffect Radius="16" />
+                </Grid.Effect>
+            </Grid>
+        </Grid>
+
+        <Border
+            Margin="16,16,17,17"
+            Background="#77444444"
+            BorderBrush="Black"
+            BorderThickness="0"
+            Visibility="Collapsed" />
+    </Grid>
+</Window>

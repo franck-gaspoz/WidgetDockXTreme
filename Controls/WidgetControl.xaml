@@ -1,0 +1,189 @@
+﻿<UserControl
+    x:Class="DesktopPanelTool.Controls.WidgetControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:controls="clr-namespace:DesktopPanelTool.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:frameworkelementbehaviors="clr-namespace:DesktopPanelTool.Behaviors.FrameworkElementBehaviors"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="128"
+    d:DesignWidth="256"
+    mc:Ignorable="d">
+
+    <behaviors:Interaction.Behaviors>
+        <frameworkelementbehaviors:DraggableFrameworkElementBehavior />
+    </behaviors:Interaction.Behaviors>
+
+    <Grid>
+
+        <!--#region  4 edges colors roundable border-->
+        <Grid>
+
+            <!--#region widget background-->
+            <Border
+                Background="{DynamicResource Widget_Background}"
+                BorderBrush="Transparent"
+                BorderThickness="{Binding Widget_BorderSize_Thickness, FallbackValue=1}"
+                CornerRadius="{Binding Widget_Border_CornerRadius, FallbackValue=16}"
+                Opacity="{DynamicResource Widget_Background_Opacity}"
+                RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}" />
+            <!--#endregion-->
+
+            <!--#region  edges and corners-->
+            <Grid Opacity="{DynamicResource Widget_Border_Opacity}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding Widget_BorderSize_GridLength, FallbackValue=1}" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="{Binding Widget_BorderSize_GridLength, FallbackValue=1}" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{Binding Widget_BorderSize_GridLength, FallbackValue=1}" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="{Binding Widget_BorderSize_GridLength, FallbackValue=1}" />
+                </Grid.RowDefinitions>
+                <!--  edges  -->
+                <Rectangle
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Height="{DynamicResource Widget_Border_Size}"
+                    Margin="{Binding Widget_Border_TopMargin}"
+                    Fill="{DynamicResource Widget_Border_TopColor}" />
+                <Rectangle
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Height="{DynamicResource Widget_Border_Size}"
+                    Margin="{Binding Widget_Border_BottomMargin}"
+                    Fill="{DynamicResource Widget_Border_BottomColor}" />
+                <Rectangle
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Width="{DynamicResource Widget_Border_Size}"
+                    Margin="{Binding Widget_Border_LeftMargin}"
+                    Fill="{DynamicResource Widget_Border_LeftColor}" />
+                <Rectangle
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Width="{DynamicResource Widget_Border_Size}"
+                    Margin="{Binding Widget_Border_RightMargin}"
+                    Fill="{DynamicResource Widget_Border_RightColor}" />
+                <!--  coins  -->
+                <Border
+                    Grid.RowSpan="3"
+                    Grid.ColumnSpan="3"
+                    BorderBrush="{DynamicResource Widget_Border_LeftColor}"
+                    BorderThickness="{Binding Widget_BorderSize_Thickness, FallbackValue=1}"
+                    Clip="{Binding Widget_Border_Clip}"
+                    CornerRadius="{Binding Widget_Border_CornerRadius, FallbackValue=16}"
+                    RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}" />
+
+                <Border
+                    Grid.RowSpan="3"
+                    Grid.ColumnSpan="3"
+                    BorderBrush="{DynamicResource Widget_Border_RightColor}"
+                    BorderThickness="{Binding Widget_BorderSize_Thickness, FallbackValue=1}"
+                    Clip="{Binding Widget_Border_Clip}"
+                    CornerRadius="{Binding Widget_Border_CornerRadius, FallbackValue=16}"
+                    RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}">
+                    <Border.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </Border.LayoutTransform>
+                </Border>
+
+                <Border
+                    Grid.RowSpan="3"
+                    Grid.ColumnSpan="3"
+                    BorderBrush="{DynamicResource Widget_Border_RightColor}"
+                    BorderThickness="{Binding Widget_BorderSize_Thickness, FallbackValue=1}"
+                    Clip="{Binding Widget_Border_Clip}"
+                    CornerRadius="{Binding Widget_Border_CornerRadius, FallbackValue=16}"
+                    RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}">
+                    <Border.LayoutTransform>
+                        <RotateTransform Angle="180" />
+                    </Border.LayoutTransform>
+                </Border>
+
+                <Border
+                    Grid.RowSpan="3"
+                    Grid.ColumnSpan="3"
+                    BorderBrush="{DynamicResource Widget_Border_LeftColor}"
+                    BorderThickness="{Binding Widget_BorderSize_Thickness, FallbackValue=1}"
+                    Clip="{Binding Widget_Border_Clip}"
+                    CornerRadius="{Binding Widget_Border_CornerRadius, FallbackValue=16}"
+                    RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}">
+                    <Border.LayoutTransform>
+                        <RotateTransform Angle="270" />
+                    </Border.LayoutTransform>
+                </Border>
+
+            </Grid>
+            <!--#endregion-->
+
+        </Grid>
+        <!--#endregion-->
+
+        <!--#region widget title bar and content-->
+
+        <Border
+            BorderBrush="Transparent"
+            BorderThickness="{Binding Widget_BorderSize_Thickness, FallbackValue=1}"
+            CornerRadius="{Binding Widget_Border_CornerRadius, FallbackValue=16}"
+            RenderOptions.BitmapScalingMode="{DynamicResource BitmapScalingMode}">
+
+            <Grid>
+                <Grid.OpacityMask>
+                    <VisualBrush>
+                        <VisualBrush.Visual>
+                            <Border
+                                Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}}"
+                                Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Border}}"
+                                Background="Black"
+                                CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=Border}}" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Grid.OpacityMask>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!--#region widget title bar-->
+
+                <Grid Style="{DynamicResource Widget_TitleBar}">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  title  -->
+                    <TextBlock Style="{DynamicResource Widget_TitleText}" Text="{Binding Title, FallbackValue='widget title'}" />
+
+                    <!--  buttons bar  -->
+
+                    <controls:WidgetButtonsBar Grid.Column="1" />
+
+                </Grid>
+
+                <!--#endregion-->
+
+                <!--#region  widget content-->
+
+                <Grid Grid.Row="1" Margin="{DynamicResource Widget_ContentPanel_Margin}">
+                    <!--  sample content  -->
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="widget" />
+                </Grid>
+
+                <!--#endregion-->
+
+            </Grid>
+
+        </Border>
+
+        <!--#endregion-->
+
+    </Grid>
+</UserControl>

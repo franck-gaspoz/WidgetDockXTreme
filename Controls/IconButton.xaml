@@ -1,0 +1,35 @@
+﻿<UserControl
+    x:Class="DesktopPanelTool.Controls.IconButton"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:frameworkelementbehaviors="clr-namespace:DesktopPanelTool.Behaviors.FrameworkElementBehaviors"
+    xmlns:local="clr-namespace:DesktopPanelTool.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="64"
+    d:DesignWidth="64"
+    mc:Ignorable="d">
+    <Grid x:Name="iconImageGrid">
+        <Image
+            x:Name="iconImage"
+            Cursor="{Binding MouseOverCursor}"
+            Opacity="{Binding MouseOutOpacity}"
+            Source="{Binding Icon}"
+            ToolTip="{Binding ButtonToolTip}">
+            <behaviors:Interaction.Triggers>
+                <behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown" SourceObject="{Binding ElementName=iconImage}">
+                    <behaviors:CallMethodAction MethodName="{Binding ClickHandlerMethodName}" TargetObject="{Binding EventObjectHandler}" />
+                    <behaviors:InvokeCommandAction Command="{Binding ClickHandlerCommand}" CommandParameter="{Binding ClickHandlerCommandParameter}" />
+                </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
+            <behaviors:Interaction.Behaviors>
+                <frameworkelementbehaviors:MouseOverOpacityChangeBehavior
+                    MouseOutOpacity="{Binding MouseOutOpacity}"
+                    MouseOverOpacity="{Binding MouseOverOpacity}"
+                    OpacityTransitionAnimationDuration="{Binding MouseOverOpacityTransitionAnimationDuration}" />
+                <frameworkelementbehaviors:KeepOrientationWhenInRotationOrientedPanelBehavior IsEnabled="{Binding EnableKeepOrientationWhenInRotationOrientedPanelBehavior, RelativeSource={RelativeSource AncestorType={x:Type local:IconButton}}}" />
+            </behaviors:Interaction.Behaviors>
+        </Image>
+    </Grid>
+</UserControl>

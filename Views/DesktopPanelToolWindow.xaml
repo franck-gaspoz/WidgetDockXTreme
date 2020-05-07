@@ -1,0 +1,50 @@
+﻿<Window
+    x:Class="DesktopPanelTool.Views.DesktopPanelToolWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:controls="clr-namespace:DesktopPanelTool.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dockablebehavior="clr-namespace:DesktopPanelTool.Behaviors.WindowBehaviors.DockableBehavior"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:panelbehaviors="clr-namespace:DesktopPanelTool.Behaviors.PanelBehaviors"
+    xmlns:windowbehaviors="clr-namespace:DesktopPanelTool.Behaviors.WindowBehaviors"
+    Width="400"
+    Height="300"
+    ResizeMode="NoResize"
+    ShowInTaskbar="True"
+    Style="{DynamicResource DesktopPanelWindowBase}"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Minimized"
+    mc:Ignorable="d">
+    <behaviors:Interaction.Behaviors>
+        <windowbehaviors:MovableTransparentWindowBehavior />
+    </behaviors:Interaction.Behaviors>
+
+    <Grid>
+        <!--  image layer  -->
+        <Image Style="{DynamicResource PanelBackgroundImage}" />
+        <!--  gradients layer  -->
+        <Border Style="{DynamicResource PanelBackgroundLayer0}" />
+        <Border Style="{DynamicResource PanelBackgroundLayer1}" />
+
+        <!--  content layer  -->
+        <Border Style="{DynamicResource DesktopPanelContentBackgroundLayer}">
+
+            <!--  panel layout  -->
+            <StackPanel Orientation="Vertical">
+
+                <!--  panel title bar  -->
+                <controls:DesktopPanelToolTitleBar />
+
+                <Grid />
+
+            </StackPanel>
+
+        </Border>
+
+        <!--  border layer  -->
+        <Border Style="{DynamicResource PanelBackgroundLayer2}" />
+    </Grid>
+
+</Window>

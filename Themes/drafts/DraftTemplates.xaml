@@ -1,0 +1,38 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:DesktopPanelTool.Themes.drafts">
+
+    <!--  context menu template overrides both ToolTip and Menu panel  -->
+    <!--
+    <SolidColorBrush x:Key="ContextMenu_Background">Red</SolidColorBrush>
+    <SolidColorBrush x:Key="ContextMenu_Border_Brush">#CCCCCCCC</SolidColorBrush>
+    -->
+    <!--
+    <Style TargetType="{x:Type ContextMenu}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Grid.IsSharedSizeScope" Value="true" />
+        <Setter Property="HasDropShadow" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Border
+                        x:Name="Border"
+                        Background="{DynamicResource ContextMenu_Background}"
+                        BorderBrush="{DynamicResource ContextMenu_Border_Brush}"
+                        BorderThickness="{DynamicResource ContextMenu_Border_Thickness}">
+                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow" Value="true">
+                            <Setter TargetName="Border" Property="Padding" Value="{DynamicResource ContextMenu_Padding}" />
+                            <Setter TargetName="Border" Property="CornerRadius" Value="{DynamicResource ContextMenu_Border_CornerRadius}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    -->
+</ResourceDictionary>

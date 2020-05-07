@@ -1,0 +1,29 @@
+﻿<UserControl
+    x:Class="DesktopPanelTool.Controls.DesktopPanelTitleBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:controls="clr-namespace:DesktopPanelTool.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:panelbehaviors="clr-namespace:DesktopPanelTool.Behaviors.PanelBehaviors"
+    d:DesignHeight="128"
+    d:DesignWidth="128"
+    mc:Ignorable="d">
+    <Grid Style="{DynamicResource DesktopPanel_TitleBar}">
+        <behaviors:Interaction.Behaviors>
+            <panelbehaviors:GridRotationOrientedBehavior />
+        </behaviors:Interaction.Behaviors>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+
+        <!--  title  -->
+        <TextBlock Style="{DynamicResource DesktopPanel_TitleText}" Text="{Binding Title, FallbackValue='desktop panel title'}" />
+
+        <!--  buttons bar  -->
+        <controls:DesktopPanelButtonsBar Grid.Column="1" />
+
+    </Grid>
+</UserControl>
