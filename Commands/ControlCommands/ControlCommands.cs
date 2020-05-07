@@ -18,5 +18,7 @@ namespace DesktopPanelTool.Commands.ControlCommands
 
         public static ICommand DisableClickOutsideHideOrCloseWindowBehavior { get; } = new DisableClickOutsideHideOrCloseWindowBehaviorCommand();
 
+        public static ICommand DropWidget { get; } = new DropWidgetCommand();
+
     }
 }

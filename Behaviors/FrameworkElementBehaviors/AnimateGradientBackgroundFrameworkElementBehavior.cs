@@ -1,6 +1,7 @@
 ﻿//#define dbg
 
 using DesktopPanelTool.Lib;
+using DesktopPanelTool.Models;
 using Microsoft.Xaml.Behaviors;
 using System;
 using System.Threading;
@@ -42,7 +43,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
 
         private void AssociatedObject_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (!_alreadyActivated)
+            if (AppSettings.EnableWindowGradientAnimation && !_alreadyActivated)
             {
                 _alreadyActivated = true;
                 StartAnimation();

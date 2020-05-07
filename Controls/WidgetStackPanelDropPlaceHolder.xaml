@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:controlcommands="clr-namespace:DesktopPanelTool.Commands.ControlCommands"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:frameworkelementbehaviors="clr-namespace:DesktopPanelTool.Behaviors.FrameworkElementBehaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,12 +11,13 @@
     d:DesignWidth="100"
     mc:Ignorable="d">
     <!--  Background="CornflowerBlue"  -->
+    <!--  Background="#01000000"  -->
     <Grid
         MinWidth="8"
         MinHeight="8"
         Background="#01000000">
         <behaviors:Interaction.Behaviors>
-            <frameworkelementbehaviors:DroppableFrameworkElementBehavior />
+            <frameworkelementbehaviors:DroppableFrameworkElementBehavior DropHandlerCommand="{x:Static controlcommands:ControlCommands.DropWidget}" />
         </behaviors:Interaction.Behaviors>
     </Grid>
 </UserControl>

@@ -1,4 +1,6 @@
-﻿using DesktopPanelTool.Behaviors.WindowBehaviors;
+﻿#define dbg
+
+using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Controls;
 using DesktopPanelTool.Lib;
 using DesktopPanelTool.Models;
@@ -8,6 +10,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace DesktopPanelTool.Services
@@ -65,6 +68,8 @@ namespace DesktopPanelTool.Services
         {
             if (panel.ViewModel.IsCollapsed)
                 panel.ViewModel.Expand();
+            else
+                panel.Activate();
         }
 
         public static void CloseDockPanel(DesktopPanelBase panel)
@@ -90,6 +95,35 @@ namespace DesktopPanelTool.Services
         {
             foreach (var panel in DesktopPanelToolViewModel.PanelsViewModels)
                 panel.View.Show();
+        }
+
+        internal static void DropWidget(WidgetControl widget,FrameworkElement target,DragEventArgs e)
+        {
+            var targetPanel = WPFUtil.FindLogicalParent<DesktopPanelBase>(target);
+            var sourcePanel = WPFUtil.FindLogicalParent<DesktopPanelBase>(widget);
+            var targetStack = WPFUtil.FindLogicalParent<StackPanel>(target);
+            var sourceStack = WPFUtil.FindLogicalParent<StackPanel>(widget);
+            if (targetPanel!=null && sourcePanel!=null && targetStack!=null && sourceStack!=null)
+            {
+                var idxSourceStack = sourceStack.Children.IndexOf(widget);
+                var idxTargetStack = targetStack.Children.IndexOf(target);
+#if dbg
+                DesktopPanelTool.Lib.Debug.WriteLine($"--------------- drop: {widget.ViewModel.Title} ------------ before:");
+                DesktopPanelTool.Lib.Debug.WriteLine($"idxTargetStack={idxTargetStack}");
+                widget.ViewModel.PanelViewModel.DumpWidgetsPanelChildren();
+#endif
+                widget.ViewModel.PanelViewModel.CloseWidget(widget);
+                if (idxTargetStack == -1)
+                    targetPanel.ViewModel.AddWidget(widget);
+                else
+                {
+                    
+                }
+#if dbg
+                DesktopPanelTool.Lib.Debug.WriteLine($"--------------- after:");
+                widget.ViewModel.PanelViewModel.DumpWidgetsPanelChildren();
+#endif
+            }
         }
 
         internal static void SaveAsLayoutSettings()

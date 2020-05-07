@@ -1,4 +1,6 @@
-﻿using DesktopPanelTool.Behaviors.WindowBehaviors;
+﻿#define dbg
+
+using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Behaviors.WindowBehaviors.DockableBehavior;
 using DesktopPanelTool.Controls;
 using DesktopPanelTool.Lib;
@@ -161,10 +163,25 @@ namespace DesktopPanelTool.ViewModels
             {
                 var index = View.WidgetsPanel.Children.IndexOf(widget);
                 View.WidgetsPanel.Children.Remove(widget);
+#if dbg
+                DumpWidgetsPanelChildren();
+#endif
                 if (index < View.WidgetsPanel.Children.Count && View.WidgetsPanel.Children[index] is WidgetStackPanelDropPlaceHolder)
                     View.WidgetsPanel.Children.Remove(View.WidgetsPanel.Children[index]);
                 if (View.WidgetsPanel.Children.Count == 1)
                     View.WidgetsPanel.Children.Clear();
+            }
+        }
+
+        internal void DumpWidgetsPanelChildren()
+        {
+            DesktopPanelTool.Lib.Debug.WriteLine($"----------- panel={Title}");
+            foreach (var o in View.WidgetsPanel.Children)
+            {
+                var title = "";
+                if (o is WidgetControl wc)
+                    title = $"[{wc.ViewModel.Title}]";
+                DesktopPanelTool.Lib.Debug.WriteLine($"o={o} {title}");
             }
         }
 
@@ -214,7 +231,7 @@ namespace DesktopPanelTool.ViewModels
 
         void InitializePermanentWidgetDropPlaceHolder()
         {
-            //View.PermanentWidgetDropPlaceHolder.ViewModel = new WidgetStackPanelDropPlaceHolderViewModel(this);
+            View.PermanentWidgetDropPlaceHolder.ViewModel = new WidgetStackPanelDropPlaceHolderViewModel(this);
         }
     }
 }

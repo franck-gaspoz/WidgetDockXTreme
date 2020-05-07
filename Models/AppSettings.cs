@@ -42,9 +42,14 @@ namespace DesktopPanelTool.Models
         public static readonly double NotifyIconContextMenuDx = -12;
         public static readonly double NotifyIconContextMenuDy = 12;
 
+        public static readonly double MinimumHorizontalDragDistance = 4;
+        public static readonly double MinimumVerticalDragDistance = 4;
+
         public static string GetWidgetWebPageUri { get; private set; } = "http://franckgaspoz.fr";
 
         public static bool EnableNotifications { get; protected set; } = true;
+
+        public static bool EnableWindowGradientAnimation = false;
 
         public static string SettingsSaveLastPath { get; set; }
         public static readonly string UserSettingsFileName = "settings.dat";

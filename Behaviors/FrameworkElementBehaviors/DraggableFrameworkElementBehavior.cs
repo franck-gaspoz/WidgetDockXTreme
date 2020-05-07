@@ -1,6 +1,7 @@
 ﻿//#define dbg
 
 using DesktopPanelTool.Lib;
+using DesktopPanelTool.Models;
 using Microsoft.Xaml.Behaviors;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,6 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
             set { SetValue(DraggableElementTypeNamesProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for DraggableElementTypeNames.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DraggableElementTypeNamesProperty =
             DependencyProperty.Register("DraggableElementTypeNames", 
                 typeof(string), 
@@ -65,14 +65,15 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                 Vector diff = _start - mpos;
 
                 if (e.LeftButton == MouseButtonState.Pressed &&
-                    Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance &&
-                    Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+                    Math.Abs(diff.X) > AppSettings.MinimumHorizontalDragDistance &&
+                    Math.Abs(diff.Y) > AppSettings.MinimumVerticalDragDistance)
                 {
 #if dbg
                     DesktopPanelTool.Lib.Debug.WriteLine($"do drag drop");
 #endif
-                    _draggedElementId = ObjectRegistry.RegisterObject(_dataObject);
-                    _dataObject = new DataObject(AssociatedObject.GetType(),_draggedElementId);
+                    //_draggedElementId = ObjectRegistry.RegisterObject(_dataObject);
+                    //_dataObject = new DataObject(AssociatedObject.GetType(),_draggedElementId);
+                    _dataObject = new DataObject(AssociatedObject.GetType(), AssociatedObject);
                     DragDrop.DoDragDrop(AssociatedObject, _dataObject, DragDropEffects.Move);
                 }
             }
