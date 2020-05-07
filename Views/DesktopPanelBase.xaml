@@ -20,6 +20,7 @@
     mc:Ignorable="d">
 
     <behaviors:Interaction.Behaviors>
+        <windowbehaviors:ActivateOnDragOverWindowBehavior />
         <windowbehaviors:FixSizeOfShadowedWindowBehavior />
         <windowbehaviors:MovableTransparentWindowBehavior TypeControlUnderMouseAvoidingMove="{x:Type controls:WidgetControl}" />
         <windowbehaviors:ResizableTransparentWindowBehavior />
@@ -228,7 +229,7 @@
 
                     </StackPanel>
 
-                    <controls:WidgetStackPanelDropPlaceHolder x:Name="PermanentWidgetDropPlaceHolder">
+                    <controls:WidgetStackPanelDropPlaceHolder x:Name="PermanentWidgetDropPlaceHolder" PlaceHolderMargin="{DynamicResource DesktopPanelContent_LastWidgetDropPlaceHolderMargin}">
                         <behaviors:Interaction.Behaviors>
                             <frameworkelementbehaviors:MaximizeStackPanelChildSizeFrameworkElementBehavior Container="{Binding ElementName=RootStackPanel}" />
                         </behaviors:Interaction.Behaviors>

@@ -13,6 +13,7 @@
     <sys:Double x:Key="Widget_TitleBar_Height">20</sys:Double>
     <sys:Double x:Key="DesktopPanel_TitleBar_Height">20</sys:Double>
     <sys:Double x:Key="DesktopPanelContent_Padding">8</sys:Double>
+    <Thickness x:Key="DesktopPanelContent_LastWidgetDropPlaceHolderMargin">8</Thickness>
 
     <Thickness x:Key="ContextMenu_Padding">2</Thickness>
 
@@ -65,6 +66,15 @@
     <!--#endregion-->
 
     <Color x:Key="WindowShadowBrush">Black</Color>
+
+    <LinearGradientBrush x:Key="DropAreaSensitiveAreaHighlightBackground" StartPoint="0.2,0" EndPoint="0.8,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#33FFFFFF" />
+            <GradientStop Offset="1" Color="#00FFFFFF" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <sys:Double x:Key="DropAreaSensitiveAreaHighlightOpacity">1</sys:Double>
 
     <!--#region  ##### colors and transparency #####-->
     <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="{DynamicResource TextForeground_Color}" />

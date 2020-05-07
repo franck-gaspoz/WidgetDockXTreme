@@ -6,6 +6,7 @@
     xmlns:controlcommands="clr-namespace:DesktopPanelTool.Commands.ControlCommands"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:frameworkelementbehaviors="clr-namespace:DesktopPanelTool.Behaviors.FrameworkElementBehaviors"
+    xmlns:local="clr-namespace:DesktopPanelTool.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="8"
     d:DesignWidth="100"
@@ -15,9 +16,22 @@
     <Grid
         MinWidth="8"
         MinHeight="8"
+        Margin="{Binding PlaceHolderMargin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:WidgetStackPanelDropPlaceHolder}}}"
         Background="#01000000">
         <behaviors:Interaction.Behaviors>
+            <frameworkelementbehaviors:FadeInOutDragOverOutFrameworkElementBehavior
+                MouseOutTransparency="0.003921"
+                MouseOverTransparency="{DynamicResource DropAreaSensitiveAreaHighlightOpacity}"
+                Target="{Binding ElementName=VisibleHitArea}" />
             <frameworkelementbehaviors:DroppableFrameworkElementBehavior DropHandlerCommand="{x:Static controlcommands:ControlCommands.DropWidget}" />
         </behaviors:Interaction.Behaviors>
+
+        <Border
+            x:Name="VisibleHitArea"
+            Margin="2"
+            Background="{DynamicResource DropAreaSensitiveAreaHighlightBackground}"
+            CornerRadius="2"
+            Opacity="0.003921" />
+
     </Grid>
 </UserControl>

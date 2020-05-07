@@ -1,4 +1,4 @@
-﻿//#define dbg
+﻿#define dbg
 
 using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Controls;
@@ -109,8 +109,8 @@ namespace DesktopPanelTool.Services
                 var idxTargetStack = targetStack.Children.IndexOf(target);
 #if dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"--------------- drop: {widget.ViewModel.Title} ------------ before:");
-                DesktopPanelTool.Lib.Debug.WriteLine($"idxTargetStack={idxTargetStack}");
-                widget.ViewModel.PanelViewModel.DumpWidgetsPanelChildren();
+                DesktopPanelTool.Lib.Debug.WriteLine($"idxTargetStack={idxTargetStack} target={target}");
+               // widget.ViewModel.PanelViewModel.DumpWidgetsPanelChildren();
 #endif
                 widget.ViewModel.PanelViewModel.CloseWidget(widget);
                 if (idxTargetStack == -1)
@@ -119,7 +119,7 @@ namespace DesktopPanelTool.Services
                 {
                     
                 }
-#if dbg
+#if false && dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"--------------- after:");
                 widget.ViewModel.PanelViewModel.DumpWidgetsPanelChildren();
 #endif
