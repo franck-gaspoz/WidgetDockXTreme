@@ -65,8 +65,8 @@ namespace DesktopPanelTool.Behaviors.PanelBehaviors
                 AssociatedObject.Orientation = CurrentOrientation.Value;
                 AssociatedObject.Margin =
                     orientation == Orientation.Horizontal ?
-                        new Thickness(0, PanelPadding, PanelPadding, PanelPadding)
-                        : new Thickness(PanelPadding, 0, PanelPadding, PanelPadding);
+                        new Thickness(0, PanelPadding, 0, PanelPadding)
+                        : new Thickness(PanelPadding, 0, PanelPadding, 0);
                 foreach (var child in AssociatedObject.Children)
                 {
                     if (child is FrameworkElement widget)

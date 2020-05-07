@@ -128,7 +128,7 @@
             </MenuItem>
 
             <MenuItem
-                Header="Current docks"
+                Header="Docks"
                 ItemContainerTemplateSelector="{StaticResource CurrentPanelsSubMenuContainerTemplateSelector}"
                 ItemsSource="{Binding PanelsViewModels}"
                 UsesItemContainerTemplate="True">
