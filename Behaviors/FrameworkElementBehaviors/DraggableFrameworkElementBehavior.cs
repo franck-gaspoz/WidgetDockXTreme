@@ -79,19 +79,12 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                     Math.Abs(diff.X) > AppSettings.MinimumHorizontalDragDistance &&
                     Math.Abs(diff.Y) > AppSettings.MinimumVerticalDragDistance)
                 {
-#if dbg
-                    DesktopPanelTool.Lib.Debug.WriteLine($"do drag drop");
-#endif
                     DragDropAnimation?.Start(AssociatedObject,BeginDragEffectAnimationName);
 
                     _dataObject = new DataObject(AssociatedObject.GetType(), AssociatedObject);
                     DragDrop.DoDragDrop(AssociatedObject, _dataObject, DragDropEffects.Move);
 
-                    // remark: get here only after dropped or drop canceled
                     DragDropAnimation?.Start(AssociatedObject,EndDragEffectAnimationName);
-#if dbg
-                    DesktopPanelTool.Lib.Debug.WriteLine($"dropped");
-#endif
                 }
             }
         }

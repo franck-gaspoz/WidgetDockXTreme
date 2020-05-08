@@ -1,0 +1,12 @@
+Desktop Panel Tool
+version      : 1.0
+build        : 1
+release date : 12/12/2020 
+-----------------------------
+status: trial (remaining XX days)
+
+modules: 
+- ddldldld
+- flflflflfl
+- flflflfllf
+- glglg

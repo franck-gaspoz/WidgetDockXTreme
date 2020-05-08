@@ -1,7 +1,4 @@
-﻿
-#define dbg
-
-using DesktopPanelTool.Behaviors.FrameworkElementBehaviors;
+﻿using DesktopPanelTool.Behaviors.FrameworkElementBehaviors;
 using DesktopPanelTool.Lib;
 using System;
 using System.Windows;
@@ -27,10 +24,13 @@ namespace DesktopPanelTool.Animations
         {
             _target = target ?? throw new ArgumentNullException(nameof(target));
             NameScope.SetNameScope(target, new NameScope());
+
             (_beginDragStoryboard, _beginScaleTransform) = InitStoryBoard(DraggableFrameworkElementBehavior.BeginDragEffectAnimationName, target, 1, 1, 0.1, 0.1);
             (_endDragStoryboard, _endScaleTransform) = InitStoryBoard(DraggableFrameworkElementBehavior.EndDragEffectAnimationName, target, 0.1, 0.1, 1, 1);
+            
             _beginDragStoryboard.Completed += (obj, e) => 
                 target.MaxWidth = target.MaxHeight = 0;
+            
             _endDragStoryboard.Completed += (obj, e) =>
             {
                 target.LayoutTransform = null;
@@ -38,7 +38,7 @@ namespace DesktopPanelTool.Animations
                 target.MinHeight = _minHeightBackup;
                 target.SetValue(FrameworkElement.MaxWidthProperty, DependencyProperty.UnsetValue);
                 target.SetValue(FrameworkElement.MaxHeightProperty, DependencyProperty.UnsetValue);
-            };
+            };            
         }
 
         Storyboard GetAnimation(string name)
@@ -73,9 +73,6 @@ namespace DesktopPanelTool.Animations
                         var idx = stackPanel.Children.IndexOf(target);
                         if (idx>-1)
                         {
-#if dbg
-                            DesktopPanelTool.Lib.Debug.WriteLine($"idx={idx}");
-#endif
                             _previousElement = stackPanel.Children[idx - 1];
                             _previousElement.Visibility = Visibility.Collapsed;
                         }    
@@ -98,16 +95,17 @@ namespace DesktopPanelTool.Animations
         (Storyboard storyBoard, ScaleTransform scaleTransform) InitStoryBoard(
             string name,
             FrameworkElement o,
-            double initialScaleX, double initialScaleY, double finalScaleX, double finalScaleY)
+            double initialScaleX, double initialScaleY, double finalScaleX, double finalScaleY,
+            EasingFunctionBase easing = null)
         {
             var storyBoard = new Storyboard() { FillBehavior = FillBehavior.Stop };
 
             var effectDuration = new Duration(TimeSpan.FromMilliseconds(200d));
             var scaleTransform = new ScaleTransform(initialScaleX, initialScaleY);
-            var scaleXAnim = new DoubleAnimation(initialScaleX, finalScaleX, effectDuration);
-            var scaleYAnim = new DoubleAnimation(initialScaleY, finalScaleY, effectDuration);
-            var maxXAnim = new DoubleAnimation(o.ActualWidth, o.ActualWidth * finalScaleX, effectDuration);
-            var maxYAnim = new DoubleAnimation(o.ActualHeight, o.ActualHeight * finalScaleY, effectDuration);
+            var scaleXAnim = new DoubleAnimation(initialScaleX, finalScaleX, effectDuration) { EasingFunction = easing };
+            var scaleYAnim = new DoubleAnimation(initialScaleY, finalScaleY, effectDuration) { EasingFunction = easing };
+            var maxXAnim = new DoubleAnimation(o.ActualWidth, o.ActualWidth * finalScaleX, effectDuration) { EasingFunction = easing };
+            var maxYAnim = new DoubleAnimation(o.ActualHeight, o.ActualHeight * finalScaleY, effectDuration) { EasingFunction = easing };
             var scaleXAnimName = $"scaleXAnim{name}";
             var scaleYAnimName = $"scaleYAnim{name}";
             var maxXAnimName = $"maxXAnim{name}";

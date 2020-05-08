@@ -1,0 +1,5 @@
+step 1 - adding nuget dep:
+Install-Package Microsoft.Xaml.Behaviors.Wpf
+
+xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+{Binding ..., diag:PresentationTraceSources.TraceLevel=High}
