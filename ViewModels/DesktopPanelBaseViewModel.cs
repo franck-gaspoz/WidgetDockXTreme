@@ -141,12 +141,19 @@ namespace DesktopPanelTool.ViewModels
             DesktopPanelToolService.CloseDockPanel(View);
         }
 
-        public void AddWidget(WidgetControl widget)
+        public void AddWidget(WidgetControl widget,int targetIndex=-1)
         {
             WidgetsViewModels.Add(widget.ViewModel);
             widget.ViewModel.PanelViewModel = this;
-            View.WidgetsPanel.Children.Add(GetNewWidgetStackPanelDropPlaceHolder());
-            View.WidgetsPanel.Children.Add(widget);
+            if (targetIndex == -1)
+            {
+                View.WidgetsPanel.Children.Add(GetNewWidgetStackPanelDropPlaceHolder());
+                View.WidgetsPanel.Children.Add(widget);
+            } else
+            {
+                View.WidgetsPanel.Children.Insert(targetIndex, widget);
+                View.WidgetsPanel.Children.Insert(targetIndex, GetNewWidgetStackPanelDropPlaceHolder());
+            }
         }
 
         WidgetStackPanelDropPlaceHolder GetNewWidgetStackPanelDropPlaceHolder()

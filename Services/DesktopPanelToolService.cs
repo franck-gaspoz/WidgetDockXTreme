@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Controls;
@@ -105,24 +105,25 @@ namespace DesktopPanelTool.Services
             var sourceStack = WPFUtil.FindLogicalParent<StackPanel>(widget);
             if (targetPanel!=null && sourcePanel!=null && targetStack!=null && sourceStack!=null)
             {
+                var dropAreaTarget = WPFUtil.FindLogicalParent<WidgetStackPanelDropPlaceHolder>(target);
                 var idxSourceStack = sourceStack.Children.IndexOf(widget);
-                var idxTargetStack = targetStack.Children.IndexOf(target);
+                var idxTargetStack = targetStack.Children.IndexOf(dropAreaTarget);
+                var targetIsLargeDropArea = dropAreaTarget.Name == "PermanentWidgetDropPlaceHolder";
 #if dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"--------------- drop: {widget.ViewModel.Title} ------------ before:");
-                DesktopPanelTool.Lib.Debug.WriteLine($"idxTargetStack={idxTargetStack} target={target} targetStack={targetStack} idxSourceStack={idxSourceStack} sourceStack={sourceStack}");
-               // widget.ViewModel.PanelViewModel.DumpWidgetsPanelChildren();
+                DesktopPanelTool.Lib.Debug.WriteLine($"idxTargetStack={idxTargetStack} idxSourceStack={idxSourceStack}");
+                DesktopPanelTool.Lib.Debug.WriteLine($"sourcePanel==targetPanel:{sourcePanel==targetPanel} targetIsLargeDropArea={targetIsLargeDropArea} idxSourceStack==sourceStack.Children.Count-1:{idxSourceStack == sourceStack.Children.Count - 1}");
 #endif
-                widget.ViewModel.PanelViewModel.CloseWidget(widget);
-                if (idxTargetStack == -1)
+                if (!((!targetIsLargeDropArea && sourcePanel == targetPanel && Math.Abs(idxTargetStack - idxSourceStack) == 1)
+                    || (targetIsLargeDropArea && sourcePanel==targetPanel && idxSourceStack==sourceStack.Children.Count-1) 
+                    ))
                 {
-                    var oldDesktopPanelBase = widget.ViewModel.PanelViewModel.View;
-                    targetPanel.ViewModel.AddWidget(widget);
-                    var newDesktopPanelBase = widget.ViewModel.PanelViewModel.View;
-                    BindingUtil.UpdateWidgetViewBindings(widget,oldDesktopPanelBase,newDesktopPanelBase);
-                }
-                else
-                {
-
+                    widget.ViewModel.PanelViewModel.CloseWidget(widget);
+                    if (targetIsLargeDropArea)
+                        targetPanel.ViewModel.AddWidget(widget);
+                    else
+                        targetPanel.ViewModel.AddWidget(widget, idxTargetStack);
+                    widget.UpdateWidgetViewBindings(sourcePanel, targetPanel);
                 }
 #if false && dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"--------------- after:");
