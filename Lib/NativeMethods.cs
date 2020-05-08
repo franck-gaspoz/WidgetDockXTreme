@@ -49,6 +49,26 @@ namespace DesktopPanelTool.Lib
         [DllImport("user32.dll")]
         public static extern IntPtr GetShellWindow();
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool BringWindowToTop(IntPtr hWnd);
+
+        public static bool SetWindowPos(IntPtr hWnd,int x,int y)
+        {
+            return SetWindowPos(hWnd, (IntPtr)0, x, y, 0, 0, 
+                SetWindowPosFlags.IgnoreZOrder
+                | SetWindowPosFlags.DoNotActivate
+                | SetWindowPosFlags.DoNotSendChangingEvent
+                | SetWindowPosFlags.IgnoreResize);
+        }
+
+        public static bool SetWindowPos(IntPtr hWnd, int x, int y,IntPtr z)
+        {
+            return SetWindowPos(hWnd, z, x, y, 0, 0,
+                SetWindowPosFlags.DoNotActivate
+                | SetWindowPosFlags.DoNotSendChangingEvent
+                | SetWindowPosFlags.IgnoreResize);
+        }
+
         [DllImport("user32.dll")]
         public static extern bool SetWindowPos(
             IntPtr hWnd,

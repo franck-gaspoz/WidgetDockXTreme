@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using static DesktopPanelTool.Lib.NativeMethods;
 
 namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
@@ -18,8 +19,9 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         : Behavior<FrameworkElement>
     {
         DragImage _cursorWindow = null;
-        double _cursorWindowXHotSpot = 4;
-        double _cursorWindowYHotSpot = 4;
+        IntPtr _cursorWindowHandle = (IntPtr)0;
+        double _cursorWindowXHotSpot = 9;   // TODO: may depend on system cursor size, depends on shadow size (depth+softness)
+        double _cursorWindowYHotSpot = 9;
 
         public bool IsDropPreviewEnabled
         {
@@ -118,43 +120,40 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         {
             _cursorWindow?.Close();
             _cursorWindow = null;
+            _cursorWindowHandle = (IntPtr)0;
         }
 
         private void AssociatedObject_GiveFeedback(object sender, GiveFeedbackEventArgs e)
         {
             if (!IsDropPreviewEnabled) return;
-            var dw = 0* 18 * 2d;
-            var dh = 0* 18 * 2d;
 
             if (_cursorWindow == null)
             {
-                if (e.Source is UIElement element && element!=null)
+                if (e.Source is FrameworkElement element && element!=null)
                 {
                     var rtb = WPFHelper.GetRenderTargetBitmap(element);
+                    var shadowAreaSize = (double)AssociatedObject.FindResource("DragWindowShadowAreaSize");
                     _cursorWindow = new DragImage()
                     {
                         Title = $"{AppSettings.AppTitle} cursor",
-                        Width = rtb.Width+dw,
-                        Height = rtb.Height+dh
+                        Width = rtb.Width+ shadowAreaSize * 2d,
+                        Height = rtb.Height+ shadowAreaSize * 2d
                     };
+                    _cursorWindowXHotSpot = -shadowAreaSize / 2d + 2d;
+                    _cursorWindowYHotSpot = -shadowAreaSize / 2d + 2d;
                     _cursorWindow.IMG.Source = rtb;
-                    var o = Interaction.GetBehaviors(_cursorWindow)
-                        .OfType<WindowBehindWindowBehavior>()
-                        .FirstOrDefault();
-                    if (o!=null && o.ShadowLayer is DragImageBackgroundLayer bgLayer && bgLayer!=null)
-                        bgLayer.IMG.Source = WPFHelper.GetImageMask(rtb);
+                    _cursorWindow.BackImg.Source = WPFHelper.GetImageMask(rtb);
                 }
             }
             if (_cursorWindow!=null)
             {
                 var p = new NativeTypes.POINT();
                 GetCursorPos(ref p);
-                var x = p.X - _cursorWindow.ActualWidth - _cursorWindowXHotSpot +dw/2d;
-                var y = p.Y - _cursorWindow.ActualHeight - _cursorWindowYHotSpot +dh/2d;
-                _cursorWindow.Left = x;
-                _cursorWindow.Top = y;
-                _cursorWindow.Topmost = false;
-                _cursorWindow.Topmost = true;
+                var x = p.X - _cursorWindow.ActualWidth - _cursorWindowXHotSpot ;
+                var y = p.Y - _cursorWindow.ActualHeight - _cursorWindowYHotSpot ;
+
+                _cursorWindow.SetPos(x, y, (IntPtr)SpecialWindowHandles.HWND_TOP);
+
                 if (!_cursorWindow.IsVisible) _cursorWindow.Show();
             }
         }

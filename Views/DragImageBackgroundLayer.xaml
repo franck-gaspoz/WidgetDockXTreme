@@ -16,23 +16,16 @@
     WindowStartupLocation="Manual"
     WindowStyle="None"
     mc:Ignorable="d">
-    <Grid>
+    <Grid >
         <Image
             x:Name="IMG"
             Margin="16"
             Opacity="1"
             Source="/Images/Icons/Papirus-Team-Papirus-Apps-Chromium-app-list.ico">
-            <!--<Image.Effect>
-                <DropShadowEffect
-                    BlurRadius="16"
-                    Direction="45"
-                    ShadowDepth="2"
-                    Color="Red" />
-            </Image.Effect>-->
             <Image.BitmapEffect>
                 <DropShadowBitmapEffect
-                    Direction="45"
-                    ShadowDepth="2"
+                    Direction="-45"
+                    ShadowDepth="4"
                     Softness="0.5"
                     Color="Black" />
             </Image.BitmapEffect>

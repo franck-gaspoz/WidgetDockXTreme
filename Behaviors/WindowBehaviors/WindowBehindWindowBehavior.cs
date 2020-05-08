@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xaml.Behaviors;
 using System;
 using System.Windows;
+using System.Windows.Interop;
+using static DesktopPanelTool.Lib.NativeMethods;
 
 namespace DesktopPanelTool.Behaviors.WindowBehaviors
 {
@@ -8,8 +10,10 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
         : Behavior<Window>
     {
         public Window ShadowLayer { get; protected set; }
-        double _dx = 17;
-        double _dy = 17;
+        double _dx = 16;
+        double _dy = 16;
+        IntPtr _blHdle;
+        IntPtr _aoHdle;
 
         public Type LayerWindowType
         {
@@ -50,7 +54,14 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
 
         private void AssociatedObject_Activated(object sender, EventArgs e)
         {
+            GetHandles();
             SetZOrder();
+        }
+
+        void GetHandles()
+        {
+            _blHdle = new WindowInteropHelper(ShadowLayer).Handle;
+            _aoHdle = new WindowInteropHelper(AssociatedObject).Handle;
         }
 
         private void AssociatedObject_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -67,9 +78,36 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
             }
         }
 
-        void SetZOrder()
+        public void SetZOrder(int? x=null,int? y=null)
         {
+#if NO
+            if (_blHdle == (IntPtr)0) GetHandles();
+
+            var flg = SetWindowPosFlags.DoNotActivate
+                | SetWindowPosFlags.DoNotSendChangingEvent
+                | SetWindowPosFlags.IgnoreResize
+                /*| SetWindowPosFlags.IgnoreMove*/;
+            if (!x.HasValue && !y.HasValue)
+                flg |= SetWindowPosFlags.DoNotReposition;
+            var xv = x.HasValue ? x.Value : 0;
+            var yv = y.HasValue ? y.Value : 0;
+
+            SetWindowPos(_blHdle,
+                (IntPtr)SpecialWindowHandles.HWND_TOP,
+                xv, yv, 0, 0,flg
+                );
+
+            SetWindowPos(_aoHdle,
+                (IntPtr)SpecialWindowHandles.HWND_TOP,
+                xv, yv, 0, 0,flg | SetWindowPosFlags.DoNotReposition);
+
+            return;
+#endif
+
             ShadowLayer.Topmost = true;
+            AssociatedObject.Topmost = false;
+
+            //ShadowLayer.Topmost = true;
             AssociatedObject.Topmost = true;
         }
 

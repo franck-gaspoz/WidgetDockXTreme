@@ -47,6 +47,12 @@
     <sys:Double x:Key="WindowBottomRightShadowBlur">12</sys:Double>
     <sys:Double x:Key="WindowTopLeftShadowBlur">12</sys:Double>
 
+    <sys:Double x:Key="DragWindowShadowAreaSize">16</sys:Double>
+    <Thickness x:Key="DragWindowShadowAreaMarginSize">16</Thickness>
+    <sys:Double x:Key="DragWindowShadowDepth">4</sys:Double>
+    <sys:Double x:Key="DragWindowShadowSoftness">0.5</sys:Double>
+    <sys:Double x:Key="DragWindowShadowDirection">-45</sys:Double>
+
     <!--#endregion-->
 
     <!--#region  ##### images #####-->
@@ -59,6 +65,8 @@
     <!--#endregion-->
 
     <!--#region  ##### effects #####-->
+
+    <Color x:Key="DragWindowShadowColor">Black</Color>
 
     <sys:Boolean x:Key="DropShadow">True</sys:Boolean>
     <sys:Double x:Key="PanelBackgroundImage_BlurRadius">10</sys:Double>

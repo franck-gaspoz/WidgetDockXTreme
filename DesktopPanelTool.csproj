@@ -19,10 +19,12 @@
     <Compile Remove="Behaviors\MenuIem\CloseSubMenuOnPreviewMouseDownBehavior.cs" />
     <Compile Remove="Behaviors\WindowBehaviors\HideWindowIfMenuItemClickedWindowBehavior.cs" />
     <Compile Remove="Behaviors\WindowBehaviors\ShadowLayerBehindWindowBehavior.cs" />
+    <Compile Remove="Behaviors\WindowBehaviors\WindowBehindWindowBehavior.cs" />
     <Compile Remove="Converters\DesktopPanelBaseViewModelToNotifyIconContextMenuItem.cs" />
     <Compile Remove="Converters\DoubleToGridLengthConverter.cs" />
     <Compile Remove="Lib\ObjectRegistry.cs" />
     <Compile Remove="Services\DesktopPanelService.cs" />
+    <Compile Remove="Views\DragImageBackgroundLayer.xaml.cs" />
     <Compile Remove="Views\WindowShadowLayer.xaml.cs" />
   </ItemGroup>
 
@@ -59,6 +61,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="Views\DragImageBackgroundLayer.xaml" />
     <Page Remove="Views\WindowShadowLayer.xaml" />
   </ItemGroup>
 

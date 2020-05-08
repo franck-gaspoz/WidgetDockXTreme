@@ -19,10 +19,22 @@
     WindowStartupLocation="Manual"
     WindowStyle="None"
     mc:Ignorable="d">
-    <behaviors:Interaction.Behaviors>
-        <windowbehaviors:WindowBehindWindowBehavior LayerWindowType="{x:Type views:DragImageBackgroundLayer}" />
-    </behaviors:Interaction.Behaviors>
     <Grid>
-        <Image x:Name="IMG" Source="/Images/Icons/Papirus-Team-Papirus-Apps-Chromium-app-list.ico" />
+        <Image
+            x:Name="BackImg"
+            Margin="{DynamicResource DragWindowShadowAreaMarginSize}"
+            Source="/Images/Icons/Papirus-Team-Papirus-Apps-Chromium-app-list.ico">
+            <Image.BitmapEffect>
+                <DropShadowBitmapEffect
+                    Direction="{DynamicResource DragWindowShadowDirection}"
+                    ShadowDepth="{DynamicResource DragWindowShadowDepth}"
+                    Softness="{DynamicResource DragWindowShadowSoftness}"
+                    Color="{DynamicResource DragWindowShadowColor}" />
+            </Image.BitmapEffect>
+        </Image>
+        <Image
+            x:Name="IMG"
+            Margin="{DynamicResource DragWindowShadowAreaMarginSize}"
+            Source="/Images/Icons/Papirus-Team-Papirus-Apps-Chromium-app-list.ico" />
     </Grid>
 </Window>

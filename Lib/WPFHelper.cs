@@ -162,18 +162,26 @@ namespace DesktopPanelTool.Lib
         internal static bool HasParent<T>(DependencyObject o) => FindParent<T>(o) != null;
         internal static bool HasParent(Type t,DependencyObject o) => FindParent(t,o) != null;
 
-        internal static RenderTargetBitmap GetRenderTargetBitmap(UIElement element)
+        internal static RenderTargetBitmap GetRenderTargetBitmap(FrameworkElement element)
         {
+            //var size = element.RenderSize;
+            var size = element.DesiredSize;
+            //size.Height += 32d;
+            var bm = element.Margin;
             element.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-            element.Arrange(new Rect(new Point(), element.DesiredSize));
+            //element.Arrange(new Rect(new Point(), element.DesiredSize));
+            element.Arrange(new Rect(new Point(), size));
 
             RenderTargetBitmap rtb =
               new RenderTargetBitmap(
-                (int)element.DesiredSize.Width,
-                (int)element.DesiredSize.Height,
+                (int)size.Width+1,
+                (int)size.Height+1,
                 96, 96, PixelFormats.Pbgra32);
 
             rtb.Render(element);
+
+            element.Margin = bm;
+
             return rtb;
         }
 
