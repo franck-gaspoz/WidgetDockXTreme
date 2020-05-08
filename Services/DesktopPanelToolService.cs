@@ -114,10 +114,15 @@ namespace DesktopPanelTool.Services
 #endif
                 widget.ViewModel.PanelViewModel.CloseWidget(widget);
                 if (idxTargetStack == -1)
+                {
+                    var oldDesktopPanelBase = widget.ViewModel.PanelViewModel.View;
                     targetPanel.ViewModel.AddWidget(widget);
+                    var newDesktopPanelBase = widget.ViewModel.PanelViewModel.View;
+                    BindingUtil.UpdateWidgetViewBindings(widget,oldDesktopPanelBase,newDesktopPanelBase);
+                }
                 else
                 {
-                    
+
                 }
 #if false && dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"--------------- after:");

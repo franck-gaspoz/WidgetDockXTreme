@@ -8,7 +8,7 @@ namespace DesktopPanelTool.Controls
     /// </summary>
     public partial class WidgetControl : UserControl
     {
-        public WidgetBaseViewModel ViewModel { get; protected set; }
+        public WidgetBaseViewModel ViewModel { get; set; }
 
         public WidgetControl()
         {

@@ -100,6 +100,21 @@ namespace DesktopPanelTool.Lib
             return foundChild;
         }
 
+        internal static List<DependencyObject> GetChilds(DependencyObject o)
+        {
+            var r = new List<DependencyObject>();
+            if (o == null)
+                return r;
+            int childrenCount = VisualTreeHelper.GetChildrenCount(o);
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(o, i);
+                r.Add(child);
+                r.AddRange(GetChilds(child));
+            }
+            return r;
+        }
+
         internal static List<T> FindChilds<T>(DependencyObject parent,bool recurseMatchingChilds=false)
            where T : DependencyObject
         {

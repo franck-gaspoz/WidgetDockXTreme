@@ -70,7 +70,7 @@
                 MouseOverOpacity="{DynamicResource IconButtonMouseOverOpacity}"
                 MouseOverOpacityTransitionAnimationDuration="{DynamicResource IconButtonMouseOverOpacityTransitionAnimationDuration}">
                 <controls:IconButton.ClickHandlerCommandParameter>
-                    <MultiBinding Converter="{x:Static converters:Converters.MultiValue}">
+                    <MultiBinding Converter="{x:Static converters:Converters.MultiValue}" UpdateSourceTrigger="LostFocus">
                         <Binding RelativeSource="{RelativeSource AncestorType={x:Type views:DesktopPanelBase}}" />
                         <Binding RelativeSource="{RelativeSource AncestorType={x:Type controls:WidgetControl}}" />
                     </MultiBinding>

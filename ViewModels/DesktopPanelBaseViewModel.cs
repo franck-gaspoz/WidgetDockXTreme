@@ -145,10 +145,8 @@ namespace DesktopPanelTool.ViewModels
         {
             WidgetsViewModels.Add(widget.ViewModel);
             widget.ViewModel.PanelViewModel = this;
-            //if (View.WidgetsPanel.Children.Count==0)
             View.WidgetsPanel.Children.Add(GetNewWidgetStackPanelDropPlaceHolder());
             View.WidgetsPanel.Children.Add(widget);
-            //View.WidgetsPanel.Children.Add(GetNewWidgetStackPanelDropPlaceHolder());
         }
 
         WidgetStackPanelDropPlaceHolder GetNewWidgetStackPanelDropPlaceHolder()
