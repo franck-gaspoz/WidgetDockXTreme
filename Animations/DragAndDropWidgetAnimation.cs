@@ -67,7 +67,7 @@ namespace DesktopPanelTool.Animations
                     _minWidthBackup = target.MinWidth;
                     _minHeightBackup = target.MinHeight;
                     target.MinWidth = target.MinHeight = 0d;
-                    var stackPanel = WPFUtil.FindLogicalParent<StackPanel>(target);
+                    var stackPanel = WPFHelper.FindLogicalParent<StackPanel>(target);
                     if (stackPanel != null)
                     {
                         var idx = stackPanel.Children.IndexOf(target);

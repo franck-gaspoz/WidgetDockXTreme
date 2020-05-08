@@ -64,7 +64,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                 ) &&
                 ( TypeControlUnderMouseAvoidingMove == null ||
                   (Mouse.DirectlyOver is DependencyObject o &&
-                  !WPFUtil.HasParent(TypeControlUnderMouseAvoidingMove,o))
+                  !WPFHelper.HasParent(TypeControlUnderMouseAvoidingMove,o))
                 )
                 );
         }

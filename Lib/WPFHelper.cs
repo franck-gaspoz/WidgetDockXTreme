@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+using dr=System.Drawing;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.IO;
+using System.Windows.Controls;
 
 namespace DesktopPanelTool.Lib
 {
-    internal static class WPFUtil
+    internal static class WPFHelper
     {
         /// <summary>
         /// get a drawing Icon from a WPF application resource located at given uri
         /// </summary>
         /// <param name="iconUri">icon uri</param>
-        internal static Icon GetIcon(
+        internal static dr.Icon GetIcon(
             string iconUri
             )
         {
-            return new Icon(
+            return new dr.Icon(
                 Application.GetResourceStream(
                     new Uri(
                         iconUri,
@@ -158,5 +160,20 @@ namespace DesktopPanelTool.Lib
 
         internal static bool HasParent<T>(DependencyObject o) => FindParent<T>(o) != null;
         internal static bool HasParent(Type t,DependencyObject o) => FindParent(t,o) != null;
+
+        internal static RenderTargetBitmap GetRenderTargetBitmap(UIElement element)
+        {
+            element.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            element.Arrange(new Rect(new Point(), element.DesiredSize));
+
+            RenderTargetBitmap rtb =
+              new RenderTargetBitmap(
+                (int)element.DesiredSize.Width,
+                (int)element.DesiredSize.Height,
+                96, 96, PixelFormats.Pbgra32);
+
+            rtb.Render(element);
+            return rtb;
+        }
     }
 }

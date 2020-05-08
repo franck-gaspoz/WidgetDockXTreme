@@ -515,7 +515,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors.DockableBehavior
 #if dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"acceptable start point: has parent={WPFUtil.HasParent<WidgetControl>(Mouse.DirectlyOver as DependencyObject)}");
 #endif
-            return !WPFUtil.HasParent<WidgetControl>(Mouse.DirectlyOver as DependencyObject);
+            return !WPFHelper.HasParent<WidgetControl>(Mouse.DirectlyOver as DependencyObject);
         }
 
         void EndUndocking()

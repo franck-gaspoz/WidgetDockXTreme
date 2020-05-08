@@ -3,3 +3,17 @@ Install-Package Microsoft.Xaml.Behaviors.Wpf
 
 xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
 {Binding ..., diag:PresentationTraceSources.TraceLevel=High}
+
+cursor from uielement
+---------------------
+
+#if NO
+            if (_customCursor == null)
+                _customCursor = CursorHelper.CreateCursor(e.Source as UIElement);
+            if (_customCursor != null)
+            {
+                e.UseDefaultCursors = false;
+                var r = Mouse.SetCursor(_customCursor);
+            }
+            //e.Handled = true;
+#endif

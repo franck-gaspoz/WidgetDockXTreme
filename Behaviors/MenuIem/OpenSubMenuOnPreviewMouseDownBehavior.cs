@@ -26,10 +26,10 @@ namespace DesktopPanelTool.Behaviors.MenuIem
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var win = WPFUtil.FindLogicalParent<Window>(AssociatedObject);
+                var win = WPFHelper.FindLogicalParent<Window>(AssociatedObject);
                 if (win != null)
                 {
-                    var menuItems = WPFUtil.FindChilds<MenuItem>(win, true);
+                    var menuItems = WPFHelper.FindChilds<MenuItem>(win, true);
                     foreach (var menuItem in menuItems)
                         if (menuItem.IsSubmenuOpen)
                         {

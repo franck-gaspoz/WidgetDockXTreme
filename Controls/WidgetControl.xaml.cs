@@ -28,7 +28,7 @@ namespace DesktopPanelTool.Controls
 
         public void UpdateWidgetViewBindings(DesktopPanelBase oldDesktopPanelBase, DesktopPanelBase newDesktopPanelBase)
         {
-            var childs = WPFUtil.FindChilds<IconButton>(this);
+            var childs = WPFHelper.FindChilds<IconButton>(this);
             foreach (var c in childs)
             {
                 if (c.ClickHandlerCommandParameter is object[] t && t.Length == 2 && t[0] == oldDesktopPanelBase)

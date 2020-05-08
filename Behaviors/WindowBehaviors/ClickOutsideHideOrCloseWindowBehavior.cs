@@ -107,7 +107,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
 #endif
             if (Mouse.DirectlyOver is DependencyObject o && o != null)
             {
-                var ancestor = WPFUtil.FindLogicalAncestor(o);
+                var ancestor = WPFHelper.FindLogicalAncestor(o);
 #if dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"ancestor = {ancestor}");
 #endif

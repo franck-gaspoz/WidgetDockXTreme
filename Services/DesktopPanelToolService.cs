@@ -102,13 +102,13 @@ namespace DesktopPanelTool.Services
 
         internal static void DropWidget(WidgetControl widget,FrameworkElement target,DragEventArgs e)
         {
-            var targetPanel = WPFUtil.FindLogicalParent<DesktopPanelBase>(target);
-            var sourcePanel = WPFUtil.FindLogicalParent<DesktopPanelBase>(widget);
-            var targetStack = WPFUtil.FindLogicalParent<StackPanel>(target);
-            var sourceStack = WPFUtil.FindLogicalParent<StackPanel>(widget);
+            var targetPanel = WPFHelper.FindLogicalParent<DesktopPanelBase>(target);
+            var sourcePanel = WPFHelper.FindLogicalParent<DesktopPanelBase>(widget);
+            var targetStack = WPFHelper.FindLogicalParent<StackPanel>(target);
+            var sourceStack = WPFHelper.FindLogicalParent<StackPanel>(widget);
             if (targetPanel!=null && sourcePanel!=null && targetStack!=null && sourceStack!=null)
             {
-                var dropAreaTarget = WPFUtil.FindLogicalParent<WidgetStackPanelDropPlaceHolder>(target);
+                var dropAreaTarget = WPFHelper.FindLogicalParent<WidgetStackPanelDropPlaceHolder>(target);
                 var idxSourceStack = sourceStack.Children.IndexOf(widget);
                 var idxTargetStack = targetStack.Children.IndexOf(dropAreaTarget);
                 var targetIsLargeDropArea = dropAreaTarget.Name == "PermanentWidgetDropPlaceHolder";

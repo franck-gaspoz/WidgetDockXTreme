@@ -14,6 +14,16 @@ namespace DesktopPanelTool.Lib
 {
     public static class NativeMethods
     {
+        [DllImport("user32.dll")]
+        public static extern SafeIconHandle CreateIconIndirect(ref IconInfo icon);
+
+        [DllImport("user32.dll")]
+        public static extern bool DestroyIcon(IntPtr hIcon);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo pIconInfo);
+
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool UnhookWindowsHookEx(IntPtr hhk);
 

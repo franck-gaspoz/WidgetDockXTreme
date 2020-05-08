@@ -3,7 +3,7 @@
 using DesktopPanelTool.Models;
 using DesktopPanelTool.Views;
 using System.Windows.Forms;
-using static DesktopPanelTool.Lib.WPFUtil;
+using static DesktopPanelTool.Lib.WPFHelper;
 using static DesktopPanelTool.Models.NativeTypes;
 using static DesktopPanelTool.Lib.NativeMethods;
 using DesktopPanelTool.Lib;

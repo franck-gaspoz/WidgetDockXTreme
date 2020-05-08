@@ -25,7 +25,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
         {            
             if (!AssociatedObject.IsVisible)
             {
-                var menuItems = WPFUtil.FindChilds<MenuItem>(AssociatedObject, true);
+                var menuItems = WPFHelper.FindChilds<MenuItem>(AssociatedObject, true);
                 foreach (var menuItem in menuItems)
                     if (menuItem.IsSubmenuOpen)
                         menuItem.IsSubmenuOpen = false;
