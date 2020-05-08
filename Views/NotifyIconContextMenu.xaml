@@ -21,8 +21,6 @@
     Style="{DynamicResource WindowBase}"
     mc:Ignorable="d">
 
-    <Window.Resources />
-
     <behaviors:Interaction.Behaviors>
         <windowbehaviors:FixSizeOfShadowedWindowBehavior />
         <windowbehaviors:CloseAnySubmenuOnHiddingWindowBehavior />

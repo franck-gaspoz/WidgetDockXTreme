@@ -125,7 +125,11 @@ namespace DesktopPanelTool.Services
                     if (targetIsLargeDropArea)
                         targetPanel.ViewModel.AddWidget(widget);
                     else
+                    {
+                        if (idxTargetStack > idxSourceStack)
+                            idxTargetStack -= 2;
                         targetPanel.ViewModel.AddWidget(widget, idxTargetStack);
+                    }
                     widget.UpdateWidgetViewBindings(sourcePanel, targetPanel);                    
                 }
 
