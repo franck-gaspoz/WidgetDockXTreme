@@ -1,13 +1,16 @@
 ﻿//#define dbg
 
+using DesktopPanelTool.Behaviors.FrameworkElementBehaviors;
 using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Controls;
 using DesktopPanelTool.Lib;
 using DesktopPanelTool.Models;
 using DesktopPanelTool.ViewModels;
 using DesktopPanelTool.Views;
+using Microsoft.Xaml.Behaviors;
 using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
@@ -123,8 +126,9 @@ namespace DesktopPanelTool.Services
                         targetPanel.ViewModel.AddWidget(widget);
                     else
                         targetPanel.ViewModel.AddWidget(widget, idxTargetStack);
-                    widget.UpdateWidgetViewBindings(sourcePanel, targetPanel);
+                    widget.UpdateWidgetViewBindings(sourcePanel, targetPanel);                    
                 }
+
 #if false && dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"--------------- after:");
                 widget.ViewModel.PanelViewModel.DumpWidgetsPanelChildren();

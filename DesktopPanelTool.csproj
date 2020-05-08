@@ -21,6 +21,7 @@
     <Compile Remove="Behaviors\WindowBehaviors\ShadowLayerBehindWindowBehavior.cs" />
     <Compile Remove="Converters\DesktopPanelBaseViewModelToNotifyIconContextMenuItem.cs" />
     <Compile Remove="Converters\DoubleToGridLengthConverter.cs" />
+    <Compile Remove="Lib\ObjectRegistry.cs" />
     <Compile Remove="Services\DesktopPanelService.cs" />
     <Compile Remove="Views\WindowShadowLayer.xaml.cs" />
   </ItemGroup>
