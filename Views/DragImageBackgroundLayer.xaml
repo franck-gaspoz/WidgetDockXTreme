@@ -1,0 +1,41 @@
+﻿<Window
+    x:Class="DesktopPanelTool.Views.DragImageBackgroundLayer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:DesktopPanelTool.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="DragImage"
+    Width="100"
+    Height="100"
+    AllowsTransparency="True"
+    Background="Transparent"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    Topmost="True"
+    WindowStartupLocation="Manual"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Grid>
+        <Image
+            x:Name="IMG"
+            Margin="16"
+            Opacity="1"
+            Source="/Images/Icons/Papirus-Team-Papirus-Apps-Chromium-app-list.ico">
+            <!--<Image.Effect>
+                <DropShadowEffect
+                    BlurRadius="16"
+                    Direction="45"
+                    ShadowDepth="2"
+                    Color="Red" />
+            </Image.Effect>-->
+            <Image.BitmapEffect>
+                <DropShadowBitmapEffect
+                    Direction="45"
+                    ShadowDepth="2"
+                    Softness="0.5"
+                    Color="Black" />
+            </Image.BitmapEffect>
+        </Image>
+    </Grid>
+</Window>

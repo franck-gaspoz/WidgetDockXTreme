@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows.Controls;
 
+
 namespace DesktopPanelTool.Lib
 {
     internal static class WPFHelper
@@ -174,6 +175,23 @@ namespace DesktopPanelTool.Lib
 
             rtb.Render(element);
             return rtb;
+        }
+
+        internal static BitmapSource GetImageMask(RenderTargetBitmap rtb)
+        {
+            int stride = (int)rtb.PixelWidth * (rtb.Format.BitsPerPixel / 8);
+            byte[] pixels = new byte[(int)rtb.PixelHeight * stride];
+            rtb.CopyPixels(pixels, stride, 0);
+            for (int i = 0; i < pixels.Length; i += 4)
+            {
+                if (pixels[i+3] != 0) {
+                    pixels[i] = pixels[i + 1] = pixels[i + 2] = 0;
+                    pixels[i+3] = 255;
+                 }
+            };
+            var bitmap = new WriteableBitmap((int)rtb.Width, (int)rtb.Height, 96, 96, PixelFormats.Pbgra32, null);
+            bitmap.WritePixels(new Int32Rect(0, 0, (int)rtb.Width, (int)rtb.Height), pixels, (int)rtb.Width * (bitmap.Format.BitsPerPixel / 8), 0);
+            return bitmap;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿//#define dbg
 
+using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Lib;
 using DesktopPanelTool.Models;
 using DesktopPanelTool.Views;
@@ -29,14 +30,14 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         public static readonly DependencyProperty IsDropPreviewEnabledProperty =
             DependencyProperty.Register("IsDropPreviewEnabled", typeof(bool), typeof(DraggableFrameworkElementBehavior), new PropertyMetadata(true));
 
-        public IMultiAnimation DragDropAnimation
+        public IAnimations DragDropAnimation
         {
-            get { return (IMultiAnimation)GetValue(DragDropAnimationProperty); }
+            get { return (IAnimations)GetValue(DragDropAnimationProperty); }
             set { SetValue(DragDropAnimationProperty, value); }
         }
 
         public static readonly DependencyProperty DragDropAnimationProperty =
-            DependencyProperty.Register("DragDropAnimation", typeof(IMultiAnimation), typeof(DraggableFrameworkElementBehavior), new PropertyMetadata(null));
+            DependencyProperty.Register("DragDropAnimation", typeof(IAnimations), typeof(DraggableFrameworkElementBehavior), new PropertyMetadata(null));
 
         Point _start;
         DataObject _dataObject;
@@ -44,6 +45,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
 
         public const string BeginDragEffectAnimationName = "BeginDragEffectAnimationName";
         public const string EndDragEffectAnimationName = "EndDragEffectAnimationName";
+        public const string CancelDragEffectAnimationName = "CancelDragEffectAnimationName";
 
         public bool IsEnabled
         {
@@ -97,19 +99,32 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                     AssociatedObject.GiveFeedback += AssociatedObject_GiveFeedback;
 
                     _dataObject = new DataObject(AssociatedObject.GetType(), AssociatedObject);
-                    DragDrop.DoDragDrop(AssociatedObject, _dataObject, DragDropEffects.Move);
+                    var r = DragDrop.DoDragDrop(AssociatedObject, _dataObject, DragDropEffects.Move);
 
                     AssociatedObject.GiveFeedback -= AssociatedObject_GiveFeedback;
-                    _cursorWindow?.Close();
-                    _cursorWindow = null;
+
+                    if (r == DragDropEffects.None)
+                        DragDropAnimation?.Start(_cursorWindow, CancelDragEffectAnimationName, null, (o,e)=>DestroyCursorWindow());
+
                     DragDropAnimation?.Start(AssociatedObject,EndDragEffectAnimationName);
+
+                    if (DragDropAnimation == null || r!=DragDropEffects.None)
+                        DestroyCursorWindow();
                 }
             }
         }
 
+        void DestroyCursorWindow()
+        {
+            _cursorWindow?.Close();
+            _cursorWindow = null;
+        }
+
         private void AssociatedObject_GiveFeedback(object sender, GiveFeedbackEventArgs e)
         {
-            if (!IsDropPreviewEnabled) return;                
+            if (!IsDropPreviewEnabled) return;
+            var dw = 0* 18 * 2d;
+            var dh = 0* 18 * 2d;
 
             if (_cursorWindow == null)
             {
@@ -119,18 +134,23 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                     _cursorWindow = new DragImage()
                     {
                         Title = $"{AppSettings.AppTitle} cursor",
-                        Width = rtb.Width,
-                        Height = rtb.Height
+                        Width = rtb.Width+dw,
+                        Height = rtb.Height+dh
                     };
                     _cursorWindow.IMG.Source = rtb;
+                    var o = Interaction.GetBehaviors(_cursorWindow)
+                        .OfType<WindowBehindWindowBehavior>()
+                        .FirstOrDefault();
+                    if (o!=null && o.ShadowLayer is DragImageBackgroundLayer bgLayer && bgLayer!=null)
+                        bgLayer.IMG.Source = WPFHelper.GetImageMask(rtb);
                 }
             }
             if (_cursorWindow!=null)
             {
                 var p = new NativeTypes.POINT();
                 GetCursorPos(ref p);
-                var x = p.X - _cursorWindow.ActualWidth - _cursorWindowXHotSpot;
-                var y = p.Y - _cursorWindow.ActualHeight - _cursorWindowYHotSpot;
+                var x = p.X - _cursorWindow.ActualWidth - _cursorWindowXHotSpot +dw/2d;
+                var y = p.Y - _cursorWindow.ActualHeight - _cursorWindowYHotSpot +dh/2d;
                 _cursorWindow.Left = x;
                 _cursorWindow.Top = y;
                 _cursorWindow.Topmost = false;
