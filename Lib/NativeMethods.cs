@@ -69,6 +69,21 @@ namespace DesktopPanelTool.Lib
                 | SetWindowPosFlags.IgnoreResize);
         }
 
+        public static bool SetWindowPosAndSize(IntPtr hWnd, int x, int y, int sizex, int sizey)
+        {
+            return SetWindowPos(hWnd, (IntPtr)0, x, y, sizex, sizey,
+                SetWindowPosFlags.IgnoreZOrder
+                | SetWindowPosFlags.DoNotActivate
+                | SetWindowPosFlags.DoNotSendChangingEvent);
+        }
+
+        public static bool SetWindowPosAndSize(IntPtr hWnd, int x, int y, IntPtr z, int sizex, int sizey)
+        {
+            return SetWindowPos(hWnd, z, x, y, sizex, sizey,
+                SetWindowPosFlags.DoNotActivate
+                | SetWindowPosFlags.DoNotSendChangingEvent);
+        }
+
         [DllImport("user32.dll")]
         public static extern bool SetWindowPos(
             IntPtr hWnd,
