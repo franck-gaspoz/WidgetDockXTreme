@@ -15,6 +15,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static DesktopPanelTool.Models.NativeTypes;
+using static DesktopPanelTool.Lib.NativeMethods;
 
 namespace DesktopPanelTool.Services
 {
@@ -35,7 +37,7 @@ namespace DesktopPanelTool.Services
 
         public static DesktopPanelBase AddDesktopPanel(
             DesktopPanelBase panel = null,
-            DockName dock = DockName.Left,
+            DockName dock = DockName.None,
             ScreenInfo screen = null,
             bool isPined = false,
             bool isCollapsed = false)
@@ -98,6 +100,29 @@ namespace DesktopPanelTool.Services
         {
             foreach (var panel in DesktopPanelToolViewModel.PanelsViewModels)
                 panel.View.Show();
+        }
+
+        internal static string GetNewPanelDefaultTitle()
+        {
+            return $"dock {DesktopPanelToolViewModel.PanelsViewModels.Count + DesktopPanelToolViewModel.RecentPanelsViewModels.Count}";
+        }
+
+        internal static void DropWidgetOnDesktop(WidgetControl widget, FrameworkElement target, DragEventArgs e)
+        {
+            var oldpanel = WPFHelper.FindLogicalParent<DesktopPanelBase>(widget);
+            widget.ViewModel.PanelViewModel.CloseWidget(widget);
+            var panel = AddDesktopPanel();
+            panel.ViewModel.Title = GetNewPanelDefaultTitle();
+            var p = new POINT();
+            GetCursorPos(ref p);
+            var gap = (Thickness)widget.FindResource("WindowShadowAreaSize");
+            var dx = (double)widget.FindResource("DropWidgetOnDesktopPanelMouseRelativeLeft");
+            var dy = (double)widget.FindResource("DropWidgetOnDesktopPanelMouseRelativeTop");
+            panel.Left = p.X - gap.Left -dx;
+            panel.Top = p.Y - gap.Top -dy;
+            panel.ViewModel.AddWidget(widget);
+            widget.UpdateWidgetViewBindings(oldpanel, panel);
+            panel.Show();
         }
 
         internal static void DropWidget(WidgetControl widget,FrameworkElement target,DragEventArgs e)
@@ -211,7 +236,12 @@ namespace DesktopPanelTool.Services
             var widget3 = new WidgetControl();
             widget3.ViewModel.Title = "widget 3";
             panel.ViewModel.AddWidget(widget3);
-
+            
+            var scr = DisplayDevices.GetCurrentScreenInfo();
+            var x = (scr.WorkArea.Width - panel.Width)/ 2d;
+            var y = (scr.WorkArea.Height - panel.Height)/ 2d;
+            panel.Left = x;
+            panel.Top = y;
         }
     }
 }

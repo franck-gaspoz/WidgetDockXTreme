@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:frameworkelementbehaviors="clr-namespace:DesktopPanelTool.Behaviors.FrameworkElementBehaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:widgetcommands="clr-namespace:DesktopPanelTool.Commands.WidgetCommands"
     d:DesignHeight="128"
     d:DesignWidth="256"
     mc:Ignorable="d">
@@ -17,7 +18,10 @@
     </UserControl.Resources>
 
     <behaviors:Interaction.Behaviors>
-        <frameworkelementbehaviors:DraggableFrameworkElementBehavior DragDropAnimation="{StaticResource DragAndDropWidgetAnimation}" />
+        <frameworkelementbehaviors:DraggableFrameworkElementBehavior
+            CanDropOnDesktop="True"
+            DragDropAnimation="{StaticResource DragAndDropWidgetAnimation}"
+            DropOnDesktopHandlerCommand="{x:Static widgetcommands:WidgetCommands.DropWidgetOnDesktop}" />
     </behaviors:Interaction.Behaviors>
 
     <Grid>

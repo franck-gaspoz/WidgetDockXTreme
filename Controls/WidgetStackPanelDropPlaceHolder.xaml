@@ -3,11 +3,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
-    xmlns:controlcommands="clr-namespace:DesktopPanelTool.Commands.ControlCommands"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:frameworkelementbehaviors="clr-namespace:DesktopPanelTool.Behaviors.FrameworkElementBehaviors"
     xmlns:local="clr-namespace:DesktopPanelTool.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:widgetcommands="clr-namespace:DesktopPanelTool.Commands.WidgetCommands"
     d:DesignHeight="8"
     d:DesignWidth="100"
     mc:Ignorable="d">
@@ -23,7 +23,7 @@
                 MouseOutTransparency="0.003921"
                 MouseOverTransparency="{DynamicResource DropAreaSensitiveAreaHighlightOpacity}"
                 Target="{Binding ElementName=VisibleHitArea}" />
-            <frameworkelementbehaviors:DroppableFrameworkElementBehavior DropHandlerCommand="{x:Static controlcommands:ControlCommands.DropWidget}" />
+            <frameworkelementbehaviors:DroppableFrameworkElementBehavior AcceptableDropDataTypesList="DesktopPanelTool.Controls.WidgetControl" DropHandlerCommand="{x:Static widgetcommands:WidgetCommands.DropWidget}" />
         </behaviors:Interaction.Behaviors>
 
         <Border

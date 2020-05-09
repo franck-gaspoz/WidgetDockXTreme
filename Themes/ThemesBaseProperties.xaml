@@ -41,6 +41,9 @@
 
     <Thickness x:Key="DropShadow_Margin">0,0,5,5</Thickness>
 
+    <sys:Double x:Key="DropWidgetOnDesktopPanelMouseRelativeLeft">32</sys:Double>
+    <sys:Double x:Key="DropWidgetOnDesktopPanelMouseRelativeTop">32</sys:Double>
+
     <Thickness x:Key="WindowShadowAreaSize">16</Thickness>
     <Thickness x:Key="WindowContentAreaShadowAreaSize">16,16,16,16</Thickness>
     <sys:Double x:Key="WindowShadowWidth">1</sys:Double>

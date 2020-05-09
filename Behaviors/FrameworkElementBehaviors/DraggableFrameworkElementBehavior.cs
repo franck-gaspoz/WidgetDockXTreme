@@ -1,6 +1,5 @@
 ﻿//#define dbg
 
-using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Lib;
 using DesktopPanelTool.Models;
 using DesktopPanelTool.Views;
@@ -8,10 +7,12 @@ using Microsoft.Xaml.Behaviors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interop;
 using static DesktopPanelTool.Lib.NativeMethods;
+using static DesktopPanelTool.Models.NativeTypes;
+using dr = System.Drawing;
 
 namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
 {
@@ -19,9 +20,26 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         : Behavior<FrameworkElement>
     {
         DragImage _cursorWindow = null;
-        IntPtr _cursorWindowHandle = (IntPtr)0;
         double _cursorWindowXHotSpot = 9;   // TODO: may depend on system cursor size, depends on shadow size (depth+softness)
         double _cursorWindowYHotSpot = 9;
+
+        public ICommand DropOnDesktopHandlerCommand
+        {
+            get { return (ICommand)GetValue(DropOnDesktopHandlerCommandProperty); }
+            set { SetValue(DropOnDesktopHandlerCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty DropOnDesktopHandlerCommandProperty =
+            DependencyProperty.Register("DropOnDesktopHandlerCommand", typeof(ICommand), typeof(DraggableFrameworkElementBehavior), new PropertyMetadata(null));
+
+        public bool CanDropOnDesktop
+        {
+            get { return (bool)GetValue(CanDropOnDesktopProperty); }
+            set { SetValue(CanDropOnDesktopProperty, value); }
+        }
+
+        public static readonly DependencyProperty CanDropOnDesktopProperty =
+            DependencyProperty.Register("CanDropOnDesktop", typeof(bool), typeof(DraggableFrameworkElementBehavior), new PropertyMetadata(false));
 
         public bool IsDropPreviewEnabled
         {
@@ -103,15 +121,29 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                     _dataObject = new DataObject(AssociatedObject.GetType(), AssociatedObject);
                     var r = DragDrop.DoDragDrop(AssociatedObject, _dataObject, DragDropEffects.Move);
 
+                    var p = new POINT();
+                    GetCursorPos(ref p);
                     AssociatedObject.GiveFeedback -= AssociatedObject_GiveFeedback;
+                    var dropAcceptedInApp = r != DragDropEffects.None;
+                    var dropAcceptedOnDesktop = CanDropOnDesktop && (!dropAcceptedInApp && CheckIsOverDesktop(p.X, p.Y));
+                    var dropAccepted = dropAcceptedInApp | dropAcceptedOnDesktop;
 
-                    if (r == DragDropEffects.None)
+                    if (!dropAccepted)
                         DragDropAnimation?.Start(_cursorWindow, CancelDragEffectAnimationName, null, (o,e)=>DestroyCursorWindow());
 
-                    DragDropAnimation?.Start(AssociatedObject,EndDragEffectAnimationName);
+                    if (!dropAcceptedOnDesktop)
+                        DragDropAnimation?.Start(AssociatedObject,EndDragEffectAnimationName);
 
-                    if (DragDropAnimation == null || r!=DragDropEffects.None)
+                    if (DragDropAnimation == null || dropAccepted)
                         DestroyCursorWindow();
+
+                    if (dropAcceptedOnDesktop && DropOnDesktopHandlerCommand != null)
+                    {
+                        var dragComponentData = new DragData(_dataObject, null, AssociatedObject);
+                        if (DropOnDesktopHandlerCommand.CanExecute(dragComponentData))
+                            DropOnDesktopHandlerCommand.Execute(dragComponentData);
+                        DragDropAnimation?.Start(AssociatedObject, EndDragEffectAnimationName);
+                    }
                 }
             }
         }
@@ -120,7 +152,6 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         {
             _cursorWindow?.Close();
             _cursorWindow = null;
-            _cursorWindowHandle = (IntPtr)0;
         }
 
         private void AssociatedObject_GiveFeedback(object sender, GiveFeedbackEventArgs e)
@@ -139,16 +170,18 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                         Width = rtb.Width+ shadowAreaSize * 2d,
                         Height = rtb.Height+ shadowAreaSize * 2d
                     };
-                    _cursorWindowXHotSpot = -shadowAreaSize / 2d + 2d;
+                    _cursorWindowXHotSpot = -shadowAreaSize / 2d + 2d;  // TODO: 2d gap could depends on system cursor size
                     _cursorWindowYHotSpot = -shadowAreaSize / 2d + 2d;
                     _cursorWindow.IMG.Source = rtb;
                     _cursorWindow.BackImg.Source = WPFHelper.GetImageMask(rtb);
                 }
             }
+            
+            var p = new NativeTypes.POINT();
+            GetCursorPos(ref p);
+
             if (_cursorWindow!=null)
             {
-                var p = new NativeTypes.POINT();
-                GetCursorPos(ref p);
                 var x = p.X - _cursorWindow.ActualWidth - _cursorWindowXHotSpot ;
                 var y = p.Y - _cursorWindow.ActualHeight - _cursorWindowYHotSpot ;
 
@@ -156,6 +189,33 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
 
                 if (!_cursorWindow.IsVisible) _cursorWindow.Show();
             }
+
+            if (CanDropOnDesktop && CheckIsOverDesktop(p.X,p.Y))
+            {
+                e.UseDefaultCursors = false;
+                Mouse.SetCursor(Cursors.Hand);
+                e.Handled = true;
+            }
+        }
+
+        bool CheckIsOverDesktop(int x,int y)
+        {
+            var overHandle = WindowFromPoint(new dr.Point(x, y));
+            StringBuilder sb3 = new StringBuilder(1024);
+            GetClassName(overHandle, sb3, sb3.Capacity);
+            var className = sb3.ToString();
+            WINDOWINFO wininfo = new WINDOWINFO();
+            StringBuilder sb4 = new StringBuilder(1024);
+            GetWindowText(overHandle, sb4, 1024);
+            var hTitle = sb4.ToString();
+            if (GetWindowInfo(overHandle, ref wininfo))
+            {
+#if false && dbg
+                DesktopPanelTool.Lib.Debug.WriteLine($"drag over: pos={x},{y} title={hTitle} clName={className} wininfo: atom={wininfo.atomWindowType} status={wininfo.dwWindowStatus}");
+#endif
+                return (hTitle == "FolderView" && className == "SysListView32");
+            }
+            return false;
         }
 
         private void AssociatedObject_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

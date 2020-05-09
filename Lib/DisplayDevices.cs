@@ -42,6 +42,13 @@ namespace DesktopPanelTool.Lib
             return scrInfos;
         }
 
+        internal static ScreenInfo GetCurrentScreenInfo()
+        {
+            var p = new POINT();
+            GetCursorPos(ref p);
+            return GetCurrentScreenInfo(p.X, p.Y);
+        }
+
         internal static ScreenInfo GetCurrentScreenInfo(double x,double y)
         {
             foreach (var scrInfo in GetScreensInfos())

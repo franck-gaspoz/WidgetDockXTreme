@@ -16,7 +16,7 @@
     Padding="0"
     ResizeMode="CanResize"
     Style="{DynamicResource DesktopPanelWindowBase}"
-    WindowStartupLocation="CenterScreen"
+    WindowStartupLocation="Manual"
     mc:Ignorable="d">
 
     <behaviors:Interaction.Behaviors>

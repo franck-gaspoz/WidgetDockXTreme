@@ -2,12 +2,10 @@
 using DesktopPanelTool.Models;
 using DesktopPanelTool.Services;
 using System;
-using System.Windows;
 using System.Windows.Input;
 
-namespace DesktopPanelTool.Commands.ControlCommands
+namespace DesktopPanelTool.Commands.WidgetCommands
 {
-
     public class DropWidgetCommand
         : ICommand
     {
