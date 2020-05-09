@@ -125,7 +125,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                 Vector diff = _start.Value - mpos;
                 
                 if (e.LeftButton == MouseButtonState.Pressed &&
-                    Math.Abs(diff.X) > AppSettings.MinimumHorizontalDragDistance &&
+                    Math.Abs(diff.X) > AppSettings.MinimumHorizontalDragDistance ||
                     Math.Abs(diff.Y) > AppSettings.MinimumVerticalDragDistance)
                 {
                     _start = null;
