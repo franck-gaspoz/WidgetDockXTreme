@@ -1,6 +1,7 @@
 ﻿//#define dbg
 
 using Microsoft.Xaml.Behaviors;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -58,6 +59,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                 }
 
                 var w = Container.ActualWidth - tw /*- 8d*/;
+                w = Math.Max(0, w);
                 AssociatedObject.Width = w;
                 AssociatedObject.SetValue(FrameworkElement.HeightProperty, DependencyProperty.UnsetValue);
 

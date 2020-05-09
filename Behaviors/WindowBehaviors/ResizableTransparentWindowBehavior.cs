@@ -1,6 +1,7 @@
 ﻿//#define dbg
 
 using DesktopPanelTool.Behaviors.WindowBehaviors.DockableBehavior;
+using DesktopPanelTool.Lib;
 using Microsoft.Xaml.Behaviors;
 using System;
 using System.Linq;
@@ -230,6 +231,11 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                 p.X += InitialDx;
                 p.Y += InitialDy;
 
+                double newLeft = AssociatedObject.Left;
+                double newTop = AssociatedObject.Top;
+                double newWidth = AssociatedObject.ActualWidth;
+                double newHeight = AssociatedObject.ActualHeight;
+
                 switch (CurrentResizeGripDirection)
                 {
                     case ResizeGripDirection.Left:
@@ -238,32 +244,36 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                         if (nw>=0 &&
                             nw>AssociatedObject.MinWidth)
                         {
-                            AssociatedObject.Left = nl;
-                            AssociatedObject.Width = nw;
+                            newLeft = nl;
+                            newWidth = nw;
                         }
                         break;
                     case ResizeGripDirection.Right:
-                        if (p.X >= 0)
-                            AssociatedObject.Width = p.X;
+                        var nw5 = p.X;
+                        if (nw5 >= 0 && nw5>AssociatedObject.MinWidth)
+                            newWidth = nw5;
                         break;
                     case ResizeGripDirection.Top:
                         var nt = AssociatedObject.Top + p.Y;
                         var nh = AssociatedObject.ActualHeight - p.Y;
                         if (nh >= 0 && nh > AssociatedObject.MinHeight)
                         {
-                            AssociatedObject.Top = nt;
-                            AssociatedObject.Height = nh;
+                            newTop = nt;
+                            newHeight = nh;
                         }
                         break;
                     case ResizeGripDirection.Bottom:
-                        if (p.Y > 0)
-                            AssociatedObject.Height = p.Y;
+                        var nh5 = p.Y;
+                        if (nh5 > 0 && nh5>AssociatedObject.MinHeight)
+                            newHeight = nh5;
                         break;
                     case ResizeGripDirection.BottomRight:
-                        if (p.Y > 0 && p.X>0)
+                        var nw6 = p.X;
+                        var nh6 = p.Y;
+                        if (nh6 > 0 && nw6 > 0 && nh6>AssociatedObject.MinHeight && nw6>AssociatedObject.MinWidth)
                         {
-                            AssociatedObject.Width = p.X;
-                            AssociatedObject.Height = p.Y;
+                            newWidth = nw6;
+                            newHeight = nh6;
                         }
                         break;
                     case ResizeGripDirection.BottomLeft:
@@ -274,9 +284,9 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                             && nw2 > AssociatedObject.MinWidth
                             && nh2 > AssociatedObject.MinHeight)
                         {
-                            AssociatedObject.Left = nl2;
-                            AssociatedObject.Height = nh2;
-                            AssociatedObject.Width = nw2;
+                            newLeft = nl2;
+                            newHeight = nh2;
+                            newWidth = nw2;
                         }
                         break;
                     case ResizeGripDirection.TopRight:
@@ -287,9 +297,9 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                             && nh3 > AssociatedObject.MinHeight
                             && nw3 > AssociatedObject.MinWidth)
                         {
-                            AssociatedObject.Top = nt2;
-                            AssociatedObject.Height = nh3;
-                            AssociatedObject.Width = nw3;
+                            newTop = nt2;
+                            newHeight = nh3;
+                            newWidth = nw3;
                         }
                         break;
                     case ResizeGripDirection.TopLeft:
@@ -301,13 +311,15 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                             && nh4 > AssociatedObject.MinHeight
                             && nw4 > AssociatedObject.MinWidth)
                         {
-                            AssociatedObject.Top = nt3;
-                            AssociatedObject.Left = nl3;
-                            AssociatedObject.Height = nh4;
-                            AssociatedObject.Width = nw4;
+                            newTop = nt3;
+                            newLeft = nl3;
+                            newHeight = nh4;
+                            newWidth = nw4;
                         }
                         break;
                 }
+
+                AssociatedObject.SetPosAndSize(newLeft, newTop, newWidth, newHeight);
 
                 LastDragMoveTime = DateTime.Now;
             }
