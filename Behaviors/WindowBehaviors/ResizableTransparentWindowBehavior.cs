@@ -332,19 +332,19 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
             var hx = 1; var hy=1; 
             if (InInterval(y, m.Top,ResizeGripEdgeSize))
                 hy = 0;
-            if (InInterval(y,AssociatedObject.Height - ResizeGripEdgeSize - m.Bottom, ResizeGripEdgeSize + m.Bottom))
+            if (InInterval(y,AssociatedObject.ActualHeight - ResizeGripEdgeSize - m.Bottom, ResizeGripEdgeSize + m.Bottom))
                 hy = 2;
             if (InInterval(x, m.Left, ResizeGripEdgeSize))
                 hx = 0;
-            if (InInterval(x, AssociatedObject.Width - ResizeGripEdgeSize - m.Right, ResizeGripEdgeSize + m.Right))
+            if (InInterval(x, AssociatedObject.ActualWidth - ResizeGripEdgeSize - m.Right, ResizeGripEdgeSize + m.Right))
                 hx = 2;
             if /*(y >= ResizeGripEdgeSize &&
                 y <= AssociatedObject.Height - ResizeGripEdgeSize)*/
-                (InInterval(y,m.Top+ResizeGripEdgeSize,AssociatedObject.Height-m.Top-m.Bottom-2d*ResizeGripEdgeSize))
+                (InInterval(y,m.Top+ResizeGripEdgeSize,AssociatedObject.ActualHeight-m.Top-m.Bottom-2d*ResizeGripEdgeSize))
                 hy = 1;
             if (/*x >= ResizeGripEdgeSize &&
                 x <= AssociatedObject.Width - ResizeGripEdgeSize)*/
-                InInterval(x,m.Left+ResizeGripEdgeSize,AssociatedObject.Width-m.Left-m.Right-2d*ResizeGripEdgeSize))
+                InInterval(x,m.Left+ResizeGripEdgeSize,AssociatedObject.ActualWidth-m.Left-m.Right-2d*ResizeGripEdgeSize))
                 hx = 1;
             var dr = GridDrs[hy, hx];
             
