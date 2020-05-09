@@ -59,7 +59,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         public static readonly DependencyProperty DragDropAnimationProperty =
             DependencyProperty.Register("DragDropAnimation", typeof(IAnimations), typeof(DraggableFrameworkElementBehavior), new PropertyMetadata(null));
 
-        Point _start;
+        Point? _start;
         DataObject _dataObject;
         List<string> _draggableElementTypeNames;
 
@@ -92,29 +92,44 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         {
             base.OnAttached();
             AssociatedObject.PreviewMouseLeftButtonDown += AssociatedObject_PreviewMouseLeftButtonDown;
+            AssociatedObject.PreviewMouseLeftButtonUp += AssociatedObject_PreviewMouseLeftButtonUp;
             AssociatedObject.MouseMove += AssociatedObject_MouseMove;
             if (DraggableElementTypeNames != null)
                 _draggableElementTypeNames = DraggableElementTypeNames.Split(',').ToList();
+        }
+
+        private void AssociatedObject_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            _start = null;
+#if dbg
+            DesktopPanelTool.Lib.Debug.WriteLine($"button up");
+#endif
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching(); 
             AssociatedObject.PreviewMouseLeftButtonDown -= AssociatedObject_PreviewMouseLeftButtonDown;
+            AssociatedObject.PreviewMouseLeftButtonUp -= AssociatedObject_PreviewMouseLeftButtonUp;
             AssociatedObject.MouseMove -= AssociatedObject_MouseMove;
         }
 
         private void AssociatedObject_MouseMove(object sender, MouseEventArgs e)
         {
-            if (IsEnabled && CheckIsValidDrag())
+            if (IsEnabled && CheckIsValidDrag() && _start.HasValue )
             {
-                Point mpos = e.GetPosition(null);
-                Vector diff = _start - mpos;
-
+                //Point mpos = e.GetPosition(null);
+                var mp = new POINT();
+                GetCursorPos(ref mp);
+                var mpos = new Point(mp.X, mp.Y);
+                Vector diff = _start.Value - mpos;
+                
                 if (e.LeftButton == MouseButtonState.Pressed &&
                     Math.Abs(diff.X) > AppSettings.MinimumHorizontalDragDistance &&
                     Math.Abs(diff.Y) > AppSettings.MinimumVerticalDragDistance)
                 {
+                    _start = null;
+
                     if (AssociatedObject is IAnimatableElement ae)
                     {
                         ae.WidthBackup = AssociatedObject.ActualWidth;
@@ -124,6 +139,9 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                     DragDropAnimation?.Start(AssociatedObject,BeginDragEffectAnimationName);
                     AssociatedObject.GiveFeedback += AssociatedObject_GiveFeedback;
 
+#if dbg
+                    DesktopPanelTool.Lib.Debug.WriteLine($"do drag drop (mpos={mpos}) (diff.X={diff.X} diff.Y={diff.Y})");
+#endif
                     _dataObject = new DataObject(AssociatedObject.GetType(), AssociatedObject);
                     var r = DragDrop.DoDragDrop(AssociatedObject, _dataObject, DragDropEffects.Move);
 
@@ -228,9 +246,12 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         {
             if (IsEnabled && CheckIsValidDrag())
             {
-                _start = e.GetPosition(null);
+                //_start = e.GetPosition(null);
+                var p = new POINT();
+                GetCursorPos(ref p);
+                _start = new Point(p.X, p.Y);
 #if dbg
-                DesktopPanelTool.Lib.Debug.WriteLine($"init start drag position");
+                DesktopPanelTool.Lib.Debug.WriteLine($"init start drag position (start={_start})");
 #endif
             }
         }
