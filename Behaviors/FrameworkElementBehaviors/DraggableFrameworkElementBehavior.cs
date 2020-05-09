@@ -1,5 +1,6 @@
 ﻿//#define dbg
 
+using DesktopPanelTool.ComponentModels;
 using DesktopPanelTool.Lib;
 using DesktopPanelTool.Models;
 using DesktopPanelTool.Views;

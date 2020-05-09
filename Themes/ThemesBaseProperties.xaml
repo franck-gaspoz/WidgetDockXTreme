@@ -13,6 +13,7 @@
     <sys:Double x:Key="Widget_TitleBar_Height">20</sys:Double>
     <sys:Double x:Key="DesktopPanel_TitleBar_Height">20</sys:Double>
     <sys:Double x:Key="DesktopPanelContent_Padding">8</sys:Double>
+    <Thickness x:Key="DesktopPanelContent_PaddingThickness">8</Thickness>
     <Thickness x:Key="DesktopPanelContent_LastWidgetDropPlaceHolderMargin">8</Thickness>
 
     <Thickness x:Key="ContextMenu_Padding">2</Thickness>

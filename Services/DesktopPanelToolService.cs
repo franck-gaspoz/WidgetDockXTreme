@@ -231,6 +231,7 @@ namespace DesktopPanelTool.Services
             var widget2 = new WidgetControl();
             widget2.ViewModel.Title = "widget 2";
             widget2.ViewModel.HasSettings = false;
+            widget2.ViewModel.AutoSizeToFitPanelSize = true;
             panel.ViewModel.AddWidget(widget2);
 
             var widget3 = new WidgetControl();

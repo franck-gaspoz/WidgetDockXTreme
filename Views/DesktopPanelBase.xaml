@@ -217,7 +217,7 @@
                     <controls:DesktopPanelTitleBar />
 
                     <!--  stack of widgets  -->
-                    <StackPanel
+                    <!--<StackPanel
                         x:Name="WidgetsPanel"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -227,12 +227,16 @@
                             <panelbehaviors:WidgetsStackPanelBehavior PanelPadding="{DynamicResource DesktopPanelContent_Padding}" WidgetSpacing="{DynamicResource Widget_Spacing}" />
                         </behaviors:Interaction.Behaviors>
 
-                    </StackPanel>
+                    </StackPanel>-->
+
+                    <!--<controls:AutoSizableElementsPanelControl x:Name="WidgetsPanel" />-->
+
 
                     <controls:WidgetStackPanelDropPlaceHolder
                         x:Name="PermanentWidgetDropPlaceHolder"
                         DropSensitiveAreahighlightBackgroundBrush="{DynamicResource DropAreaSensitiveAreaHighlightBackground}"
-                        PlaceHolderMargin="{DynamicResource DesktopPanelContent_LastWidgetDropPlaceHolderMargin}">
+                        PlaceHolderMargin="{DynamicResource DesktopPanelContent_LastWidgetDropPlaceHolderMargin}"
+                        Visibility="Collapsed">
                         <behaviors:Interaction.Behaviors>
                             <frameworkelementbehaviors:MaximizeStackPanelChildSizeFrameworkElementBehavior Container="{Binding ElementName=RootStackPanel}" />
                         </behaviors:Interaction.Behaviors>
@@ -241,6 +245,8 @@
                 </StackPanel>
 
             </Border>
+
+            <controls:AutoSizableElementsPanelControl x:Name="WidgetsPanel" />
 
             <!--  border layer  -->
             <Border Style="{DynamicResource PanelBackgroundLayer2}" />

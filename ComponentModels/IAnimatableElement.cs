@@ -1,4 +1,4 @@
-﻿namespace DesktopPanelTool.Lib
+﻿namespace DesktopPanelTool.ComponentModels
 {
     internal interface IAnimatableElement
     {

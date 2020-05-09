@@ -1,6 +1,7 @@
 ﻿using DesktopPanelTool.Controls;
 using DesktopPanelTool.Lib;
 using System;
+using System.ComponentModel.Design;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Media;
@@ -94,6 +95,24 @@ namespace DesktopPanelTool.ViewModels
 
         public Visibility ButtonSettingsVisibility => HasSettings ? Visibility.Visible : Visibility.Collapsed;
 
+        bool _autoSizeToFitPanelSize = false;
+        /// <summary>
+        /// if true, widget size fit panel size according to panel orientation
+        /// </summary>
+        public bool AutoSizeToFitPanelSize
+        {
+            get
+            {
+                return _autoSizeToFitPanelSize;
+            }
+            set
+            {
+                _autoSizeToFitPanelSize = value;
+                SetAutoSizeStrategy();
+                NotifyPropertyChanged();
+            }
+        }
+
         string[] _members = new string[] {
             nameof(Title),
             nameof(HasSettings)
@@ -108,11 +127,28 @@ namespace DesktopPanelTool.ViewModels
         {
             info.GetValues(this, _members);
             View = new WidgetControl(this);
+            Initialize();
         }
 
         public WidgetBaseViewModel(WidgetControl widget)
         {
             View = widget;
+            Initialize();
+        }
+
+        void Initialize()
+        {
+            View.Loaded += OnLoadedInit;
+        }
+
+        void OnLoadedInit(object o, EventArgs e)
+        {
+            SetAutoSizeStrategy();
+        }
+
+        void SetAutoSizeStrategy()
+        {
+            return;
         }
     }
 }

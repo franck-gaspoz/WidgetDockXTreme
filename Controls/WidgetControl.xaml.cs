@@ -1,4 +1,5 @@
-﻿using DesktopPanelTool.Lib;
+﻿using DesktopPanelTool.ComponentModels;
+using DesktopPanelTool.Lib;
 using DesktopPanelTool.ViewModels;
 using DesktopPanelTool.Views;
 using System.Windows.Controls;
@@ -8,7 +9,7 @@ namespace DesktopPanelTool.Controls
     /// <summary>
     /// Logique d'interaction pour WidgetControl.xaml
     /// </summary>
-    public partial class WidgetControl : UserControl, IAnimatableElement
+    public partial class WidgetControl : UserControl, IAnimatableElement, IAutoSizableElement
     {
         public WidgetBaseViewModel ViewModel { get; set; }
 
@@ -20,12 +21,6 @@ namespace DesktopPanelTool.Controls
             ViewModel = new WidgetBaseViewModel(this);
             InitializeComponent();
             DataContext = ViewModel;
-            Loaded += WidgetControl_Loaded;
-        }
-
-        private void WidgetControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            this.MinimizeSize();
         }
 
         public WidgetControl(WidgetBaseViewModel viewModel)
@@ -33,7 +28,6 @@ namespace DesktopPanelTool.Controls
             ViewModel = viewModel;
             InitializeComponent();
             DataContext = ViewModel; 
-            Loaded += WidgetControl_Loaded;
         }
 
         public void UpdateWidgetViewBindings(DesktopPanelBase oldDesktopPanelBase, DesktopPanelBase newDesktopPanelBase)
