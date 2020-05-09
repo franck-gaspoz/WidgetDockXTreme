@@ -116,10 +116,10 @@ namespace DesktopPanelTool.Services
             var p = new POINT();
             GetCursorPos(ref p);
             var gap = (Thickness)widget.FindResource("WindowShadowAreaSize");
-            var dx = (double)widget.FindResource("DropWidgetOnDesktopPanelMouseRelativeLeft");
-            var dy = (double)widget.FindResource("DropWidgetOnDesktopPanelMouseRelativeTop");
-            panel.Left = p.X - gap.Left -dx;
-            panel.Top = p.Y - gap.Top -dy;
+            var mind = (double)widget.FindResource("DropWidgetOnDesktopPanelMouseRelativeMinPosition");
+            var maxd = (double)widget.FindResource("DropWidgetOnDesktopPanelMouseRelativeMaxPosition");            
+            panel.Left = p.X - gap.Left -maxd - widget.WidthBackup/2d;
+            panel.Top = p.Y - gap.Top -mind - widget.HeightBackup/2d;
             panel.ViewModel.AddWidget(widget);
             widget.UpdateWidgetViewBindings(oldpanel, panel);
             panel.Show();

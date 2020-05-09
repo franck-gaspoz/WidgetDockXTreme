@@ -8,9 +8,12 @@ namespace DesktopPanelTool.Controls
     /// <summary>
     /// Logique d'interaction pour WidgetControl.xaml
     /// </summary>
-    public partial class WidgetControl : UserControl
+    public partial class WidgetControl : UserControl, IAnimatableElement
     {
         public WidgetBaseViewModel ViewModel { get; set; }
+
+        public double WidthBackup { get; set; }
+        public double HeightBackup { get; set; }
 
         public WidgetControl()
         {

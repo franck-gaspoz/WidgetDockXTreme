@@ -115,6 +115,12 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                     Math.Abs(diff.X) > AppSettings.MinimumHorizontalDragDistance &&
                     Math.Abs(diff.Y) > AppSettings.MinimumVerticalDragDistance)
                 {
+                    if (AssociatedObject is IAnimatableElement ae)
+                    {
+                        ae.WidthBackup = AssociatedObject.ActualWidth;
+                        ae.HeightBackup = AssociatedObject.ActualHeight;
+                    }
+
                     DragDropAnimation?.Start(AssociatedObject,BeginDragEffectAnimationName);
                     AssociatedObject.GiveFeedback += AssociatedObject_GiveFeedback;
 
