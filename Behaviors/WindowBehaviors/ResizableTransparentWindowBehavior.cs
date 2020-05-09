@@ -236,85 +236,85 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                 double newWidth = AssociatedObject.ActualWidth;
                 double newHeight = AssociatedObject.ActualHeight;
 
+                double calcLeft, calcTop, calcWidth, calcHeight;
+
                 switch (CurrentResizeGripDirection)
                 {
                     case ResizeGripDirection.Left:
-                        var nl = AssociatedObject.Left + p.X;
-                        var nw = AssociatedObject.ActualWidth - p.X;
-                        if (nw>=0 &&
-                            nw>AssociatedObject.MinWidth)
+                        calcLeft = AssociatedObject.Left + p.X;
+                        calcWidth = AssociatedObject.ActualWidth - p.X;
+                        if (calcWidth>=0 &&
+                            calcWidth>AssociatedObject.MinWidth)
                         {
-                            newLeft = nl;
-                            newWidth = nw;
+                            newLeft = calcLeft;
+                            newWidth = calcWidth;
                         }
                         break;
                     case ResizeGripDirection.Right:
-                        var nw5 = p.X;
-                        if (nw5 >= 0 && nw5>AssociatedObject.MinWidth)
-                            newWidth = nw5;
+                        calcWidth = p.X;
+                        if (calcWidth >= 0 && calcWidth>AssociatedObject.MinWidth)
+                            newWidth = calcWidth;
                         break;
                     case ResizeGripDirection.Top:
-                        var nt = AssociatedObject.Top + p.Y;
-                        var nh = AssociatedObject.ActualHeight - p.Y;
-                        if (nh >= 0 && nh > AssociatedObject.MinHeight)
+                        calcTop = AssociatedObject.Top + p.Y;
+                        calcHeight = AssociatedObject.ActualHeight - p.Y;
+                        if (calcHeight >= 0 && calcHeight > AssociatedObject.MinHeight)
                         {
-                            newTop = nt;
-                            newHeight = nh;
+                            newTop = calcTop;
+                            newHeight = calcHeight;
                         }
                         break;
                     case ResizeGripDirection.Bottom:
-                        var nh5 = p.Y;
-                        if (nh5 > 0 && nh5>AssociatedObject.MinHeight)
-                            newHeight = nh5;
+                        calcHeight = p.Y;
+                        if (calcHeight > 0 && calcHeight>AssociatedObject.MinHeight)
+                            newHeight = calcHeight;
                         break;
                     case ResizeGripDirection.BottomRight:
-                        var nw6 = p.X;
-                        var nh6 = p.Y;
-                        if (nh6 > 0 && nw6 > 0 && nh6>AssociatedObject.MinHeight && nw6>AssociatedObject.MinWidth)
-                        {
-                            newWidth = nw6;
-                            newHeight = nh6;
-                        }
+                        calcWidth = p.X;
+                        calcHeight = p.Y;
+                        if (calcHeight > 0  && calcHeight>AssociatedObject.MinHeight)
+                            newHeight = calcHeight;
+                        if (calcWidth > 0 && calcWidth >AssociatedObject.MinWidth)
+                            newWidth = calcWidth;
                         break;
                     case ResizeGripDirection.BottomLeft:
-                        var nl2 = AssociatedObject.Left + p.X;
-                        var nh2 = p.Y;
-                        var nw2 = AssociatedObject.ActualWidth - p.X;
-                        if (nh2 >= 0 && nw2>0
-                            && nw2 > AssociatedObject.MinWidth
-                            && nh2 > AssociatedObject.MinHeight)
+                        calcLeft = AssociatedObject.Left + p.X;
+                        calcHeight = p.Y;
+                        calcWidth = AssociatedObject.ActualWidth - p.X;
+                        if (calcHeight >= 0 && calcHeight > AssociatedObject.MinHeight)
+                            newHeight = calcHeight;
+                        if (calcWidth > AssociatedObject.MinWidth && calcWidth > 0 )
                         {
-                            newLeft = nl2;
-                            newHeight = nh2;
-                            newWidth = nw2;
+                            newLeft = calcLeft;
+                            newWidth = calcWidth;
                         }
                         break;
                     case ResizeGripDirection.TopRight:
-                        var nt2 = AssociatedObject.Top + p.Y;
-                        var nh3 = AssociatedObject.ActualHeight - p.Y;
-                        var nw3 = p.X;
-                        if (nh3 >= 0 && nw3 > 0
-                            && nh3 > AssociatedObject.MinHeight
-                            && nw3 > AssociatedObject.MinWidth)
+                        calcTop = AssociatedObject.Top + p.Y;
+                        calcHeight = AssociatedObject.ActualHeight - p.Y;
+                        calcWidth = p.X;
+                        if (calcHeight >= 0 && calcHeight > AssociatedObject.MinHeight)
                         {
-                            newTop = nt2;
-                            newHeight = nh3;
-                            newWidth = nw3;
+                            newTop = calcTop;
+                            newHeight = calcHeight;
                         }
+                        if ( calcWidth > AssociatedObject.MinWidth && calcWidth > 0)
+                            newWidth = calcWidth;
                         break;
                     case ResizeGripDirection.TopLeft:
-                        var nt3 = AssociatedObject.Top + p.Y;
-                        var nl3 = AssociatedObject.Left + p.X;
-                        var nh4 = AssociatedObject.ActualHeight - p.Y;
-                        var nw4 = AssociatedObject.ActualWidth - p.X;
-                        if (nh4 > 0 && nw4>=0
-                            && nh4 > AssociatedObject.MinHeight
-                            && nw4 > AssociatedObject.MinWidth)
+                        calcTop = AssociatedObject.Top + p.Y;
+                        calcLeft = AssociatedObject.Left + p.X;
+                        calcHeight = AssociatedObject.ActualHeight - p.Y;
+                        calcWidth = AssociatedObject.ActualWidth - p.X;
+                        if (calcHeight > 0 && calcHeight > AssociatedObject.MinHeight)
                         {
-                            newTop = nt3;
-                            newLeft = nl3;
-                            newHeight = nh4;
-                            newWidth = nw4;
+                            newTop = calcTop;
+                            newHeight = calcHeight;
+                        }
+                        if (calcWidth > AssociatedObject.MinWidth && calcWidth >= 0)
+                        {
+                            newLeft = calcLeft;
+                            newWidth = calcWidth;
                         }
                         break;
                 }
