@@ -219,8 +219,8 @@
                     <!--  stack of widgets  -->
                     <StackPanel
                         x:Name="WidgetsPanel"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         Orientation="Horizontal">
 
                         <behaviors:Interaction.Behaviors>

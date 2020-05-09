@@ -20,13 +20,20 @@ namespace DesktopPanelTool.Controls
             ViewModel = new WidgetBaseViewModel(this);
             InitializeComponent();
             DataContext = ViewModel;
+            Loaded += WidgetControl_Loaded;
+        }
+
+        private void WidgetControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.MinimizeSize();
         }
 
         public WidgetControl(WidgetBaseViewModel viewModel)
         {
             ViewModel = viewModel;
             InitializeComponent();
-            DataContext = ViewModel;
+            DataContext = ViewModel; 
+            Loaded += WidgetControl_Loaded;
         }
 
         public void UpdateWidgetViewBindings(DesktopPanelBase oldDesktopPanelBase, DesktopPanelBase newDesktopPanelBase)

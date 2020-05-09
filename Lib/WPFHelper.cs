@@ -164,12 +164,9 @@ namespace DesktopPanelTool.Lib
 
         internal static RenderTargetBitmap GetRenderTargetBitmap(FrameworkElement element)
         {
-            //var size = element.RenderSize;
             var size = element.DesiredSize;
-            //size.Height += 32d;
             var bm = element.Margin;
             element.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-            //element.Arrange(new Rect(new Point(), element.DesiredSize));
             element.Arrange(new Rect(new Point(), size));
 
             RenderTargetBitmap rtb =
