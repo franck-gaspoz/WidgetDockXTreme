@@ -15,6 +15,8 @@ namespace DesktopPanelTool.Controls
 {
     public partial class AutoSizableElementsPanelControl : UserControl
     {
+        #region attributes
+
         public Orientation Orientation { get; protected set; } = Orientation.Horizontal;
 
         readonly List<IAutoSizableElement> _elements = new List<IAutoSizableElement>();
@@ -24,15 +26,42 @@ namespace DesktopPanelTool.Controls
 
         double _splitterWidth = 5;
         double _splitterHeight = 5;
-        double _elementSpacing = 8;
         bool _initialized = false;
         Window _window;
+
+        public double ElementSpacing
+        {
+            get { return (double)GetValue(ElementSpacingProperty); }
+            set { SetValue(ElementSpacingProperty, value); }
+        }
+
+        public static readonly DependencyProperty ElementSpacingProperty =
+            DependencyProperty.Register("ElementSpacing", typeof(double), typeof(AutoSizableElementsPanelControl), new PropertyMetadata(8d));
+
+        public string VerticalGridSplitterStyleName
+        {
+            get { return (string)GetValue(VerticalGridSplitterStyleNameProperty); }
+            set { SetValue(VerticalGridSplitterStyleNameProperty, value); }
+        }
+
+        public static readonly DependencyProperty VerticalGridSplitterStyleNameProperty =
+            DependencyProperty.Register("VerticalGridSplitterStyleName", typeof(string), typeof(AutoSizableElementsPanelControl), new PropertyMetadata(null));
+
+        public string HorizontalGridSplitterStyleName
+        {
+            get { return (string)GetValue(HorizontalGridSplitterStyleNameProperty); }
+            set { SetValue(HorizontalGridSplitterStyleNameProperty, value); }
+        }
+
+        public static readonly DependencyProperty HorizontalGridSplitterStyleNameProperty =
+            DependencyProperty.Register("HorizontalGridSplitterStyleName", typeof(string), typeof(AutoSizableElementsPanelControl), new PropertyMetadata(null));
+
+        #endregion
 
         public AutoSizableElementsPanelControl()
         {
             InitializeComponent();
-            _elementSpacing = (double)FindResource("Widget_Spacing");
-            InsertEmptyCell(0,0);
+            InsertEmptyCell(0, 0);
             Loaded += AutoSizableElementsPanelControl_Loaded;
         }
 
@@ -288,10 +317,10 @@ namespace DesktopPanelTool.Controls
             switch (orientation)
             {
                 case Orientation.Horizontal:
-                    gs.SetResourceReference(FrameworkElement.StyleProperty, "WidgetVerticalSizer");
+                    gs.SetResourceReference(FrameworkElement.StyleProperty, VerticalGridSplitterStyleName);
                     break;
                 case Orientation.Vertical:
-                    gs.SetResourceReference(FrameworkElement.StyleProperty, "WidgetHorizontalSizer");
+                    gs.SetResourceReference(FrameworkElement.StyleProperty, HorizontalGridSplitterStyleName);
                     break;
             }
             var animations = new FrameworkElementFadeInOutAnimation();
@@ -376,7 +405,8 @@ namespace DesktopPanelTool.Controls
                     grid.RowDefinitions.Add(rd);
                     grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0) });
                     grid.ColumnDefinitions.Add(new ColumnDefinition());
-                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(_elementSpacing) });
+                    if (ElementSpacing>0)
+                        grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(ElementSpacing) });
                     gridSplitter.Height = _splitterHeight;
                     gridSplitter.HorizontalAlignment = HorizontalAlignment.Stretch;
                     gridSplitter.VerticalAlignment = VerticalAlignment.Bottom;
@@ -390,7 +420,8 @@ namespace DesktopPanelTool.Controls
                     grid.ColumnDefinitions.Add(cd);
                     grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0) });
                     grid.RowDefinitions.Add(new RowDefinition());
-                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(_elementSpacing) });
+                    if (ElementSpacing>0)
+                        grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(ElementSpacing) });
                     gridSplitter.Width = _splitterWidth;
                     gridSplitter.HorizontalAlignment = HorizontalAlignment.Right;
                     gridSplitter.VerticalAlignment = VerticalAlignment.Stretch;
@@ -403,8 +434,8 @@ namespace DesktopPanelTool.Controls
             return grid;
         }
 
-        double FixedMinWidth(double w) => Orientation == Orientation.Horizontal ? w+_elementSpacing : w;
-        double FixedMinHeight(double h) => Orientation == Orientation.Vertical ? h+_elementSpacing : h;
+        double FixedMinWidth(double w) => Orientation == Orientation.Horizontal ? w+ElementSpacing : w;
+        double FixedMinHeight(double h) => Orientation == Orientation.Vertical ? h+ElementSpacing : h;
         internal List<IAutoSizableElement> Elements => _elements.ToList();
         internal int IndexOf(IAutoSizableElement element) => _elements.IndexOf(element);
         ColumnDefinition Column(int index) => Container.ColumnDefinitions[index];

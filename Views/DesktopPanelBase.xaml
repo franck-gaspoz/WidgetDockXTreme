@@ -218,17 +218,6 @@
                         <!--  panel title bar  -->
                         <controls:DesktopPanelTitleBar x:Name="TitleBar" />
 
-                        <!--  stack of widgets  -->
-                        <!--<StackPanel
-                        x:Name="WidgetsPanel"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Orientation="Horizontal">
-                        <behaviors:Interaction.Behaviors>
-                            <panelbehaviors:WidgetsStackPanelBehavior PanelPadding="{DynamicResource DesktopPanelContent_Padding}" WidgetSpacing="{DynamicResource Widget_Spacing}" />
-                        </behaviors:Interaction.Behaviors>
-                    </StackPanel>-->
-
                         <controls:WidgetStackPanelDropPlaceHolder
                             x:Name="PermanentWidgetDropPlaceHolder"
                             DropSensitiveAreahighlightBackgroundBrush="{DynamicResource DropAreaSensitiveAreaHighlightBackground}"
@@ -241,11 +230,16 @@
 
                     </StackPanel>
 
+                    <!--  widgets panel  -->
                     <Grid>
                         <behaviors:Interaction.Behaviors>
                             <panelbehaviors:WidgetsGridPanelBehavior RelatedElement="{Binding ElementName=TitleBar}" />
                         </behaviors:Interaction.Behaviors>
-                        <controls:AutoSizableElementsPanelControl x:Name="WidgetsPanel" Margin="{DynamicResource DesktopPanelContent_PaddingThickness}" />
+                        <controls:AutoSizableElementsPanelControl
+                            x:Name="WidgetsPanel"
+                            Margin="{DynamicResource DesktopPanelContent_PaddingThickness}"
+                            HorizontalGridSplitterStyleName="WidgetHorizontalSizer"
+                            VerticalGridSplitterStyleName="WidgetVerticalSizer" />
                     </Grid>
 
                 </Grid>
