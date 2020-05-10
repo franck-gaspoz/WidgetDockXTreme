@@ -202,51 +202,55 @@
             <!--  content layer  -->
             <Border Style="{DynamicResource DesktopPanelContentBackgroundLayer}">
 
-                <!--  panel layout  -->
-                <StackPanel
-                    x:Name="RootStackPanel"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Orientation="Vertical">
+                <Grid>
 
-                    <behaviors:Interaction.Behaviors>
-                        <panelbehaviors:DesktopPanelOrientableStackPanelBehavior />
-                    </behaviors:Interaction.Behaviors>
+                    <!--  panel layout  -->
+                    <StackPanel
+                        x:Name="RootStackPanel"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Orientation="Vertical">
 
-                    <!--  panel title bar  -->
-                    <controls:DesktopPanelTitleBar />
+                        <behaviors:Interaction.Behaviors>
+                            <panelbehaviors:DesktopPanelOrientableStackPanelBehavior />
+                        </behaviors:Interaction.Behaviors>
 
-                    <!--  stack of widgets  -->
-                    <!--<StackPanel
+                        <!--  panel title bar  -->
+                        <controls:DesktopPanelTitleBar x:Name="TitleBar" />
+
+                        <!--  stack of widgets  -->
+                        <!--<StackPanel
                         x:Name="WidgetsPanel"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Orientation="Horizontal">
-
                         <behaviors:Interaction.Behaviors>
                             <panelbehaviors:WidgetsStackPanelBehavior PanelPadding="{DynamicResource DesktopPanelContent_Padding}" WidgetSpacing="{DynamicResource Widget_Spacing}" />
                         </behaviors:Interaction.Behaviors>
-
                     </StackPanel>-->
 
-                    <!--<controls:AutoSizableElementsPanelControl x:Name="WidgetsPanel" />-->
+                        <controls:WidgetStackPanelDropPlaceHolder
+                            x:Name="PermanentWidgetDropPlaceHolder"
+                            DropSensitiveAreahighlightBackgroundBrush="{DynamicResource DropAreaSensitiveAreaHighlightBackground}"
+                            PlaceHolderMargin="{DynamicResource DesktopPanelContent_LastWidgetDropPlaceHolderMargin}"
+                            Visibility="Collapsed">
+                            <behaviors:Interaction.Behaviors>
+                                <frameworkelementbehaviors:MaximizeStackPanelChildSizeFrameworkElementBehavior Container="{Binding ElementName=RootStackPanel}" />
+                            </behaviors:Interaction.Behaviors>
+                        </controls:WidgetStackPanelDropPlaceHolder>
 
+                    </StackPanel>
 
-                    <controls:WidgetStackPanelDropPlaceHolder
-                        x:Name="PermanentWidgetDropPlaceHolder"
-                        DropSensitiveAreahighlightBackgroundBrush="{DynamicResource DropAreaSensitiveAreaHighlightBackground}"
-                        PlaceHolderMargin="{DynamicResource DesktopPanelContent_LastWidgetDropPlaceHolderMargin}"
-                        Visibility="Collapsed">
+                    <Grid>
                         <behaviors:Interaction.Behaviors>
-                            <frameworkelementbehaviors:MaximizeStackPanelChildSizeFrameworkElementBehavior Container="{Binding ElementName=RootStackPanel}" />
+                            <panelbehaviors:WidgetsGridPanelBehavior RelatedElement="{Binding ElementName=TitleBar}" />
                         </behaviors:Interaction.Behaviors>
-                    </controls:WidgetStackPanelDropPlaceHolder>
+                        <controls:AutoSizableElementsPanelControl x:Name="WidgetsPanel" Margin="{DynamicResource DesktopPanelContent_PaddingThickness}" />
+                    </Grid>
 
-                </StackPanel>
+                </Grid>
 
             </Border>
-
-            <controls:AutoSizableElementsPanelControl x:Name="WidgetsPanel" />
 
             <!--  border layer  -->
             <Border Style="{DynamicResource PanelBackgroundLayer2}" />

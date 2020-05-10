@@ -13,19 +13,23 @@ namespace DesktopPanelTool.Controls
     {
         public WidgetBaseViewModel ViewModel { get; set; }
 
+        public AutoSizableElementViewModel AutoSizableElementViewModel { get; set; }
+
         public double WidthBackup { get; set; }
         public double HeightBackup { get; set; }
 
         public WidgetControl()
         {
             ViewModel = new WidgetBaseViewModel(this);
+            AutoSizableElementViewModel = ViewModel.AutoSizableElementViewModel;
             InitializeComponent();
             DataContext = ViewModel;
         }
 
-        public WidgetControl(WidgetBaseViewModel viewModel)
+        public WidgetControl(WidgetBaseViewModel viewModel, AutoSizableElementViewModel autoSizableElementViewModel)
         {
             ViewModel = viewModel;
+            AutoSizableElementViewModel = autoSizableElementViewModel;
             InitializeComponent();
             DataContext = ViewModel; 
         }

@@ -165,7 +165,6 @@ namespace DesktopPanelTool.Lib
         internal static RenderTargetBitmap GetRenderTargetBitmap(FrameworkElement element)
         {
             var size = element.DesiredSize;
-            var bm = element.Margin;
             element.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
             element.Arrange(new Rect(new Point(), size));
 
@@ -176,9 +175,6 @@ namespace DesktopPanelTool.Lib
                 96, 96, PixelFormats.Pbgra32);
 
             rtb.Render(element);
-
-            element.Margin = bm;
-
             return rtb;
         }
 

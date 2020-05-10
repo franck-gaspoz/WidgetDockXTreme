@@ -1,7 +1,6 @@
 ﻿using DesktopPanelTool.Controls;
 using DesktopPanelTool.Lib;
 using System;
-using System.ComponentModel.Design;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Media;
@@ -13,8 +12,8 @@ namespace DesktopPanelTool.ViewModels
         : ViewModelBase, ISerializable
     {
         public WidgetControl View { get; protected set; }
-
         public DesktopPanelBaseViewModel PanelViewModel { get; set; }
+        public AutoSizableElementViewModel AutoSizableElementViewModel { get; set; }
 
         #region border geometry
 
@@ -126,12 +125,13 @@ namespace DesktopPanelTool.ViewModels
         public WidgetBaseViewModel(SerializationInfo info, StreamingContext context)
         {
             info.GetValues(this, _members);
-            View = new WidgetControl(this);
+            View = new WidgetControl(this,AutoSizableElementViewModel);
             Initialize();
         }
 
         public WidgetBaseViewModel(WidgetControl widget)
         {
+            AutoSizableElementViewModel = new AutoSizableElementViewModel();
             View = widget;
             Initialize();
         }

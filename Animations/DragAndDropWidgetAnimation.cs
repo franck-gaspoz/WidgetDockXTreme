@@ -129,7 +129,8 @@ namespace DesktopPanelTool.Animations
 
                 case DraggableFrameworkElementBehavior.EndDragEffectAnimationName:
                     target.LayoutTransform = _endScaleTransform;
-                    _previousElement.Visibility = Visibility.Visible;
+                    if (_previousElement!=null) // temporary fix
+                        _previousElement.Visibility = Visibility.Visible;
                     break;
             }
 
