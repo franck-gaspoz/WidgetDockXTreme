@@ -181,6 +181,7 @@ namespace DesktopPanelTool.Controls
         internal void SetOrientation(Orientation orientation)
         {
             if (orientation == Orientation) return;
+
         }
 
         void SetBoundsLimits(IAutoSizableElement element)
@@ -349,7 +350,7 @@ namespace DesktopPanelTool.Controls
                     var rd = new RowDefinition() { Height = new GridLength(100, GridUnitType.Star) };
                     grid.RowDefinitions.Add(rd);
                     grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                    grid.RowDefinitions.Add(new RowDefinition() {  });
+                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0) });
                     gridSplitter.Height = _splitterHeight;
                     gridSplitter.HorizontalAlignment = HorizontalAlignment.Stretch;
                     gridSplitter.VerticalAlignment = VerticalAlignment.Center;
@@ -360,7 +361,7 @@ namespace DesktopPanelTool.Controls
                     var cd = new ColumnDefinition() { Width = GridLength.Auto };
                     grid.ColumnDefinitions.Add(cd);
                     grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
-                    grid.ColumnDefinitions.Add(new ColumnDefinition() { });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0) });
                     gridSplitter.Width = _splitterHeight;
                     gridSplitter.HorizontalAlignment = HorizontalAlignment.Center;
                     gridSplitter.VerticalAlignment = VerticalAlignment.Stretch;
