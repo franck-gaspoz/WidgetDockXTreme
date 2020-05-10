@@ -226,7 +226,8 @@ namespace DesktopPanelTool.Services
 
             var widget1 = new WidgetControl();
             widget1.ViewModel.Title = "widget 1";
-            panel.ViewModel.AddWidget(widget1);
+            widget1.AutoSizableElementViewModel.WidthSizeMode = SizeMode.Maximized;
+            panel.ViewModel.AddWidget(widget1);            
 
             var widget2 = new WidgetControl();
             widget2.ViewModel.Title = "widget 2";
@@ -237,6 +238,7 @@ namespace DesktopPanelTool.Services
 
             var widget3 = new WidgetControl();
             widget3.ViewModel.Title = "widget 3";
+            widget3.AutoSizableElementViewModel.WidthSizeMode = SizeMode.MaximizedResizable;
             panel.ViewModel.AddWidget(widget3);
             
             var scr = DisplayDevices.GetCurrentScreenInfo();

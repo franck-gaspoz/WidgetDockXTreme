@@ -22,6 +22,7 @@
     <Compile Remove="Behaviors\WindowBehaviors\WindowBehindWindowBehavior.cs" />
     <Compile Remove="Converters\DesktopPanelBaseViewModelToNotifyIconContextMenuItem.cs" />
     <Compile Remove="Converters\DoubleToGridLengthConverter.cs" />
+    <Compile Remove="Lib\FrameworkElementExt.cs" />
     <Compile Remove="Lib\ObjectRegistry.cs" />
     <Compile Remove="Services\DesktopPanelService.cs" />
     <Compile Remove="Views\DragImageBackgroundLayer.xaml.cs" />

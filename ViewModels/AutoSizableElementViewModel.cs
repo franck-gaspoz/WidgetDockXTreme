@@ -25,6 +25,23 @@ namespace DesktopPanelTool.ViewModels
             }
         }
 
+        SizeMode _heightSizeMode = SizeMode.MaximizedResizable;
+        /// <summary>
+        /// height size mode
+        /// </summary>
+        public SizeMode HeightSizeMode
+        {
+            get
+            {
+                return _heightSizeMode;
+            }
+            set
+            {
+                _heightSizeMode = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         double _minWidth = 0;
         /// <summary>
         /// min width == measured width (size mode auto)
