@@ -219,6 +219,7 @@ namespace DesktopPanelTool.Controls
 
         void SetBoundsLimits(IAutoSizableElement element)
         {
+            if (element.AutoSizableElementViewModel.MinWidth != 0) return;
             var o = (FrameworkElement)element;
             o.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
             element.AutoSizableElementViewModel.MinWidth = o.DesiredSize.Width;
@@ -402,9 +403,9 @@ namespace DesktopPanelTool.Controls
         internal List<IAutoSizableElement> Elements => _elements.ToList();
         internal int IndexOf(IAutoSizableElement element) => _elements.IndexOf(element);
         ColumnDefinition Column(int index) => Container.ColumnDefinitions[index];
-        ColumnDefinition GlueColumn => Container.ColumnDefinitions[Container.ColumnDefinitions.Count-1];
+        ColumnDefinition GlueColumn => Container.ColumnDefinitions[^1];
         RowDefinition Row(int index) => Container.RowDefinitions[index];
-        RowDefinition GlueRow => Container.RowDefinitions[Container.RowDefinitions.Count-1];
+        RowDefinition GlueRow => Container.RowDefinitions[^1];
         bool IsAutoSize(SizeMode sizeMode) => sizeMode == SizeMode.Auto || sizeMode == SizeMode.AutoResizable;
         bool IsSpecifiedSize(SizeMode sizeMode) => sizeMode == SizeMode.Fixed || sizeMode == SizeMode.FixedResizable || sizeMode == SizeMode.Auto || sizeMode == SizeMode.AutoResizable;
         bool IsMaximizableSize(SizeMode sizeMode) => sizeMode == SizeMode.MaximizedResizable || sizeMode == SizeMode.Maximized;
