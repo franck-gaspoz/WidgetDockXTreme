@@ -8,6 +8,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using System.Xml.Linq;
 
 namespace DesktopPanelTool.Controls
 {
@@ -16,12 +18,14 @@ namespace DesktopPanelTool.Controls
         public Orientation Orientation { get; protected set; } = Orientation.Horizontal;
 
         readonly List<IAutoSizableElement> _elements = new List<IAutoSizableElement>();
+        readonly List<(IAutoSizableElement element, Grid cell)> _elementsCells = new List<(IAutoSizableElement element, Grid cell)>();
         readonly List<GridSplitter> _splitters = new List<GridSplitter>();
         readonly List<(IAutoSizableElement element,int index)> _deferredElements = new List<(IAutoSizableElement,int)>();
 
         double _splitterWidth = 3;
         double _splitterHeight = 3;
         double _elementSpacing = 8;
+        bool _initialized = false;
 
         public AutoSizableElementsPanelControl()
         {
@@ -32,10 +36,22 @@ namespace DesktopPanelTool.Controls
 
         private void AutoSizableElementsPanelControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            foreach (var (element, index) in _deferredElements)
-                AddElement(element, index);
-            _deferredElements.Clear();
-            SetOrientation(Container.ActualWidth >= Container.ActualHeight ? Orientation.Horizontal : Orientation.Vertical);
+            if (!_initialized)
+            {
+                _initialized = true;
+                foreach (var (element, index) in _deferredElements)
+                    AddElement(element, index);
+                _deferredElements.Clear();
+                SetOrientation(GetOrientation());
+                Container.SizeChanged += Container_SizeChanged;
+            }
+        }
+
+        Orientation GetOrientation() => Container.ActualWidth >= Container.ActualHeight ? Orientation.Horizontal : Orientation.Vertical;
+
+        private void Container_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            SetOrientation(GetOrientation());
         }
 
         internal void AddElement(IAutoSizableElement element, int index=-1)
@@ -45,7 +61,8 @@ namespace DesktopPanelTool.Controls
             else
             {
                 var idx = index == -1 ? _elements.Count : index;
-                _elements.Insert(idx, element);
+                element.AutoSizableElementViewModel.Index = idx;
+                _elements.Insert(idx, element);                
                 InsertElement(element, idx);
             }
         }
@@ -181,7 +198,22 @@ namespace DesktopPanelTool.Controls
         internal void SetOrientation(Orientation orientation)
         {
             if (orientation == Orientation) return;
-
+            Orientation = orientation;
+            var lst = _elements.ToList();
+            lst.Sort(new Comparison<IAutoSizableElement>((x, y) => x.AutoSizableElementViewModel.Index.CompareTo(y.AutoSizableElementViewModel.Index)));
+            Container.Children.Clear();
+            Container.ColumnDefinitions.Clear();
+            Container.RowDefinitions.Clear();
+            _elements.Clear();
+            _splitters.Clear();
+            foreach (var element in lst)
+            {
+                var ecell = _elementsCells.Where(x => x.element == element).First();
+                ecell.cell.Children.Remove((UIElement)element);
+            }
+            _elementsCells.Clear();
+            foreach (var element in lst)
+                AddElement(element);
         }
 
         void SetBoundsLimits(IAutoSizableElement element)
@@ -344,6 +376,7 @@ namespace DesktopPanelTool.Controls
             var gridSplitter = new GridSplitter();
             grid.Children.Add((UIElement)element);
             grid.Children.Add(gridSplitter);
+            _elementsCells.Add((element, grid));
             switch (Orientation)
             {
                 case Orientation.Horizontal:
@@ -372,10 +405,12 @@ namespace DesktopPanelTool.Controls
             return grid;
         }
 
+#if no
         void SetColumnWidth(ColumnDefinition cd, double w) => cd.Width = new GridLength(w);
         void RemoveColumnWidth(ColumnDefinition cd) => cd.Width = new GridLength(1,GridUnitType.Star);
         void SetRowWidth(RowDefinition rd, double w) => rd.Height = new GridLength(w);
         void RemoveRowWidth(RowDefinition rd) => rd.Height = new GridLength(1,GridUnitType.Star);
+#endif
 
         internal List<IAutoSizableElement> Elements => _elements.ToList();
         internal int IndexOf(IAutoSizableElement element) => _elements.IndexOf(element);

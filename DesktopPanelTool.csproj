@@ -17,6 +17,7 @@
   <ItemGroup>
     <Compile Remove="Behaviors\MenuIem\CloseSelfSubMenuOnPreviewMouseDownBehavior.cs" />
     <Compile Remove="Behaviors\MenuIem\CloseSubMenuOnPreviewMouseDownBehavior.cs" />
+    <Compile Remove="Behaviors\PanelBehaviors\WidgetsStackPanelBehavior.cs" />
     <Compile Remove="Behaviors\WindowBehaviors\HideWindowIfMenuItemClickedWindowBehavior.cs" />
     <Compile Remove="Behaviors\WindowBehaviors\ShadowLayerBehindWindowBehavior.cs" />
     <Compile Remove="Behaviors\WindowBehaviors\WindowBehindWindowBehavior.cs" />

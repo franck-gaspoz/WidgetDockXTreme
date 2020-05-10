@@ -56,7 +56,7 @@ namespace DesktopPanelTool.Behaviors.PanelBehaviors
                 AssociatedObject.Margin =
                     orientation == Orientation.Horizontal ?
                         new Thickness( RelatedElement.ActualHeight, 0, 0, 0)
-                        : new Thickness(RelatedElement.ActualHeight, 0, 0, 0);                
+                        : new Thickness(0,RelatedElement.ActualWidth, 0, 0);                
             }
         }
 

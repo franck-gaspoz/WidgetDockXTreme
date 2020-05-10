@@ -110,6 +110,11 @@ namespace DesktopPanelTool.ViewModels
             }
         }
 
+        /// <summary>
+        /// index in grid
+        /// </summary>
+        public int Index { get; set; }
+
         public AutoSizableElementViewModel()
         {
         }
