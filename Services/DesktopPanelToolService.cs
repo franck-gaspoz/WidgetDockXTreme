@@ -226,7 +226,8 @@ namespace DesktopPanelTool.Services
 
             var widget1 = new WidgetControl();
             widget1.ViewModel.Title = "widget 1";
-            widget1.AutoSizableElementViewModel.WidthSizeMode = SizeMode.MaximizedResizable;
+            widget1.AutoSizableElementViewModel.WidthSizeMode = SizeMode.Maximized;
+            widget1.AutoSizableElementViewModel.HeightSizeMode = SizeMode.Auto;
             panel.ViewModel.AddWidget(widget1);            
 
             var widget2 = new WidgetControl();
@@ -234,13 +235,15 @@ namespace DesktopPanelTool.Services
             widget2.ViewModel.HasSettings = false;
             widget2.ViewModel.AutoSizeToFitPanelSize = true;
             widget2.AutoSizableElementViewModel.WidthSizeMode = SizeMode.Auto;
+            widget2.AutoSizableElementViewModel.HeightSizeMode = SizeMode.AutoResizable;
             panel.ViewModel.AddWidget(widget2);
 
             var widget3 = new WidgetControl();
             widget3.ViewModel.Title = "widget 3";
             widget3.AutoSizableElementViewModel.WidthSizeMode = SizeMode.MaximizedResizable;
+            widget3.AutoSizableElementViewModel.HeightSizeMode = SizeMode.MaximizedResizable;
             panel.ViewModel.AddWidget(widget3);
-            
+
             var scr = DisplayDevices.GetCurrentScreenInfo();
             var x = (scr.WorkArea.Width - panel.Width)/ 2d;
             var y = (scr.WorkArea.Height - panel.Height)/ 2d;
