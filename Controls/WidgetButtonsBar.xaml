@@ -36,6 +36,14 @@
                         <Image Source="/Images/Icons/icons8-macos-close-20.png" />
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Command="{x:Static widgetcommands:WidgetCommands.DumpInfo}" Header="Dump info">
+                    <MenuItem.CommandParameter>
+                        <MultiBinding Converter="{x:Static converters:Converters.MultiValue}">
+                            <Binding Path="Data.PanelViewModel.View" Source="{StaticResource Proxy}" />
+                            <Binding Path="Data.View" Source="{StaticResource Proxy}" />
+                        </MultiBinding>
+                    </MenuItem.CommandParameter>
+                </MenuItem>
             </ContextMenu>
 
         </Grid.Resources>

@@ -221,7 +221,7 @@ namespace DesktopPanelTool.Controls
                         break;
                     case Orientation.Vertical:
                         maximizableCount = _elements.Where(x => IsMaximizableSize(x.AutoSizableElementViewModel.HeightSizeMode)).Count();
-                        ApplyGridCellHeightStrategy(Row(i),maximizableCount, props.HeightSizeMode, FixedMinHeight(props.MinHeight), props.Height, _splitters[i]);
+                        ApplyGridCellHeightStrategy(Row(i),maximizableCount, props.WidthSizeMode, FixedMinHeight(props.MinHeight), props.Height, _splitters[i]);
                         break;
                 }
             }
@@ -293,9 +293,7 @@ namespace DesktopPanelTool.Controls
         }
 
         void InsertElementCell(IAutoSizableElement element,UIElement cell,int grIndex)
-        {
-            var o = (FrameworkElement)element;
-            
+        {         
             Container.Children.Add(cell);
             switch (Orientation)
             {
@@ -346,19 +344,17 @@ namespace DesktopPanelTool.Controls
             }
             SetGridSplitterStyle(gs,Orientation);
             Grid.SetZIndex(gs, 1);
-            gs.DragDelta += Gs_DragDelta;
+            gs.DragDelta += WidgetSeparatorSplitter_DragDelta;
             return gs;
         }
 
-        private void Gs_DragDelta(object sender, DragDeltaEventArgs e)
+        void WidgetSeparatorSplitter_DragDelta(object sender, DragDeltaEventArgs e)
         {
 #if false && dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"splitter dragging dx={e.HorizontalChange},DynamicResourceExtension={e.VerticalChange}");
 #endif
             var gs = (GridSplitter)sender;
             var grIndex = _splitters.IndexOf(gs);
-            IAutoSizableElement nxtElem = (grIndex < _elements.Count - 1) ? _elements[grIndex + 1] : null;
-            var element = _elements[grIndex];
             switch (Orientation)
             {
                 case Orientation.Horizontal:
@@ -370,6 +366,39 @@ namespace DesktopPanelTool.Controls
             }
             RecalcMaximizedCellsSize();
             e.Handled = true;
+        }
+
+        void WidgetCellContentSplitter_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+            var gs = (GridSplitter)sender;
+            var cellgrid = WPFHelper.FindLogicalParent<Grid>(gs);
+            var widget = (WidgetControl)cellgrid.Children[0];
+            switch (Orientation)
+            {
+                case Orientation.Horizontal:
+                    IncreaseCellHeight(cellgrid,widget,e.VerticalChange);
+                    break;
+                case Orientation.Vertical:
+                    IncreaseCellWidth(cellgrid,widget,e.HorizontalChange);
+                    break;
+            }
+            e.Handled = true;
+        }
+
+        void IncreaseCellWidth(Grid grid,IAutoSizableElement element,double delta)
+        {
+            var cd = Column(grid,0);
+            var nw = cd.ActualWidth + delta;
+            nw = Math.Max(FixedMinWidth(element.AutoSizableElementViewModel.MinWidth), nw);
+            cd.Width = new GridLength(nw);
+        }
+
+        void IncreaseCellHeight(Grid grid, IAutoSizableElement element, double delta)
+        {
+            var cd = Row(grid,0);
+            var nh = cd.ActualHeight + delta;
+            nh = Math.Max(FixedMinHeight(element.AutoSizableElementViewModel.MinHeight), nh);
+            cd.Height = new GridLength(nh);
         }
 
         void IncreaseCellWidth(int i,double delta)
@@ -407,30 +436,36 @@ namespace DesktopPanelTool.Controls
                     grid.ColumnDefinitions.Add(new ColumnDefinition());
                     if (ElementSpacing>0)
                         grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(ElementSpacing) });
+
                     gridSplitter.Height = _splitterHeight;
                     gridSplitter.HorizontalAlignment = HorizontalAlignment.Stretch;
                     gridSplitter.VerticalAlignment = VerticalAlignment.Bottom;
                     gridSplitter.Margin = new Thickness(0);
+
                     SetGridSplitterStyle(gridSplitter, Orientation.Vertical);
                     ApplyGridCellHeightStrategy(rd, IsMaximizableSize(props.HeightSizeMode) ? 1 : 0, props.HeightSizeMode, FixedMinHeight(props.MinHeight), props.Height, gridSplitter);
                     Grid.SetRow(gridSplitter, 0);
                     break;
+
                 case Orientation.Vertical:
-                    var cd = new ColumnDefinition() { Width = GridLength.Auto };
+                    var cd = new ColumnDefinition() { Width = new GridLength(100, GridUnitType.Star) };
                     grid.ColumnDefinitions.Add(cd);
                     grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0) });
                     grid.RowDefinitions.Add(new RowDefinition());
                     if (ElementSpacing>0)
                         grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(ElementSpacing) });
+
                     gridSplitter.Width = _splitterWidth;
                     gridSplitter.HorizontalAlignment = HorizontalAlignment.Right;
                     gridSplitter.VerticalAlignment = VerticalAlignment.Stretch;
                     gridSplitter.Margin = new Thickness(0);
+
                     SetGridSplitterStyle(gridSplitter, Orientation.Horizontal);
-                    ApplyGridCellWidthStrategy(cd, IsMaximizableSize(props.WidthSizeMode) ? 1 : 0, props.WidthSizeMode, FixedMinWidth(props.MinWidth), props.Width, gridSplitter);
+                    ApplyGridCellWidthStrategy(cd, IsMaximizableSize(props.HeightSizeMode) ? 1 : 0, props.HeightSizeMode, FixedMinHeight(props.MinWidth), props.Width, gridSplitter);
                     Grid.SetColumn(gridSplitter, 0);
                     break;
             }
+            gridSplitter.DragDelta += WidgetCellContentSplitter_DragDelta;
             return grid;
         }
 
@@ -438,8 +473,10 @@ namespace DesktopPanelTool.Controls
         double FixedMinHeight(double h) => Orientation == Orientation.Vertical ? h+ElementSpacing : h;
         internal List<IAutoSizableElement> Elements => _elements.ToList();
         internal int IndexOf(IAutoSizableElement element) => _elements.IndexOf(element);
+        ColumnDefinition Column(Grid grid,int index) => grid.ColumnDefinitions[index];
         ColumnDefinition Column(int index) => Container.ColumnDefinitions[index];
         ColumnDefinition GlueColumn => Container.ColumnDefinitions[^1];
+        RowDefinition Row(Grid grid,int index) => grid.RowDefinitions[index];
         RowDefinition Row(int index) => Container.RowDefinitions[index];
         RowDefinition GlueRow => Container.RowDefinitions[^1];
         bool IsAutoSize(SizeMode sizeMode) => sizeMode == SizeMode.Auto || sizeMode == SizeMode.AutoResizable;

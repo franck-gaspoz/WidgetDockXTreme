@@ -94,24 +94,6 @@ namespace DesktopPanelTool.ViewModels
 
         public Visibility ButtonSettingsVisibility => HasSettings ? Visibility.Visible : Visibility.Collapsed;
 
-        bool _autoSizeToFitPanelSize = false;
-        /// <summary>
-        /// if true, widget size fit panel size according to panel orientation
-        /// </summary>
-        public bool AutoSizeToFitPanelSize
-        {
-            get
-            {
-                return _autoSizeToFitPanelSize;
-            }
-            set
-            {
-                _autoSizeToFitPanelSize = value;
-                SetAutoSizeStrategy();
-                NotifyPropertyChanged();
-            }
-        }
-
         string[] _members = new string[] {
             nameof(Title),
             nameof(HasSettings)
@@ -149,6 +131,11 @@ namespace DesktopPanelTool.ViewModels
         void SetAutoSizeStrategy()
         {
             return;
+        }
+
+        public string DumpInfo()
+        {
+            return $"title={_title}{Environment.NewLine}has settings={_hasSettings}{Environment.NewLine}{AutoSizableElementViewModel.DumpInfo()}";
         }
     }
 }

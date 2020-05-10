@@ -118,5 +118,10 @@ namespace DesktopPanelTool.ViewModels
         public AutoSizableElementViewModel()
         {
         }
+
+        public string DumpInfo()
+        {
+            return $"index={Index}{Environment.NewLine}widthSizeMode={WidthSizeMode} heightSizeMode={HeightSizeMode}{Environment.NewLine}minWidth={MinWidth} minHeight={MinHeight} width={Width} height={Height}";
+        }
     }
 }
