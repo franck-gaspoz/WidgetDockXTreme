@@ -226,7 +226,7 @@ namespace DesktopPanelTool.Services
 
             var widget1 = new WidgetControl();
             widget1.ViewModel.Title = "widget 1";
-            widget1.AutoSizableElementViewModel.WidthSizeMode = SizeMode.Maximized;
+            widget1.AutoSizableElementViewModel.WidthSizeMode = SizeMode.MaximizedResizable;
             panel.ViewModel.AddWidget(widget1);            
 
             var widget2 = new WidgetControl();

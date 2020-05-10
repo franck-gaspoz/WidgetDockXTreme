@@ -1,4 +1,4 @@
-﻿//#define dbg
+﻿#define dbg
 
 using DesktopPanelTool.ComponentModels;
 using DesktopPanelTool.Lib;
@@ -22,7 +22,6 @@ namespace DesktopPanelTool.Controls
 
         double _splitterWidth = 3;
         double _splitterHeight = 3;
-        double _emptyCellSize = 8;
         double _elementSpacing = 8;
 
         public AutoSizableElementsPanelControl()
@@ -60,11 +59,11 @@ namespace DesktopPanelTool.Controls
         void InsertElement(IAutoSizableElement element,int index)
         {
             var grIndex = index;
+            SetBoundsLimits(element);
             var elementCell = BuildCell(element);
             InsertElementCell(element,elementCell,grIndex);
             var gsEnd = BuildGridSplitter(true);
             AddSplitterCell(gsEnd, grIndex);
-            SetBoundsLimits(element);
             ApplyGridCellsSizingStrategy();
         }
 
@@ -83,7 +82,7 @@ namespace DesktopPanelTool.Controls
 
             Column(grIndex).MinWidth = props.MinWidth;
 
-            if (IsMaximizableSize(SizeMode.Maximized))
+            if (IsMaximizableSize(props.WidthSizeMode))
             {
                 var psize = (100 / nb);
                 cd.Width = new GridLength(psize, GridUnitType.Star);
@@ -91,8 +90,54 @@ namespace DesktopPanelTool.Controls
 
             if (!IsResizableSize(props.WidthSizeMode))
                 splitter.IsEnabled = false;
+        }
 
-            var lastElement = _elements[nb - 1];
+        void RecalcMaximizedCellsSize()
+        {
+            int i = 0, nb = 0;
+
+            switch (Orientation)
+            {
+                case Orientation.Horizontal:
+                    var cds = Container.ColumnDefinitions.ToList();
+                    foreach (var cd in cds)
+                        if (i++ < _elements.Count)
+                            if (IsMaximizableSize(_elements[i - 1].AutoSizableElementViewModel.WidthSizeMode)
+                                && cd.Width.GridUnitType == GridUnitType.Star)
+                                nb ++;
+                    i = 0;
+                    foreach (var cd in cds)
+                        if (i++ < _elements.Count)
+                            if (IsMaximizableSize( _elements[i-1].AutoSizableElementViewModel.WidthSizeMode)
+                                && cd.Width.GridUnitType == GridUnitType.Star)
+                            {
+                                var psize = (100 / nb);
+                                cd.Width = new GridLength(psize, GridUnitType.Star);
+                            }
+                    GlueColumn.Width = new GridLength(0);
+                    break;
+                case Orientation.Vertical:
+                    var rds = Container.RowDefinitions.ToList();
+                    foreach (var rd in rds)
+                        if (i++ < _elements.Count)
+                            if (IsMaximizableSize(_elements[i - 1].AutoSizableElementViewModel.HeightSizeMode)
+                                && rd.Height.GridUnitType == GridUnitType.Star)
+                                nb++;
+                    i = 0;
+                    foreach (var rd in rds)
+                        if (i++ < _elements.Count)
+                            if (IsMaximizableSize( _elements[i - 1].AutoSizableElementViewModel.HeightSizeMode)
+                                && rd.Height.GridUnitType==GridUnitType.Star)
+                            {
+                                var psize = (100 / nb);
+                                rd.Height = new GridLength(psize, GridUnitType.Star);
+                            }
+                    GlueRow.Height = new GridLength(0);
+                    break;
+            }
+#if false && dbg
+                DesktopPanelTool.Lib.Debug.WriteLine($"glue width = {GlueColumn.Width}");
+#endif
         }
 
         void ApplyGridCellHeightStrategy(RowDefinition rd, IAutoSizableElement element, GridSplitter splitter, int grIndex)
@@ -227,13 +272,15 @@ namespace DesktopPanelTool.Controls
         }
 #endif
 
+#if no
         void SetColumnFixedWidth(int i, double w) => Container.ColumnDefinitions[i] = new ColumnDefinition() { Width = new GridLength(w, GridUnitType.Pixel) };
 
         void SetColumnFixedHeight(int i,double h) => Container.RowDefinitions[i] = new RowDefinition() { Height = new GridLength(h, GridUnitType.Pixel) };
+#endif
 
         private void Gs_DragDelta(object sender, DragDeltaEventArgs e)
         {
-#if dbg
+#if false && dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"splitter dragging dx={e.HorizontalChange},DynamicResourceExtension={e.VerticalChange}");
 #endif
             var gs = (GridSplitter)sender;
@@ -249,6 +296,7 @@ namespace DesktopPanelTool.Controls
                     IncreaseCellHeight(grIndex, e.VerticalChange);
                     break;
             }
+            RecalcMaximizedCellsSize();
             e.Handled = true;
         }
 
