@@ -29,6 +29,7 @@ namespace DesktopPanelTool.Controls
         public AutoSizableElementsPanelControl()
         {
             InitializeComponent();
+            _elementSpacing = (double)FindResource("Widget_Spacing");
             InsertEmptyCell(0,0);
             Loaded += AutoSizableElementsPanelControl_Loaded;
         }
@@ -370,9 +371,12 @@ namespace DesktopPanelTool.Controls
                     var rd = new RowDefinition() { Height = new GridLength(100, GridUnitType.Star) };
                     grid.RowDefinitions.Add(rd);
                     grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0) });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition());
+                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(_elementSpacing) });
                     gridSplitter.Height = _splitterHeight;
                     gridSplitter.HorizontalAlignment = HorizontalAlignment.Stretch;
                     gridSplitter.VerticalAlignment = VerticalAlignment.Bottom;
+                    gridSplitter.Margin = new Thickness(0);
                     SetGridSplitterStyle(gridSplitter, Orientation.Vertical);
                     ApplyGridCellHeightStrategy(rd, IsMaximizableSize(props.HeightSizeMode) ? 1 : 0, props.HeightSizeMode, props.MinHeight, props.Height, gridSplitter);
                     Grid.SetRow(gridSplitter, 0);
@@ -381,9 +385,12 @@ namespace DesktopPanelTool.Controls
                     var cd = new ColumnDefinition() { Width = GridLength.Auto };
                     grid.ColumnDefinitions.Add(cd);
                     grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0) });
+                    grid.RowDefinitions.Add(new RowDefinition());
+                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(_elementSpacing) });
                     gridSplitter.Width = _splitterWidth;
                     gridSplitter.HorizontalAlignment = HorizontalAlignment.Right;
                     gridSplitter.VerticalAlignment = VerticalAlignment.Stretch;
+                    gridSplitter.Margin = new Thickness(0);
                     SetGridSplitterStyle(gridSplitter, Orientation.Horizontal);
                     ApplyGridCellWidthStrategy(cd, IsMaximizableSize(props.WidthSizeMode) ? 1 : 0, props.WidthSizeMode, props.MinWidth, props.Width, gridSplitter);
                     Grid.SetColumn(gridSplitter, 0);

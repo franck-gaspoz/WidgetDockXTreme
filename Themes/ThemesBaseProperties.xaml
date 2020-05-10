@@ -5,7 +5,7 @@
 
     <!--#region  ##### layout #####-->
 
-    <sys:Double x:Key="Widget_Spacing">0</sys:Double>
+    <sys:Double x:Key="Widget_Spacing">8</sys:Double>
     <Thickness x:Key="Widget_ContentPanel_Margin">4</Thickness>
     <Thickness x:Key="Widget_TitleText_Margin">8,-2,8,0</Thickness>
     <Thickness x:Key="DesktopPanel_TitleText_Margin">8,-2,8,0</Thickness>
@@ -135,7 +135,7 @@
     <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Green" />
     -->
 
-    <!--#region menu and contest menu-->
+    <!--#region menu and context menu-->
 
     <Color x:Key="DropShadow_Color">#99000000</Color>
 

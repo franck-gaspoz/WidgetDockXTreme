@@ -10,6 +10,7 @@
         <Setter Property="Background" Value="{DynamicResource WidgetSliderBackground}" />
         <Setter Property="Opacity" Value="0" />
         <Setter Property="BorderThickness" Value="0,4,0,0" />
+        <Setter Property="Margin" Value="0,0,0,8" />
         <Setter Property="BorderBrush" Value="Transparent" />
     </Style>
 
@@ -17,6 +18,7 @@
         <Setter Property="Background" Value="{DynamicResource WidgetSliderBackground}" />
         <Setter Property="Opacity" Value="0" />
         <Setter Property="BorderThickness" Value="4,0,0,0" />
+        <Setter Property="Margin" Value="0,0,8,0" />
         <Setter Property="BorderBrush" Value="Transparent" />
     </Style>
 
