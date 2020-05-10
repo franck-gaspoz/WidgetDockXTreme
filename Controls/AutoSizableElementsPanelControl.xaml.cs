@@ -212,6 +212,7 @@ namespace DesktopPanelTool.Controls
                 ecell.cell.Children.Remove((UIElement)element);
             }
             _elementsCells.Clear();
+            InsertEmptyCell(0, 0);
             foreach (var element in lst)
                 AddElement(element);
         }
