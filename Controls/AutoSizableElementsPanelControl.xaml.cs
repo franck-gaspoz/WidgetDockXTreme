@@ -1,5 +1,6 @@
 ﻿#define dbg
 
+using DesktopPanelTool.Animations;
 using DesktopPanelTool.ComponentModels;
 using DesktopPanelTool.Models;
 using System;
@@ -8,8 +9,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Media;
-using System.Xml.Linq;
 
 namespace DesktopPanelTool.Controls
 {
@@ -22,8 +21,8 @@ namespace DesktopPanelTool.Controls
         readonly List<GridSplitter> _splitters = new List<GridSplitter>();
         readonly List<(IAutoSizableElement element,int index)> _deferredElements = new List<(IAutoSizableElement,int)>();
 
-        double _splitterWidth = 3;
-        double _splitterHeight = 3;
+        double _splitterWidth = 5;
+        double _splitterHeight = 5;
         double _elementSpacing = 8;
         bool _initialized = false;
 
@@ -279,6 +278,22 @@ namespace DesktopPanelTool.Controls
             }
         }
 
+        void SetGridSplitterStyle(GridSplitter gs,Orientation orientation)
+        {
+            switch (orientation)
+            {
+                case Orientation.Horizontal:
+                    gs.SetResourceReference(FrameworkElement.StyleProperty, "WidgetVerticalSizer");
+                    break;
+                case Orientation.Vertical:
+                    gs.SetResourceReference(FrameworkElement.StyleProperty, "WidgetHorizontalSizer");
+                    break;
+            }
+            var animations = new FrameworkElementFadeInOutAnimation();
+            gs.MouseEnter += (o, e) => animations.Start(gs, FrameworkElementFadeInOutAnimation.FadeInAnimationName);
+            gs.MouseLeave += (o, e) => animations.Start(gs, FrameworkElementFadeInOutAnimation.FadeOutAnimationName);
+        }
+
         GridSplitter BuildGridSplitter(bool alignToRightBottom)
         {
             var gs = new GridSplitter() { ShowsPreview = false };
@@ -295,40 +310,11 @@ namespace DesktopPanelTool.Controls
                     gs.VerticalAlignment = alignToRightBottom?VerticalAlignment.Bottom:VerticalAlignment.Top;
                     break;
             }
+            SetGridSplitterStyle(gs,Orientation);
             Grid.SetZIndex(gs, 1);
             gs.DragDelta += Gs_DragDelta;
             return gs;
         }
-
-#if no
-        void FixNotResizableCells()
-        {
-            int i = 0;
-            switch (Orientation)
-            {
-                case Orientation.Horizontal:
-                    var cds = Container.ColumnDefinitions.ToList();
-                    foreach (var cd in cds)
-                        if (i++ < _elements.Count)
-                            if (IsResizableSize(_elements[i - 1].AutoSizableElementViewModel.WidthSizeMode))
-                                SetColumnFixedWidth(i-1,cd.ActualWidth);
-                    break;
-                case Orientation.Vertical:
-                    var rds = Container.RowDefinitions.ToList();
-                    foreach (var rd in rds)
-                        if (i++ < _elements.Count)
-                            if (IsResizableSize(_elements[i - 1].AutoSizableElementViewModel.HeightSizeMode))
-                                SetColumnFixedHeight(i - 1, rd.ActualHeight);
-                    break;
-            }
-        }
-#endif
-
-#if no
-        void SetColumnFixedWidth(int i, double w) => Container.ColumnDefinitions[i] = new ColumnDefinition() { Width = new GridLength(w, GridUnitType.Pixel) };
-
-        void SetColumnFixedHeight(int i,double h) => Container.RowDefinitions[i] = new RowDefinition() { Height = new GridLength(h, GridUnitType.Pixel) };
-#endif
 
         private void Gs_DragDelta(object sender, DragDeltaEventArgs e)
         {
@@ -383,35 +369,28 @@ namespace DesktopPanelTool.Controls
                 case Orientation.Horizontal:
                     var rd = new RowDefinition() { Height = new GridLength(100, GridUnitType.Star) };
                     grid.RowDefinitions.Add(rd);
-                    grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                     grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0) });
                     gridSplitter.Height = _splitterHeight;
                     gridSplitter.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    gridSplitter.VerticalAlignment = VerticalAlignment.Center;
+                    gridSplitter.VerticalAlignment = VerticalAlignment.Bottom;
+                    SetGridSplitterStyle(gridSplitter, Orientation.Vertical);
                     ApplyGridCellHeightStrategy(rd, IsMaximizableSize(props.HeightSizeMode) ? 1 : 0, props.HeightSizeMode, props.MinHeight, props.Height, gridSplitter);
-                    Grid.SetRow(gridSplitter, 1);
+                    Grid.SetRow(gridSplitter, 0);
                     break;
                 case Orientation.Vertical:
                     var cd = new ColumnDefinition() { Width = GridLength.Auto };
                     grid.ColumnDefinitions.Add(cd);
-                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
                     grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0) });
-                    gridSplitter.Width = _splitterHeight;
-                    gridSplitter.HorizontalAlignment = HorizontalAlignment.Center;
+                    gridSplitter.Width = _splitterWidth;
+                    gridSplitter.HorizontalAlignment = HorizontalAlignment.Right;
                     gridSplitter.VerticalAlignment = VerticalAlignment.Stretch;
+                    SetGridSplitterStyle(gridSplitter, Orientation.Horizontal);
                     ApplyGridCellWidthStrategy(cd, IsMaximizableSize(props.WidthSizeMode) ? 1 : 0, props.WidthSizeMode, props.MinWidth, props.Width, gridSplitter);
-                    Grid.SetColumn(gridSplitter, 1);
+                    Grid.SetColumn(gridSplitter, 0);
                     break;
             }
             return grid;
         }
-
-#if no
-        void SetColumnWidth(ColumnDefinition cd, double w) => cd.Width = new GridLength(w);
-        void RemoveColumnWidth(ColumnDefinition cd) => cd.Width = new GridLength(1,GridUnitType.Star);
-        void SetRowWidth(RowDefinition rd, double w) => rd.Height = new GridLength(w);
-        void RemoveRowWidth(RowDefinition rd) => rd.Height = new GridLength(1,GridUnitType.Star);
-#endif
 
         internal List<IAutoSizableElement> Elements => _elements.ToList();
         internal int IndexOf(IAutoSizableElement element) => _elements.IndexOf(element);

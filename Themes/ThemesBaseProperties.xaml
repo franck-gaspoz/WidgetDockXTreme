@@ -77,6 +77,27 @@
 
     <!--#endregion-->
 
+    <!--#region  ##### colors and transparency #####-->
+
+    <DrawingBrush
+        x:Key="WidgetSliderBackground"
+        TileMode="Tile"
+        Viewport="0,0,8,8"
+        ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="#77FFFFFF">
+                    <GeometryDrawing.Geometry>
+                        <GeometryGroup>
+                            <RectangleGeometry Rect="0,0,50,50" />
+                            <RectangleGeometry Rect="50,50,50,50" />
+                        </GeometryGroup>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
     <Color x:Key="WindowShadowBrush">Black</Color>
 
     <LinearGradientBrush x:Key="DropAreaSensitiveAreaHighlightBackground" StartPoint="0.2,0" EndPoint="0.5,1">
@@ -97,7 +118,6 @@
     <sys:String x:Key="DropAreaSensitiveAreaSmallHighlightBackgroundKey">DropAreaSensitiveAreaSmallHighlightBackground</sys:String>
     <sys:Double x:Key="DropAreaSensitiveAreaHighlightOpacity">1</sys:Double>
 
-    <!--#region  ##### colors and transparency #####-->
     <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="{DynamicResource TextForeground_Color}" />
     <SolidColorBrush x:Key="{x:Static SystemColors.WindowTextBrushKey}" Color="{DynamicResource TextForeground_Color}" />
     <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}">Transparent</SolidColorBrush>

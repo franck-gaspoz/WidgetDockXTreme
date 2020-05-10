@@ -6,6 +6,20 @@
     xmlns:convertes="clr-namespace:DesktopPanelTool.Converters"
     xmlns:frameworkelementbehaviors="clr-namespace:DesktopPanelTool.Behaviors.FrameworkElementBehaviors">
 
+    <Style x:Key="WidgetHorizontalSizer" TargetType="{x:Type GridSplitter}">
+        <Setter Property="Background" Value="{DynamicResource WidgetSliderBackground}" />
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="BorderThickness" Value="0,4,0,0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+
+    <Style x:Key="WidgetVerticalSizer" TargetType="{x:Type GridSplitter}">
+        <Setter Property="Background" Value="{DynamicResource WidgetSliderBackground}" />
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="BorderThickness" Value="4,0,0,0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+
     <!--  window  -->
     <Style x:Key="WindowBase" TargetType="{x:Type Window}">
         <Setter Property="Foreground" Value="{DynamicResource TextForeground_Brush}" />
