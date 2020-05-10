@@ -47,6 +47,10 @@
                         <Image Source="/Images/Icons/icons8-macos-close-20.png" />
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem
+                    Command="{x:Static desktoppanelcommands:DesktopPanelCommands.DumpInfo}"
+                    CommandParameter="{Binding Data.View, Source={StaticResource Proxy}}"
+                    Header="Dump info" />
             </ContextMenu>
 
         </Grid.Resources>

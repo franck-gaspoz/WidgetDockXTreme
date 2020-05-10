@@ -110,6 +110,23 @@ namespace DesktopPanelTool.ViewModels
             }
         }
 
+        bool _swapWidthHeightSizeModeWhenOrientationChanges = true;
+        /// <summary>
+        /// if true width and height size mode strategy are swapped when orientation change
+        /// </summary>
+        public bool SwapWidthHeightSizeModeWhenOrientationChanges
+        {
+            get
+            {
+                return _swapWidthHeightSizeModeWhenOrientationChanges;
+            }
+            set
+            {
+                _swapWidthHeightSizeModeWhenOrientationChanges = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         /// <summary>
         /// index in grid
         /// </summary>

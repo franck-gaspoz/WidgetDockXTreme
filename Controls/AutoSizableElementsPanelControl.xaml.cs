@@ -139,17 +139,22 @@ namespace DesktopPanelTool.Controls
                             }
                     GlueColumn.Width = new GridLength(0);
                     break;
+
                 case Orientation.Vertical:
                     var rds = Container.RowDefinitions.ToList();
                     foreach (var rd in rds)
                         if (i++ < _elements.Count)
-                            if (IsMaximizableSize(_elements[i - 1].AutoSizableElementViewModel.HeightSizeMode)
+                            if ((_elements[i - 1].AutoSizableElementViewModel.SwapWidthHeightSizeModeWhenOrientationChanges?
+                                IsMaximizableSize(_elements[i - 1].AutoSizableElementViewModel.WidthSizeMode)
+                                : IsMaximizableSize(_elements[i - 1].AutoSizableElementViewModel.HeightSizeMode))
                                 && rd.Height.GridUnitType == GridUnitType.Star)
                                 nb++;
                     i = 0;
                     foreach (var rd in rds)
                         if (i++ < _elements.Count)
-                            if (IsMaximizableSize(_elements[i - 1].AutoSizableElementViewModel.HeightSizeMode)
+                            if ((_elements[i - 1].AutoSizableElementViewModel.SwapWidthHeightSizeModeWhenOrientationChanges ? 
+                                IsMaximizableSize(_elements[i - 1].AutoSizableElementViewModel.WidthSizeMode)
+                                : IsMaximizableSize(_elements[i - 1].AutoSizableElementViewModel.HeightSizeMode))
                                 && rd.Height.GridUnitType == GridUnitType.Star)
                             {
                                 var psize = (100 / nb);
@@ -220,8 +225,12 @@ namespace DesktopPanelTool.Controls
                         ApplyGridCellWidthStrategy(Column(i),maximizableCount,props.WidthSizeMode,FixedMinWidth(props.MinWidth),props.Width, _splitters[i]);
                         break;
                     case Orientation.Vertical:
-                        maximizableCount = _elements.Where(x => IsMaximizableSize(x.AutoSizableElementViewModel.HeightSizeMode)).Count();
-                        ApplyGridCellHeightStrategy(Row(i),maximizableCount, props.WidthSizeMode, FixedMinHeight(props.MinHeight), props.Height, _splitters[i]);
+                        maximizableCount = _elements.Where(x => IsMaximizableSize(
+                            props.SwapWidthHeightSizeModeWhenOrientationChanges ? x.AutoSizableElementViewModel.WidthSizeMode: x.AutoSizableElementViewModel.HeightSizeMode
+                            )).Count();
+                        ApplyGridCellHeightStrategy(Row(i),maximizableCount, 
+                            props.SwapWidthHeightSizeModeWhenOrientationChanges?props.WidthSizeMode:props.HeightSizeMode, 
+                            FixedMinHeight(props.MinHeight), props.Height, _splitters[i]);
                         break;
                 }
             }
@@ -427,6 +436,7 @@ namespace DesktopPanelTool.Controls
             grid.Children.Add((UIElement)element);
             grid.Children.Add(gridSplitter);
             _elementsCells.Add((element, grid));
+
             switch (Orientation)
             {
                 case Orientation.Horizontal:
@@ -461,7 +471,9 @@ namespace DesktopPanelTool.Controls
                     gridSplitter.Margin = new Thickness(0);
 
                     SetGridSplitterStyle(gridSplitter, Orientation.Horizontal);
-                    ApplyGridCellWidthStrategy(cd, IsMaximizableSize(props.HeightSizeMode) ? 1 : 0, props.HeightSizeMode, FixedMinHeight(props.MinWidth), props.Width, gridSplitter);
+                    ApplyGridCellWidthStrategy(cd, IsMaximizableSize(props.HeightSizeMode) ? 1 : 0, 
+                        props.SwapWidthHeightSizeModeWhenOrientationChanges?props.HeightSizeMode:props.WidthSizeMode, 
+                        FixedMinHeight(props.MinWidth), props.Width, gridSplitter);
                     Grid.SetColumn(gridSplitter, 0);
                     break;
             }
@@ -483,5 +495,20 @@ namespace DesktopPanelTool.Controls
         bool IsSpecifiedSize(SizeMode sizeMode) => sizeMode == SizeMode.Fixed || sizeMode == SizeMode.FixedResizable || sizeMode == SizeMode.Auto || sizeMode == SizeMode.AutoResizable;
         bool IsMaximizableSize(SizeMode sizeMode) => sizeMode == SizeMode.MaximizedResizable || sizeMode == SizeMode.Maximized;
         bool IsResizableSize(SizeMode sizeMode) => sizeMode == SizeMode.MaximizedResizable || sizeMode == SizeMode.FixedResizable || sizeMode == SizeMode.AutoResizable;
+
+        public string DumpInfo()
+        {
+            string cols = "",rows ="";
+            int i = 0;
+            foreach (var cd in Container.ColumnDefinitions)
+                cols += $", {i++}: {cd.Width}";
+            i = 0;
+            foreach (var cd in Container.RowDefinitions)
+                rows += $", {i++}: {cd.Height}";
+            var dmp = "";
+            if (!string.IsNullOrWhiteSpace(cols)) dmp += "columns: "+cols.Substring(2);
+            if (!string.IsNullOrWhiteSpace(rows)) dmp += "rows: "+rows.Substring(2);
+            return dmp;
+        }
     }
 }
