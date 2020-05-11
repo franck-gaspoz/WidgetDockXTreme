@@ -406,29 +406,41 @@ namespace DesktopPanelTool.Controls
             switch (Orientation)
             {
                 case Orientation.Horizontal:
-                    IncreaseCellHeight(cellgrid,widget,e.VerticalChange);
+                    IncreaseContentCellHeight(cellgrid,widget,e.VerticalChange);
                     break;
                 case Orientation.Vertical:
-                    IncreaseCellWidth(cellgrid,widget,e.HorizontalChange);
+                    IncreaseContentCellWidth(cellgrid,widget,e.HorizontalChange);
                     break;
             }
             e.Handled = true;
         }
 
-        void IncreaseCellWidth(Grid grid,IAutoSizableElement element,double delta)
+        void IncreaseContentCellWidth(Grid grid,IAutoSizableElement element,double delta)
         {
             var cd = Column(grid,0);
+            var ow = cd.ActualWidth;
             var nw = cd.ActualWidth + delta;
             nw = Math.Max(FixedMinWidth(element.AutoSizableElementViewModel.MinWidth), nw);
             cd.Width = new GridLength(nw);
+            if (delta > 0 && nw > Container.ActualWidth)
+            {
+                Mouse.Capture(null);
+                cd.Width = new GridLength(ow);
+            }
         }
 
-        void IncreaseCellHeight(Grid grid, IAutoSizableElement element, double delta)
+        void IncreaseContentCellHeight(Grid grid, IAutoSizableElement element, double delta)
         {
             var cd = Row(grid,0);
+            var oh = cd.ActualHeight;
             var nh = cd.ActualHeight + delta;
             nh = Math.Max(FixedMinHeight(element.AutoSizableElementViewModel.MinHeight), nh);
             cd.Height = new GridLength(nh);
+            if (delta>0 && nh>Container.ActualHeight)
+            {
+                Mouse.Capture(null);
+                cd.Height = new GridLength(oh);
+            }
         }
 
         void IncreaseCellWidth(int i,double delta)
