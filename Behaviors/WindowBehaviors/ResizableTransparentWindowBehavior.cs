@@ -243,6 +243,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                     case ResizeGripDirection.Left:
                         calcLeft = AssociatedObject.Left + p.X;
                         calcWidth = AssociatedObject.ActualWidth - p.X;
+                        if (calcWidth < AssociatedObject.MinWidth) calcLeft = AssociatedObject.Left;
                         calcWidth = Math.Max(calcWidth, AssociatedObject.MinWidth);
                         newLeft = calcLeft;
                         newWidth = calcWidth;
@@ -255,6 +256,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                     case ResizeGripDirection.Top:
                         calcTop = AssociatedObject.Top + p.Y;
                         calcHeight = AssociatedObject.ActualHeight - p.Y;
+                        if (calcHeight < AssociatedObject.MinHeight) calcTop = AssociatedObject.Top;
                         calcHeight = Math.Max(calcHeight, AssociatedObject.MinHeight);
                         newTop = calcTop;
                         newHeight = calcHeight;
@@ -277,8 +279,9 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                         calcHeight = p.Y;
                         calcWidth = AssociatedObject.ActualWidth - p.X;
                         calcHeight = Math.Max(calcHeight, AssociatedObject.MinHeight);
-                        newHeight = calcHeight;
+                        if (calcWidth < AssociatedObject.MinWidth) calcLeft = AssociatedObject.Left;
                         calcWidth = Math.Max(calcWidth, AssociatedObject.MinWidth);
+                        newHeight = calcHeight;
                         newLeft = calcLeft;
                         newWidth = calcWidth;
                         break;
@@ -286,21 +289,24 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                         calcTop = AssociatedObject.Top + p.Y;
                         calcHeight = AssociatedObject.ActualHeight - p.Y;
                         calcWidth = p.X;
+                        if (calcHeight < AssociatedObject.MinHeight) calcTop = AssociatedObject.Top;
                         calcHeight = Math.Max(calcHeight, AssociatedObject.MinHeight);
-                        newTop = calcTop;
-                        newHeight = calcHeight;
                         calcWidth = Math.Max(calcWidth, AssociatedObject.MinWidth);
                         newWidth = calcWidth;
+                        newTop = calcTop;
+                        newHeight = calcHeight;
                         break;
                     case ResizeGripDirection.TopLeft:
                         calcTop = AssociatedObject.Top + p.Y;
                         calcLeft = AssociatedObject.Left + p.X;
                         calcHeight = AssociatedObject.ActualHeight - p.Y;
                         calcWidth = AssociatedObject.ActualWidth - p.X;
+                        if (calcWidth < AssociatedObject.MinWidth) calcLeft = AssociatedObject.Left;
+                        calcWidth = Math.Max(calcWidth, AssociatedObject.MinWidth);
+                        if (calcHeight < AssociatedObject.MinHeight) calcTop = AssociatedObject.Top;
                         calcHeight = Math.Max(calcHeight, AssociatedObject.MinHeight);
                         newTop = calcTop;
                         newHeight = calcHeight;
-                        calcWidth = AssociatedObject.ActualWidth - p.X;
                         newLeft = calcLeft;
                         newWidth = calcWidth;
                         break;
