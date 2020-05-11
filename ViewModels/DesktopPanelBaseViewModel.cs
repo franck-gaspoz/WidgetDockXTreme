@@ -13,6 +13,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace DesktopPanelTool.ViewModels
 {
@@ -50,44 +52,43 @@ namespace DesktopPanelTool.ViewModels
         /// <summary>
         /// indicates if the panel is pined or not 
         /// </summary>
-        public bool IsPined { get { return Behavior.IsPined; } set { _isPined = value; } }
+        public bool IsPined { get { return _behavior.IsPined; } set { _isPined = value; } }
 
         bool _isDocked;
         /// <summary>
         /// indicates if the panel is docked or not
         /// </summary>
-        public bool IsDocked { get { return Behavior.IsDocked; } set { _isDocked = value; }  }
+        public bool IsDocked { get { return _behavior.IsDocked; } set { _isDocked = value; }  }
 
         bool _isCollapsed;
         /// <summary>
         /// indicates if the panel is collapsed or not
         /// </summary>
-        public bool IsCollapsed { get { return Behavior.IsHidden; } set { _isCollapsed = value; } } 
+        public bool IsCollapsed { get { return _behavior.IsHidden; } set { _isCollapsed = value; } } 
 
         DockName _dock;
         /// <summary>
         /// indicates the dock where the panel is docked
         /// </summary>
-        public DockName Dock { get { return Behavior.Dock; } set { _dock = value; } }
+        public DockName Dock { get { return _behavior.Dock; } set { _dock = value; } }
 
         ScreenInfo _dockScreen;
-
         /// <summary>
         /// screen where panel is docked
         /// </summary>
-        public ScreenInfo DockScreen { get { return Behavior.DockScreen; } set { _dockScreen = value; } }
+        public ScreenInfo DockScreen { get { return _behavior.DockScreen; } set { _dockScreen = value; } }
 
-        DockablePanelWindowBehavior Behavior
+        DockablePanelWindowBehavior _behavior
             => Interaction.GetBehaviors(View)
                 .OfType<DockablePanelWindowBehavior>()
                 .FirstOrDefault();
 
-        MovableTransparentWindowBehavior MoveBehavior
+        MovableTransparentWindowBehavior _moveBehavior
             => Interaction.GetBehaviors(View)
                 .OfType<MovableTransparentWindowBehavior>()
                 .FirstOrDefault();
 
-        public bool IsMoving => MoveBehavior.IsDragging;
+        public bool IsMoving => _moveBehavior.IsDragging;
 
         public void NotifyPropertyUpdated(string propName)
         {
@@ -96,27 +97,27 @@ namespace DesktopPanelTool.ViewModels
 
         public void TogglePin()
         {
-            Behavior.TogglePin();
+            _behavior.TogglePin();
         }
 
         public void Pin()
         {
-            Behavior.Pin();
+            _behavior.Pin();
         }
 
         public void UnPin()
         {
-            Behavior.UnPin();
+            _behavior.UnPin();
         }
 
         public void Expand()
         {
-            Behavior.ExpandPanel();
+            _behavior.ExpandPanel();
         }
 
         public void Collapse()
         {
-            Behavior.CollapsePanel();
+            _behavior.CollapsePanel();
         }
 
         public void AttachToDock(
@@ -129,7 +130,7 @@ namespace DesktopPanelTool.ViewModels
                     .Where(x => x.IsPrimary)
                     .FirstOrDefault();
             if (dockScreen != null)
-                Behavior.AttachToDock(dock, dockScreen);
+                _behavior.AttachToDock(dock, dockScreen);
         }
 
         public void Close()
@@ -237,8 +238,27 @@ namespace DesktopPanelTool.ViewModels
 
         void Initialize()
         {
-            View.Loaded += (o, e) => InitializePermanentWidgetDropPlaceHolder();
-            PropertyChanged += DesktopPanelBaseViewModel_PropertyChanged;
+            View.Loaded += View_Loaded;
+            PropertyChanged += DesktopPanelBaseViewModel_PropertyChanged;            
+        }
+
+        private void View_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var resizeBehavior = InteractionHelper.GetBehavior<ResizableTransparentWindowBehavior>(View);
+            resizeBehavior.ValidateResize = ValidateResize;
+            InitializePermanentWidgetDropPlaceHolder();
+        }
+
+        (bool validateWidth,bool validateHeight) ValidateResize(double width,double height)
+        {
+            var dw = width - View.ActualWidth;
+            var dh = height - View.ActualHeight;
+            var newgridw = View.WidgetsPanel.ActualWidth + dw;
+            var newgridh = View.WidgetsPanel.ActualHeight + dh;
+            var canfitw = View.WidgetsPanel.CanFitWidth(newgridw);
+            var canfith = View.WidgetsPanel.CanFitHeight(newgridh);
+
+            return (canfitw, canfith);
         }
 
         private void DesktopPanelBaseViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

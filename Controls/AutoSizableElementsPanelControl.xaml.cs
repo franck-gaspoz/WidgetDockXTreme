@@ -41,6 +41,7 @@ namespace DesktopPanelTool.Controls
         double _containerMaxWidth, _containerMaxHeight;
         double _previousIncreaseCellWidth;
         double _previousIncreaseCellHeight;
+        bool _showMinGridPreview = false;
 
         public double ElementSpacing
         {
@@ -90,7 +91,16 @@ namespace DesktopPanelTool.Controls
                 _window = WPFHelper.FindLogicalParent<Window>(this);                
                 _window.SizeChanged += Window_SizeChanged;
                 SetOrientation(GetOrientation());
+                ShowMinGridPreview();
             }
+        }
+
+        void ShowMinGridPreview()
+        {
+            if (!_showMinGridPreview) return;
+            MinSizeGrid.Visibility = Visibility.Visible;
+            MinSizeGrid.Width = MinGridWidth();
+            MinSizeGrid.Height = MinGridHeight();
         }
 
         Orientation GetOrientation() => _window.ActualWidth >= _window.ActualHeight ? Orientation.Horizontal : Orientation.Vertical;
@@ -282,6 +292,7 @@ namespace DesktopPanelTool.Controls
             InsertEmptyCell(0, 0);
             foreach (var element in lst)
                 AddElement(element);
+            ShowMinGridPreview();
         }
 
         void SetBoundsLimits(IAutoSizableElement element)
@@ -401,6 +412,7 @@ namespace DesktopPanelTool.Controls
             }
             RecalcMaximizedCellsSize();
             e.Handled = true;
+            ShowMinGridPreview();
         }
 
         void WidgetCellContentSplitter_DragDelta(object sender, DragDeltaEventArgs e)
@@ -418,6 +430,7 @@ namespace DesktopPanelTool.Controls
                     break;
             }
             e.Handled = true;
+            ShowMinGridPreview();
         }
 
         void IncreaseContentCellWidth(Grid grid,IAutoSizableElement element,double delta)
@@ -527,6 +540,96 @@ namespace DesktopPanelTool.Controls
             }
             gridSplitter.DragDelta += WidgetCellContentSplitter_DragDelta;
             return grid;
+        }
+
+        public double ComputeWidth()
+        {
+            var w = 0d;
+            foreach (var o in Container.Children)
+                if (o is Grid g)
+                    if (Orientation == Orientation.Horizontal)
+                        w += g.ActualWidth;
+                    else
+                        w = Math.Max(w, g.ActualWidth);
+            return w;
+        }
+
+        public double ComputeHeight()
+        {
+            var h = 0d;
+            foreach (var o in Container.Children)
+                if (o is Grid g)
+                    if (Orientation == Orientation.Horizontal)
+                        h = Math.Max(h, g.ActualHeight);
+                    else
+                        h += g.ActualHeight;
+            return h;
+        }
+
+        public bool CanFitWidth(double w) => MinGridWidth() <= w;
+
+        public bool CanFitHeight(double h) => MinGridHeight() <= h;
+
+        public double MinGridWidth()
+        {
+            var w = 0d;
+            for (int i = 0; i < _elements.Count; i++)
+                if (Orientation == Orientation.Horizontal)
+                    w += CellMinWidth(i);
+                else
+                    w = Math.Max(w, CellMinWidth(i));
+            return w;
+        }
+
+        public double MinGridHeight()
+        {
+            var h = 0d;
+            for (int i = 0; i < _elements.Count; i++)
+                if (Orientation == Orientation.Vertical)
+                    h += CellMinHeight(i);
+                else
+                    h = Math.Max(h, CellMinHeight(i));
+            return h;
+        }
+
+        double CellMinWidth(int i)
+        {
+            var props = _elements[i].AutoSizableElementViewModel;
+            if (Orientation == Orientation.Horizontal)
+            {
+                if (Column(i).Width.GridUnitType == GridUnitType.Pixel)
+                    return Column(i).Width.Value;
+                else
+                    return FixedMinWidth(props.MinWidth);
+            }
+            else
+            {
+                var cd = _elementsCells[i].cell.ColumnDefinitions[0];
+                if (cd.Width.GridUnitType == GridUnitType.Pixel)
+                    return cd.Width.Value;
+                else
+                    return FixedMinHeight(props.MinHeight);
+            }
+        }
+
+        double CellMinHeight(int i)
+        {
+            var props = _elements[i].AutoSizableElementViewModel;
+            if (Orientation == Orientation.Vertical)
+            {
+                if (Row(i).Height.GridUnitType == GridUnitType.Pixel)
+                    return Row(i).Height.Value;
+                else
+                    return (props.SwapWidthHeightSizeModeWhenOrientationChanges) ? FixedMinWidth(props.MinWidth) : FixedMinHeight(props.MinHeight);
+            }
+            else
+            {
+                var rd = _elementsCells[i].cell.RowDefinitions[0];
+                if (rd.Height.GridUnitType == GridUnitType.Pixel)
+                    return rd.Height.Value;
+                else
+                    return FixedMinHeight(props.MinHeight);
+            }
         }
 
         double FixedMinWidth(double w) => Orientation == Orientation.Horizontal ? w+ElementSpacing : w;

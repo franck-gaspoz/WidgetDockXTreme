@@ -1,6 +1,5 @@
 ﻿//#define dbg
 
-using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Lib;
 using Microsoft.Xaml.Behaviors;
 using System;
@@ -30,7 +29,11 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
         public static double MaximumMoveEventRate = 25;
         public static bool LimitFrameRate = false;
 
-        DateTime LastDragMoveTime;
+        DateTime _lastDragMoveTime;
+
+        public delegate (bool validatedWidth,bool validatedHeight) ValidateResizeDelegate(double width, double height);
+
+        public ValidateResizeDelegate ValidateResize;
 
         public bool CanResizeLeft
         {
@@ -104,11 +107,11 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
         public static readonly DependencyProperty CanResizeBottomLeftProperty =
             DependencyProperty.Register("CanResizeBottomLeft", typeof(bool), typeof(ResizableTransparentWindowBehavior), new PropertyMetadata(true));
 
-        ResizeGripDirection CurrentResizeGripDirection = ResizeGripDirection.None;
-        double InitialDx = 0;
-        double InitialDy = 0;
+        ResizeGripDirection _currentResizeGripDirection = ResizeGripDirection.None;
+        double _initialDx = 0;
+        double _initialDy = 0;
 
-        ResizeGripDirection[,] GridDrs =
+        ResizeGripDirection[,] _gridDrs =
             new ResizeGripDirection[,]
             {
                 { ResizeGripDirection.TopLeft , ResizeGripDirection.Top , ResizeGripDirection.TopRight },
@@ -116,7 +119,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                 { ResizeGripDirection.BottomLeft , ResizeGripDirection.Bottom , ResizeGripDirection.BottomRight }
             };
 
-        Cursor[,] CurDrs =
+        Cursor[,] _curDrs =
             new Cursor[,]
             {
                 { CursorResizeNWSE , CursorResizeNS , CursorResizeNESW },
@@ -124,7 +127,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                 { CursorResizeNESW , CursorResizeNS , CursorResizeNWSE }
             };
 
-        bool IsResizing = false;
+        bool _isResizing = false;
 
         protected override void OnAttached()
         {
@@ -147,41 +150,41 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
             if (!IsResizable)
                 return;
 
-            if (CurrentResizeGripDirection != ResizeGripDirection.None
+            if (_currentResizeGripDirection != ResizeGripDirection.None
                 && e.ChangedButton==MouseButton.Left)
             {
-                IsResizing = true;
+                _isResizing = true;
                 var p = e.GetPosition(AssociatedObject);
-                InitialDx = InitialDx = 0;
-                switch (CurrentResizeGripDirection)
+                _initialDx = _initialDx = 0;
+                switch (_currentResizeGripDirection)
                 {
                     case ResizeGripDirection.Right:
-                        InitialDx = AssociatedObject.ActualWidth - p.X;
+                        _initialDx = AssociatedObject.ActualWidth - p.X;
                         break;
                     case ResizeGripDirection.Left:
-                        InitialDx = -p.X;
+                        _initialDx = -p.X;
                         break;
                     case ResizeGripDirection.Top:
-                        InitialDy = -p.Y;
+                        _initialDy = -p.Y;
                         break;
                     case ResizeGripDirection.Bottom:
-                        InitialDy = AssociatedObject.ActualHeight - p.Y;
+                        _initialDy = AssociatedObject.ActualHeight - p.Y;
                         break;
                     case ResizeGripDirection.TopRight:
-                        InitialDx = AssociatedObject.ActualWidth - p.X;
-                        InitialDy = -p.Y;
+                        _initialDx = AssociatedObject.ActualWidth - p.X;
+                        _initialDy = -p.Y;
                         break;
                     case ResizeGripDirection.BottomRight:
-                        InitialDx = AssociatedObject.ActualWidth - p.X;
-                        InitialDy = AssociatedObject.ActualHeight - p.Y;
+                        _initialDx = AssociatedObject.ActualWidth - p.X;
+                        _initialDy = AssociatedObject.ActualHeight - p.Y;
                         break;
                     case ResizeGripDirection.BottomLeft:
-                        InitialDy = AssociatedObject.ActualHeight - p.Y;
-                        InitialDx = -p.X;
+                        _initialDy = AssociatedObject.ActualHeight - p.Y;
+                        _initialDx = -p.X;
                         break;
                     case ResizeGripDirection.TopLeft:
-                        InitialDy = -p.Y;
-                        InitialDx = -p.X;
+                        _initialDy = -p.Y;
+                        _initialDx = -p.X;
                         break;
                 }
                 DockablePanelWindowBehavior.DisableDockBehavior(AssociatedObject);
@@ -196,11 +199,11 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
         {
             if (e.ChangedButton==MouseButton.Left)
             {
-                CurrentResizeGripDirection = ResizeGripDirection.None;
-                if (IsResizing)
+                _currentResizeGripDirection = ResizeGripDirection.None;
+                if (_isResizing)
                 {
-                    IsResizing = false;
-                    LastDragMoveTime = DateTime.Now;
+                    _isResizing = false;
+                    _lastDragMoveTime = DateTime.Now;
                     Mouse.Capture(null);
                     AssociatedObject.Cursor = CursorDefault;
                     DockablePanelWindowBehavior.EnableDockBehavior(AssociatedObject);
@@ -218,9 +221,9 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                 return;
 
             var p = e.GetPosition(AssociatedObject);
-            if (IsResizing)
+            if (_isResizing)
             {
-                var elapsed = DateTime.Now - LastDragMoveTime;
+                var elapsed = DateTime.Now - _lastDragMoveTime;
                 if (LimitFrameRate &&
                     elapsed.TotalMilliseconds < MaximumMoveEventRate)
                     return;
@@ -228,8 +231,8 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
 #if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"mouse move x={p.X},y={p.Y}");
 #endif
-                p.X += InitialDx;
-                p.Y += InitialDy;
+                p.X += _initialDx;
+                p.Y += _initialDy;
 
                 double newLeft = AssociatedObject.Left;
                 double newTop = AssociatedObject.Top;
@@ -238,7 +241,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
 
                 double calcLeft, calcTop, calcWidth, calcHeight;
 
-                switch (CurrentResizeGripDirection)
+                switch (_currentResizeGripDirection)
                 {
                     case ResizeGripDirection.Left:
                         calcLeft = AssociatedObject.Left + p.X;
@@ -312,15 +315,29 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                         break;
                 }
 
-                AssociatedObject.SetPosAndSize(newLeft, newTop, newWidth, newHeight);
+                if (ValidateResize==null)
+                    AssociatedObject.SetPosAndSize(newLeft, newTop, newWidth, newHeight);
+                else
+                {
+                    var (validatedWidth, validatedHeight) = ValidateResize(newWidth, newHeight);
+                    if (validatedWidth && validatedHeight)
+                        AssociatedObject.SetPosAndSize(newLeft, newTop, newWidth, newHeight);
+                    else
+                    {
+                        if (validatedWidth)
+                            AssociatedObject.SetPosAndSize(newLeft, AssociatedObject.Top, newWidth, AssociatedObject.Height);
+                        if (validatedHeight)
+                            AssociatedObject.SetPosAndSize(AssociatedObject.Left, newTop, AssociatedObject.ActualWidth, newHeight);
+                    }
+                }
 
-                LastDragMoveTime = DateTime.Now;
+                _lastDragMoveTime = DateTime.Now;
             }
             else
             {
                 var rgd = CheckRGD(p.X, p.Y);
-                AssociatedObject.Cursor = CurDrs[rgd.hy, rgd.hx];
-                CurrentResizeGripDirection = rgd.rgd;
+                AssociatedObject.Cursor = _curDrs[rgd.hy, rgd.hx];
+                _currentResizeGripDirection = rgd.rgd;
 #if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"mouse move x={p.X},y={p.Y} (rgd={CurrentResizeGripDirection}) (resizing={IsResizing})");
 #endif
@@ -343,15 +360,11 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                 hx = 0;
             if (InInterval(x, AssociatedObject.ActualWidth - ResizeGripEdgeSize - m.Right, ResizeGripEdgeSize + m.Right))
                 hx = 2;
-            if /*(y >= ResizeGripEdgeSize &&
-                y <= AssociatedObject.Height - ResizeGripEdgeSize)*/
-                (InInterval(y,m.Top+ResizeGripEdgeSize,AssociatedObject.ActualHeight-m.Top-m.Bottom-2d*ResizeGripEdgeSize))
+            if (InInterval(y,m.Top+ResizeGripEdgeSize,AssociatedObject.ActualHeight-m.Top-m.Bottom-2d*ResizeGripEdgeSize))
                 hy = 1;
-            if (/*x >= ResizeGripEdgeSize &&
-                x <= AssociatedObject.Width - ResizeGripEdgeSize)*/
-                InInterval(x,m.Left+ResizeGripEdgeSize,AssociatedObject.ActualWidth-m.Left-m.Right-2d*ResizeGripEdgeSize))
+            if (InInterval(x,m.Left+ResizeGripEdgeSize,AssociatedObject.ActualWidth-m.Left-m.Right-2d*ResizeGripEdgeSize))
                 hx = 1;
-            var dr = GridDrs[hy, hx];
+            var dr = _gridDrs[hy, hx];
             
             switch (dr)
             {

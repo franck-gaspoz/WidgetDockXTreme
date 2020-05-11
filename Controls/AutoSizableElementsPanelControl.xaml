@@ -8,5 +8,14 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid x:Name="Container" ShowGridLines="False" />
+    <Grid>
+        <Grid x:Name="Container" ShowGridLines="False" />
+        <Border
+            x:Name="MinSizeGrid"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            BorderBrush="DarkRed"
+            BorderThickness="1"
+            Visibility="Collapsed" />
+    </Grid>
 </UserControl>
