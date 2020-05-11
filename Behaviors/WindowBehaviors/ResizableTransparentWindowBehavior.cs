@@ -289,7 +289,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                         calcHeight = Math.Max(calcHeight, AssociatedObject.MinHeight);
                         newTop = calcTop;
                         newHeight = calcHeight;
-                        calcWidth = AssociatedObject.ActualWidth - p.X;
+                        calcWidth = Math.Max(calcWidth, AssociatedObject.MinWidth);
                         newWidth = calcWidth;
                         break;
                     case ResizeGripDirection.TopLeft:
