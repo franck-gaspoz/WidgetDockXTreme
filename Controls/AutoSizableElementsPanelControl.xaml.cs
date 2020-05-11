@@ -10,12 +10,22 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 
 namespace DesktopPanelTool.Controls
 {
     public partial class AutoSizableElementsPanelControl : UserControl
     {
         #region attributes
+
+        public FrameworkElement MaxBoundContainer
+        {
+            get { return (FrameworkElement)GetValue(MaxBoundContainerProperty); }
+            set { SetValue(MaxBoundContainerProperty, value); }
+        }
+
+        public static readonly DependencyProperty MaxBoundContainerProperty =
+            DependencyProperty.Register("MaxBoundContainer", typeof(FrameworkElement), typeof(AutoSizableElementsPanelControl), new PropertyMetadata(null));
 
         public Orientation Orientation { get; protected set; } = Orientation.Horizontal;
 
@@ -28,6 +38,9 @@ namespace DesktopPanelTool.Controls
         double _splitterHeight = 5;
         bool _initialized = false;
         Window _window;
+        double _containerMaxWidth, _containerMaxHeight;
+        double _previousIncreaseCellWidth;
+        double _previousIncreaseCellHeight;
 
         public double ElementSpacing
         {
@@ -70,10 +83,11 @@ namespace DesktopPanelTool.Controls
             if (!_initialized)
             {
                 _initialized = true;
+                SetBoundsLimit();
                 foreach (var (element, index) in _deferredElements)
                     AddElement(element, index);
                 _deferredElements.Clear();
-                _window = WPFHelper.FindLogicalParent<Window>(this);
+                _window = WPFHelper.FindLogicalParent<Window>(this);                
                 _window.SizeChanged += Window_SizeChanged;
                 SetOrientation(GetOrientation());
             }
@@ -83,7 +97,14 @@ namespace DesktopPanelTool.Controls
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            SetBoundsLimit();
             SetOrientation(GetOrientation());
+        }
+
+        void SetBoundsLimit()
+        {
+            _containerMaxWidth = Container.ActualWidth;
+            _containerMaxHeight = Container.ActualHeight;
         }
 
         internal void AddElement(IAutoSizableElement element, int index=-1)
@@ -413,19 +434,29 @@ namespace DesktopPanelTool.Controls
         void IncreaseCellWidth(int i,double delta)
         {
             var cd = Column(i);
-            var element = _elements[i];
             var nw = cd.ActualWidth + delta;
-            nw = Math.Max(FixedMinWidth(_elements[i].AutoSizableElementViewModel.MinWidth),nw);
+            nw = Math.Max(FixedMinWidth(_elements[i].AutoSizableElementViewModel.MinWidth), nw);
             cd.Width = new GridLength(nw);
+            if (delta>0 && Container.ActualWidth > _containerMaxWidth)
+            {
+                Mouse.Capture(null);
+                cd.Width = new GridLength(_previousIncreaseCellWidth);
+            }
+            _previousIncreaseCellWidth = cd.ActualWidth;
         }
 
         void IncreaseCellHeight(int i,double delta)
         {
             var cd = Row(i);
-            var element = _elements[i];
             var nh = cd.ActualHeight + delta;
             nh = Math.Max(FixedMinHeight(_elements[i].AutoSizableElementViewModel.MinHeight), nh);
             cd.Height = new GridLength(nh);
+            if (delta > 0 && Container.ActualHeight > _containerMaxHeight)
+            {
+                Mouse.Capture(null);
+                cd.Height = new GridLength(_previousIncreaseCellHeight);
+            }
+            _previousIncreaseCellHeight = cd.ActualHeight;
         }
 
         Grid BuildCell(IAutoSizableElement element)

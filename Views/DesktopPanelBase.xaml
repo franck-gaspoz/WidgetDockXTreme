@@ -200,7 +200,7 @@
             <Border Style="{DynamicResource PanelBackgroundLayer2}" />
 
             <!--  content layer  -->
-            <Border Style="{DynamicResource DesktopPanelContentBackgroundLayer}">
+            <Border x:Name="DesktopPanelBaseContentRootPanel" Style="{DynamicResource DesktopPanelContentBackgroundLayer}">
 
                 <Grid>
 
@@ -239,6 +239,7 @@
                             x:Name="WidgetsPanel"
                             Margin="{DynamicResource DesktopPanelContent_PaddingThickness}"
                             HorizontalGridSplitterStyleName="WidgetHorizontalSizer"
+                            MaxBoundContainer="{Binding ElementName=DesktopPanelBaseContentRootPanel}"
                             VerticalGridSplitterStyleName="WidgetVerticalSizer" />
                     </Grid>
 
