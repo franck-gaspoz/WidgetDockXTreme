@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using DesktopPanelTool.ComponentModels;
 using DesktopPanelTool.Lib;
@@ -102,7 +102,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         private void AssociatedObject_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             _start = null;
-#if dbg
+#if alldbg || dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"button up");
 #endif
         }
@@ -140,7 +140,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                     DragDropAnimation?.Start(AssociatedObject,BeginDragEffectAnimationName);
                     AssociatedObject.GiveFeedback += AssociatedObject_GiveFeedback;
 
-#if dbg
+#if alldbg || dbg
                     DesktopPanelTool.Lib.Debug.WriteLine($"do drag drop (mpos={mpos}) (diff.X={diff.X} diff.Y={diff.Y})");
 #endif
                     _dataObject = new DataObject(AssociatedObject.GetType(), AssociatedObject);
@@ -251,7 +251,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                 var p = new POINT();
                 GetCursorPos(ref p);
                 _start = new Point(p.X, p.Y);
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"init start drag position (start={_start})");
 #endif
             }

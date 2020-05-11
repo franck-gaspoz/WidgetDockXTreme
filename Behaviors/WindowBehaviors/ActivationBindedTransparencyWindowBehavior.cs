@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using Microsoft.Xaml.Behaviors;
 using System;
@@ -53,7 +53,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
 
         private void AssociatedObject_Deactivated(object sender, EventArgs e)
         {
-#if dbg
+#if alldbg || dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"deactivated");
 #endif
             var an = new DoubleAnimation(ActivatedTransparency, DeactivatedTransparency, new Duration(TimeSpan.FromMilliseconds(TransparencyChangeDuration)));
@@ -62,7 +62,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
 
         private void AssociatedObject_Activated(object sender, EventArgs e)
         {
-#if dbg
+#if alldbg || dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"activated");
 #endif
             var an = new DoubleAnimation(DeactivatedTransparency, ActivatedTransparency, new Duration(TimeSpan.FromMilliseconds(TransparencyChangeDuration)));

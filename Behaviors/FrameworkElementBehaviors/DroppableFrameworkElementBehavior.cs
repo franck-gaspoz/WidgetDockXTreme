@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using DesktopPanelTool.Models;
 using Microsoft.Xaml.Behaviors;
@@ -82,7 +82,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
 
         private void AssociatedObject_Drop(object sender, DragEventArgs e)
         {
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"dropping");
 #endif
             if (DropHandlerCommand != null)

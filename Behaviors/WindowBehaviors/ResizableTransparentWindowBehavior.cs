@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Lib;
@@ -186,7 +186,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                 }
                 DockablePanelWindowBehavior.DisableDockBehavior(AssociatedObject);
                 Mouse.Capture(AssociatedObject);
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"is resizing dx={InitialDx},dy={InitialDy} x={p.X},y={p.Y} (rgd={CurrentResizeGripDirection})");
 #endif
             }
@@ -204,7 +204,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                     Mouse.Capture(null);
                     AssociatedObject.Cursor = CursorDefault;
                     DockablePanelWindowBehavior.EnableDockBehavior(AssociatedObject);
-#if dbg
+#if alldbg || dbg
                     DesktopPanelTool.Lib.Debug.WriteLine($"not resizing");
 #endif
                 }
@@ -225,7 +225,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                     elapsed.TotalMilliseconds < MaximumMoveEventRate)
                     return;
 
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"mouse move x={p.X},y={p.Y}");
 #endif
                 p.X += InitialDx;
@@ -315,7 +315,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                 var rgd = CheckRGD(p.X, p.Y);
                 AssociatedObject.Cursor = CurDrs[rgd.hy, rgd.hx];
                 CurrentResizeGripDirection = rgd.rgd;
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"mouse move x={p.X},y={p.Y} (rgd={CurrentResizeGripDirection}) (resizing={IsResizing})");
 #endif
             }

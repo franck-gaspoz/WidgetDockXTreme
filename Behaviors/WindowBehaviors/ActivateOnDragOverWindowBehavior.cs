@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using Microsoft.Xaml.Behaviors;
 using System.Windows;
@@ -22,7 +22,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
 
         private void AssociatedObject_DragOver(object sender, DragEventArgs e)
         {
-#if dbg
+#if alldbg || dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"drag over");
 #endif
             if (!AssociatedObject.IsActive)

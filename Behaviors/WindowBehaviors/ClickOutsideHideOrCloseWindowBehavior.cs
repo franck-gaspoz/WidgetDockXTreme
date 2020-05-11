@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using DesktopPanelTool.Lib;
 using Microsoft.Xaml.Behaviors;
@@ -56,7 +56,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
         {
             if (AssociatedObject.IsVisible)
             {
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"is visible");
 #endif
                 GetWindowCoordinates();
@@ -87,7 +87,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                 && IsEnabled
                 && CheckMouseOutWindow())
             {
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"wParam={wParam} lParam={lParam}");
 #endif
                 UnhookWindowsHookEx(_hookHandle);
@@ -102,13 +102,13 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
 
         bool CheckMouseOutWindow()
         {
-#if dbg
+#if alldbg || dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"mouse directlyOver={Mouse.DirectlyOver}");
 #endif
             if (Mouse.DirectlyOver is DependencyObject o && o != null)
             {
                 var ancestor = WPFHelper.FindLogicalAncestor(o);
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"ancestor = {ancestor}");
 #endif
                 if ( !( ancestor is Window w && AssociatedObject!=w) )

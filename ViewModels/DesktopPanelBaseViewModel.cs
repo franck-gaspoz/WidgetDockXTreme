@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Controls;
@@ -173,7 +173,7 @@ namespace DesktopPanelTool.ViewModels
                 View.WidgetsPanel.Children.Remove(dropholder);*/
                 var index = View.WidgetsPanel.IndexOf(widget);
                 View.WidgetsPanel.RemoveElement(widget);
-#if dbg
+#if alldbg || dbg
                 DumpWidgetsPanelChildren();
 #endif
             }

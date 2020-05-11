@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using DesktopPanelTool.Behaviors.FrameworkElementBehaviors;
 using DesktopPanelTool.Lib;
@@ -106,7 +106,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
         {            
             LastDragMoveTime = DateTime.Now;
             AssociatedObject.Cursor = CursorDragging;
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"start drag move: x={setUpIsMovingFrom.X},y={setUpIsMovingFrom.Y}");
 #endif            
             InitialPX = setUpIsMovingFrom.X;
@@ -133,7 +133,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
             if (e.ChangedButton == MouseButton.Left && IsDragging)
             {
 
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"end drag move");
 #endif
                 IsDragging = false;

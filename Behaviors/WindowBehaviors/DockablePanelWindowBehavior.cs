@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using DesktopPanelTool.Behaviors.FrameworkElementBehaviors;
 using DesktopPanelTool.Controls;
@@ -150,7 +150,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
         public DockablePanelWindowBehavior()
         {
             ScreenInfos = DisplayDevices.GetScreensInfos();
-#if dbg
+#if alldbg || dbg
             foreach (var scr in ScreenInfos)
                 DesktopPanelTool.Lib.Debug.WriteLine(scr);            
 #endif
@@ -380,7 +380,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                 if (!outArea)
                 {
                     var elapsed = DateTime.Now - beginTime;
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"elapsed={elapsed.TotalMilliseconds} ms (ScreenMouseSensitiveAreaTriggerDelay={_ScreenMouseSensitiveAreaTriggerDelay})");
 #endif
                     IsHidden = false;
@@ -405,7 +405,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
 
             if (!IsDocked && !IsUndocking)
                 CheckIsDocking(p);
-#if dbg
+#if alldbg || dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"dock={DockingDock} isDockable={IsDockable} isDocked={IsDocked} isUndocking={IsUndocking}");
 #endif
 
@@ -494,12 +494,12 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
 
         private void AssociatedObject_MouseDown(object sender, MouseButtonEventArgs e)
         {
-#if dbg
+#if alldbg || dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"mouse down");
 #endif
             if (IsDocked && e.ChangedButton==MouseButton.Left && !IsPined && AcceptableUndockingStartPoint())
             {
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"start undocking");
 #endif
                 DraggableFrameworkElementBehavior.SetIsEnabledDraggableDescendants(AssociatedObject, typeof(WidgetControl), false);
@@ -513,7 +513,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
 
         bool AcceptableUndockingStartPoint()
         {
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"acceptable start point: has parent={WPFHelper.HasParent<WidgetControl>(Mouse.DirectlyOver as DependencyObject)}");
 #endif
             return !WPFHelper.HasParent<WidgetControl>(Mouse.DirectlyOver as DependencyObject);
@@ -580,7 +580,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                     p.X <= area.Right && 
                     p.Y <= area.Bottom )
                 {
-#if dbg
+#if alldbg || dbg
                     DesktopPanelTool.Lib.Debug.WriteLine($"x={p.X},y={p.Y} area={area}");
 #endif
                     if (p.X >= area.Left && p.X < area.Left+ScreenDockingAreaEdgeSize)
@@ -632,7 +632,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
                 HideDockHit();
             IsDocked = true;
             IsDockable = false;
-#if dbg
+#if alldbg || dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"attach to dock: dock={DockingDock} scr={DockingScreen}");
 #endif
             DockWindow(dock, dockScreen);

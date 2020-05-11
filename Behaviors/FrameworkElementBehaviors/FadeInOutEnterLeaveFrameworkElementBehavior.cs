@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using Microsoft.Xaml.Behaviors;
 using System;
@@ -53,7 +53,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
 
         private void AssociatedObject_MouseLeave(object sender, EventArgs e)
         {
-#if dbg
+#if alldbg || dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"deactivated");
 #endif
             var an = new DoubleAnimation(MouseOverTransparency, MouseOutTransparency, new Duration(TimeSpan.FromMilliseconds(TransparencyChangeDuration)));
@@ -62,7 +62,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
 
         private void AssociatedObject_MouseEnter(object sender, EventArgs e)
         {
-#if dbg
+#if alldbg || dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"activated");
 #endif
             var an = new DoubleAnimation(MouseOutTransparency, MouseOverTransparency, new Duration(TimeSpan.FromMilliseconds(TransparencyChangeDuration)));

@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using DesktopPanelTool.Models;
 using DesktopPanelTool.Views;
@@ -60,7 +60,7 @@ namespace DesktopPanelTool.Services
                 y += r.Bottom - (h + y) + AppSettings.NotifyIconContextMenuDy;
             _contextMenu.Left = x;
             _contextMenu.Top = y;
-#if dbg
+#if alldbg || dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"scr={scrInfo}");
             DesktopPanelTool.Lib.Debug.WriteLine($"x={x} y={y} w={w} h={h}");
 #endif

@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using DesktopPanelTool.Behaviors.FrameworkElementBehaviors;
 using DesktopPanelTool.Behaviors.WindowBehaviors;
@@ -137,7 +137,7 @@ namespace DesktopPanelTool.Services
                 var idxSourceStack = sourceStack.Children.IndexOf(widget);
                 var idxTargetStack = targetStack.Children.IndexOf(dropAreaTarget);
                 var targetIsLargeDropArea = dropAreaTarget.Name == "PermanentWidgetDropPlaceHolder";
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"--------------- drop: {widget.ViewModel.Title} ------------ before:");
                 DesktopPanelTool.Lib.Debug.WriteLine($"idxTargetStack={idxTargetStack} idxSourceStack={idxSourceStack}");
                 DesktopPanelTool.Lib.Debug.WriteLine($"sourcePanel==targetPanel:{sourcePanel==targetPanel} targetIsLargeDropArea={targetIsLargeDropArea} idxSourceStack==sourceStack.Children.Count-1:{idxSourceStack == sourceStack.Children.Count - 1}");

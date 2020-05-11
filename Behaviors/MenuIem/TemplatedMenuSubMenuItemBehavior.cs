@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using Microsoft.Xaml.Behaviors;
 using System.Windows;
@@ -40,7 +40,7 @@ namespace DesktopPanelTool.Behaviors.MenuIem
 
         void Initialize()
         {
-#if dbg
+#if alldbg || dbg
             DesktopPanelTool.Lib.Debug.WriteLine($"");
 #endif
             var tgs = Interaction.GetTriggers(AssociatedObject);

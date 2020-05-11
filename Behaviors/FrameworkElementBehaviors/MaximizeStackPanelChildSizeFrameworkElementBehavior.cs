@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using Microsoft.Xaml.Behaviors;
 using System;
@@ -44,14 +44,14 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
             if (Container.ActualWidth >= Container.ActualHeight)
             {
                 var tw = 0d;
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"container.aw={Container.ActualWidth}");
 #endif
                 foreach (var element in Container.Children)
                 {
                     if (element is FrameworkElement fe && fe!=AssociatedObject)
                     {
-#if dbg
+#if alldbg || dbg
                     DesktopPanelTool.Lib.Debug.WriteLine($"fe={fe} fe.aw={fe.ActualWidth}");
 #endif
                         tw += fe.ActualWidth;
@@ -63,20 +63,20 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                 AssociatedObject.Width = w;
                 AssociatedObject.SetValue(FrameworkElement.HeightProperty, DependencyProperty.UnsetValue);
 
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"tw={tw} container.aw={Container.ActualWidth}");
 #endif
             } else
             {
                 var tw = 0d;
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"container.ah={Container.ActualHeight}");
 #endif
                 foreach (var element in Container.Children)
                 {
                     if (element is FrameworkElement fe && fe != AssociatedObject)
                     {
-#if dbg
+#if alldbg || dbg
                         DesktopPanelTool.Lib.Debug.WriteLine($"fe={fe} fe.ah={fe.ActualHeight}");
 #endif
                         tw += fe.ActualHeight;
@@ -87,7 +87,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
                 AssociatedObject.Height = w;
                 AssociatedObject.SetValue(FrameworkElement.WidthProperty, DependencyProperty.UnsetValue);
 
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"tw={tw} container.ah={Container.ActualHeight}");
 #endif
             }

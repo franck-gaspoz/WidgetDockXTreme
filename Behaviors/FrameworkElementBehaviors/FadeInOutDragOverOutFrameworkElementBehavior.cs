@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using Microsoft.Xaml.Behaviors;
 using System;
@@ -69,7 +69,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         {
             _isOver = false;
             if (Target == null) return;
-#if dbg
+#if alldbg || dbg
             var mo = Mouse.DirectlyOver;
             DesktopPanelTool.Lib.Debug.WriteLine($"drag leave - mouse over: {mo?.GetType().Name}");
 #endif
@@ -83,7 +83,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         private void AssociatedObject_DragOver(object sender, DragEventArgs e)
         {
             if (Target == null || _isOver) return;
-#if dbg
+#if alldbg || dbg
             var mo = Mouse.DirectlyOver;
             DesktopPanelTool.Lib.Debug.WriteLine($"drag over - mouse over: {mo?.GetType().Name}");
 #endif
@@ -95,7 +95,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
         private void AssociatedObject_Drop(object sender, DragEventArgs e)
         {
             if (!_isOver) return;
-#if dbg
+#if alldbg || dbg
             var mo = Mouse.DirectlyOver;
             DesktopPanelTool.Lib.Debug.WriteLine($"drag drop - mouse over: {mo?.GetType().Name}");
 #endif

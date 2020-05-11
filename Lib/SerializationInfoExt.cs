@@ -1,4 +1,4 @@
-﻿#define dbg
+﻿//#define dbg
 
 using System.Collections.Generic;
 using System.Reflection;
@@ -28,7 +28,7 @@ namespace DesktopPanelTool.Lib
                 var propinf = t.GetProperty(member, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
                 if (propinf != null)
                 {
-#if dbg
+#if alldbg || dbg
                     DesktopPanelTool.Lib.Debug.WriteLine($"get property: {member}={value} [{propinf.PropertyType.FullName}] ({t.FullName})");
 #endif
                     value = propinf.GetValue(o);
@@ -37,7 +37,7 @@ namespace DesktopPanelTool.Lib
                 var fieldinf = t.GetField(member, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
                 if (fieldinf != null)
                 {
-#if dbg
+#if alldbg || dbg
                     DesktopPanelTool.Lib.Debug.WriteLine($"get field: {member}={value} [{fieldinf.FieldType.FullName}] ({t.FullName})");
 #endif
                     value = fieldinf.GetValue(o);
@@ -60,14 +60,14 @@ namespace DesktopPanelTool.Lib
 
             foreach (var member in members)
             {
-#if dbg
+#if alldbg || dbg
                 DesktopPanelTool.Lib.Debug.WriteLine($"getValue: {member} ({t.FullName})");
 #endif
                 var propinf = t.GetProperty(member, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
                 if (propinf != null && propinf.CanWrite)
                 {
                     var value = info.GetValue(member, propinf.PropertyType);
-#if dbg
+#if alldbg || dbg
                     DesktopPanelTool.Lib.Debug.WriteLine($"-- property: ={value} [{propinf.PropertyType.FullName}] ({t.FullName})");
 #endif
                     propinf.SetValue(o, value);
@@ -77,7 +77,7 @@ namespace DesktopPanelTool.Lib
                 if (fieldinf != null && !fieldinf.IsInitOnly)
                 {
                     var value = info.GetValue(member, fieldinf.FieldType);
-#if dbg
+#if alldbg || dbg
                     DesktopPanelTool.Lib.Debug.WriteLine($"-- field: ={value} [{fieldinf.FieldType}] ({t.FullName})");
 #endif
                     fieldinf.SetValue(o, value);
