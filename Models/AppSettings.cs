@@ -36,7 +36,6 @@ namespace DesktopPanelTool.Models
             }
         }
 
-        //public static string AppIconPath { get; } = "/Images/Icons/Papirus-Team-Papirus-Apps-Chromium-app-list.ico";
         public static string AppIconPath { get; } = "/Images/Icons/add_hardware.ico";
 
         public static readonly double NotifyIconContextMenuDx = -12;
@@ -47,7 +46,7 @@ namespace DesktopPanelTool.Models
 
         public static string GetWidgetWebPageUri { get; private set; } = "http://franckgaspoz.fr";
 
-        public static bool EnableNotifications { get; protected set; } = true;
+        public static bool EnableNotifications { get; set; } = true;
 
         public static bool EnableWindowGradientAnimation = false;
 
@@ -57,6 +56,7 @@ namespace DesktopPanelTool.Models
 
         // TODO: use this to init behaviors
         public static int MouseWatcherScrutationDelay = 100;
+
         public readonly static string AppLocalDataFolderName = "Widget Dock XTreme";
         internal static readonly string SettingsFilesExt = ".dat";
         internal static readonly string SettingsFileDialogFilter = "dat files (*.dat)|*.dat|All files (*.*)|*.*";

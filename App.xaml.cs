@@ -54,7 +54,7 @@ namespace DesktopPanelTool
                 reinitializeSettings = true;
             }
 
-            if (reinitializeSettings)
+            if (reinitializeSettings || settingsStorageMissing)
                 DesktopPanelToolService.InitializeDefaultSettings();
 
             InitializeServices();

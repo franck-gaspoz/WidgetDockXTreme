@@ -1,4 +1,4 @@
-﻿//#define dbg
+﻿#define dbg
 
 using DesktopPanelTool.Behaviors.FrameworkElementBehaviors;
 using DesktopPanelTool.Controls;
@@ -514,7 +514,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
         bool AcceptableUndockingStartPoint()
         {
 #if dbg
-                DesktopPanelTool.Lib.Debug.WriteLine($"acceptable start point: has parent={WPFUtil.HasParent<WidgetControl>(Mouse.DirectlyOver as DependencyObject)}");
+                DesktopPanelTool.Lib.Debug.WriteLine($"acceptable start point: has parent={WPFHelper.HasParent<WidgetControl>(Mouse.DirectlyOver as DependencyObject)}");
 #endif
             return !WPFHelper.HasParent<WidgetControl>(Mouse.DirectlyOver as DependencyObject);
         }
@@ -551,6 +551,7 @@ namespace DesktopPanelTool.Behaviors.WindowBehaviors
             }
         }
 
+        // TODO: change by left mouse up or check left button
         private void AssociatedObject_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (!IsDockableEnabled)

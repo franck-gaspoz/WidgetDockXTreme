@@ -1,4 +1,4 @@
-﻿//#define dbg
+﻿#define dbg
 
 using System.Collections.Generic;
 using System.Reflection;

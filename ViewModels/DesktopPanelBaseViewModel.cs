@@ -1,4 +1,4 @@
-﻿//#define dbg
+﻿#define dbg
 
 using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Controls;
@@ -10,6 +10,7 @@ using Microsoft.Xaml.Behaviors;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -46,28 +47,24 @@ namespace DesktopPanelTool.ViewModels
         }
 
         bool _isPined;
-
         /// <summary>
         /// indicates if the panel is pined or not 
         /// </summary>
         public bool IsPined { get { return Behavior.IsPined; } set { _isPined = value; } }
 
         bool _isDocked;
-
         /// <summary>
         /// indicates if the panel is docked or not
         /// </summary>
         public bool IsDocked { get { return Behavior.IsDocked; } set { _isDocked = value; }  }
 
         bool _isCollapsed;
-
         /// <summary>
         /// indicates if the panel is collapsed or not
         /// </summary>
         public bool IsCollapsed { get { return Behavior.IsHidden; } set { _isCollapsed = value; } } 
 
         DockName _dock;
-
         /// <summary>
         /// indicates the dock where the panel is docked
         /// </summary>
@@ -213,7 +210,7 @@ namespace DesktopPanelTool.ViewModels
         {
             SettingsBackup = info.GetValues(this, _members);
             View = new DesktopPanelBase(this);
-            View.Loaded += (o,e) => InitializePermanentWidgetDropPlaceHolder();
+            Initialize();
         }
 
         [OnDeserialized]
@@ -235,7 +232,21 @@ namespace DesktopPanelTool.ViewModels
         public DesktopPanelBaseViewModel(DesktopPanelBase view)
         {
             View = view;
-            View.Loaded += (o,e) => InitializePermanentWidgetDropPlaceHolder();
+            Initialize();
+        }
+
+        void Initialize()
+        {
+            View.Loaded += (o, e) => InitializePermanentWidgetDropPlaceHolder();
+            PropertyChanged += DesktopPanelBaseViewModel_PropertyChanged;
+        }
+
+        private void DesktopPanelBaseViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName==nameof(IsDocked) && IsDocked)
+            {
+                View.WidgetsPanel.ResetDisposition();
+            }
         }
 
         void InitializePermanentWidgetDropPlaceHolder()

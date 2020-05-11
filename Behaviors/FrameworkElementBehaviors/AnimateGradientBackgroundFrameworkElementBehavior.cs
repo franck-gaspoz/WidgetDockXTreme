@@ -1,4 +1,4 @@
-﻿//#define dbg
+﻿#define dbg
 
 using DesktopPanelTool.Lib;
 using DesktopPanelTool.Models;
@@ -36,7 +36,7 @@ namespace DesktopPanelTool.Behaviors.FrameworkElementBehaviors
             AssociatedObject.SizeChanged += AssociatedObject_SizeChanged;
 
 #if dbg
-            var win = WPFUtil.FindLogicalParent<Window>(AssociatedObject);
+            var win = WPFHelper.FindLogicalParent<Window>(AssociatedObject);
             DesktopPanelTool.Lib.Debug.WriteLine($"win={win} name={win?.Name}");
 #endif
         }

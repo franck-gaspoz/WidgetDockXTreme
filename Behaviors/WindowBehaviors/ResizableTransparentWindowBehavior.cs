@@ -1,4 +1,4 @@
-﻿//#define dbg
+﻿#define dbg
 
 using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Lib;

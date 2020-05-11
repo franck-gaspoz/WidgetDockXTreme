@@ -261,6 +261,11 @@ namespace DesktopPanelTool.Controls
         {
             if (orientation == Orientation) return;
             Orientation = orientation;
+            ResetDisposition();
+        }
+
+        public void ResetDisposition()
+        { 
             var lst = _elements.ToList();
             lst.Sort(new Comparison<IAutoSizableElement>((x, y) => x.AutoSizableElementViewModel.Index.CompareTo(y.AutoSizableElementViewModel.Index)));
             Container.Children.Clear();
