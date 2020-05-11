@@ -274,7 +274,7 @@ namespace DesktopPanelTool.Controls
             ResetDisposition();
         }
 
-        public void ResetDisposition()
+        internal void ResetDisposition()
         { 
             var lst = _elements.ToList();
             lst.Sort(new Comparison<IAutoSizableElement>((x, y) => x.AutoSizableElementViewModel.Index.CompareTo(y.AutoSizableElementViewModel.Index)));
@@ -542,7 +542,7 @@ namespace DesktopPanelTool.Controls
             return grid;
         }
 
-        public double ComputeWidth()
+        internal double ComputeWidth()
         {
             var w = 0d;
             foreach (var o in Container.Children)
@@ -554,7 +554,7 @@ namespace DesktopPanelTool.Controls
             return w;
         }
 
-        public double ComputeHeight()
+        internal double ComputeHeight()
         {
             var h = 0d;
             foreach (var o in Container.Children)
@@ -566,11 +566,11 @@ namespace DesktopPanelTool.Controls
             return h;
         }
 
-        public bool CanFitWidth(double w) => MinGridWidth() <= w;
+        internal bool CanFitWidth(double w) => MinGridWidth() <= w;
 
-        public bool CanFitHeight(double h) => MinGridHeight() <= h;
+        internal bool CanFitHeight(double h) => MinGridHeight() <= h;
 
-        public double MinGridWidth()
+        internal double MinGridWidth()
         {
             var w = 0d;
             for (int i = 0; i < _elements.Count; i++)
@@ -581,7 +581,7 @@ namespace DesktopPanelTool.Controls
             return w;
         }
 
-        public double MinGridHeight()
+        internal double MinGridHeight()
         {
             var h = 0d;
             for (int i = 0; i < _elements.Count; i++)

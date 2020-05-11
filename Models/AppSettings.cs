@@ -60,5 +60,8 @@ namespace DesktopPanelTool.Models
         public readonly static string AppLocalDataFolderName = "Widget Dock XTreme";
         internal static readonly string SettingsFilesExt = ".dat";
         internal static readonly string SettingsFileDialogFilter = "dat files (*.dat)|*.dat|All files (*.*)|*.*";
+
+        internal static readonly double WidgetMinWidth = 92.35666666666667;
+        internal static readonly double WidgetMinHeight = 45.96;
     }
 }

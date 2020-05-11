@@ -251,6 +251,8 @@ namespace DesktopPanelTool.ViewModels
 
         (bool validateWidth,bool validateHeight) ValidateResize(double width,double height)
         {
+            AdjustViewMinSize();
+
             var dw = width - View.ActualWidth;
             var dh = height - View.ActualHeight;
             var newgridw = View.WidgetsPanel.ActualWidth + dw;
@@ -259,6 +261,15 @@ namespace DesktopPanelTool.ViewModels
             var canfith = View.WidgetsPanel.CanFitHeight(newgridh);
 
             return (canfitw, canfith);
+        }
+
+        void AdjustViewMinSize()
+        {
+            var topleft = View.WidgetsPanel.TransformToAncestor(View).Transform(new Point(0, 0));
+            var w = AppSettings.WidgetMinWidth+topleft.X+View.WidgetsPanel.ElementSpacing;
+            var h = AppSettings.WidgetMinHeight+topleft.Y+View.WidgetsPanel.ElementSpacing;
+            View.MinWidth = w;
+            View.MinHeight = h;
         }
 
         private void DesktopPanelBaseViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
