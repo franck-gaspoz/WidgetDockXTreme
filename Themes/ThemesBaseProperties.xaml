@@ -86,7 +86,7 @@
         ViewportUnits="Absolute">
         <DrawingBrush.Drawing>
             <DrawingGroup>
-                <GeometryDrawing Brush="#77FFFFFF">
+                <GeometryDrawing Brush="#88FFFFFF">
                     <GeometryDrawing.Geometry>
                         <GeometryGroup>
                             <RectangleGeometry Rect="0,0,50,50" />

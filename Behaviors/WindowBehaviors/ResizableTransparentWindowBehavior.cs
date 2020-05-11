@@ -1,6 +1,6 @@
 ﻿//#define dbg
 
-using DesktopPanelTool.Behaviors.WindowBehaviors.DockableBehavior;
+using DesktopPanelTool.Behaviors.WindowBehaviors;
 using DesktopPanelTool.Lib;
 using Microsoft.Xaml.Behaviors;
 using System;

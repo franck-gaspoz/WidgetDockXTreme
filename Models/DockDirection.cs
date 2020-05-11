@@ -1,4 +1,4 @@
-﻿namespace DesktopPanelTool.Behaviors.WindowBehaviors.DockableBehavior
+﻿namespace DesktopPanelTool.Lib.Models
 {
     public enum DockDirection
     {

@@ -5,7 +5,6 @@
     xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:controls="clr-namespace:DesktopPanelTool.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dockablebehavior="clr-namespace:DesktopPanelTool.Behaviors.WindowBehaviors.DockableBehavior"
     xmlns:frameworkelementbehaviors="clr-namespace:DesktopPanelTool.Behaviors.FrameworkElementBehaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:panelbehaviors="clr-namespace:DesktopPanelTool.Behaviors.PanelBehaviors"
@@ -24,7 +23,7 @@
         <windowbehaviors:FixSizeOfShadowedWindowBehavior />
         <windowbehaviors:MovableTransparentWindowBehavior TypeControlUnderMouseAvoidingMove="{x:Type controls:WidgetControl}" />
         <windowbehaviors:ResizableTransparentWindowBehavior />
-        <dockablebehavior:DockablePanelWindowBehavior
+        <windowbehaviors:DockablePanelWindowBehavior
             HideAnimationDuration="{DynamicResource HideHitAnimationDuration}"
             HideHitAnimationDuration="{DynamicResource HideHitAnimationDuration}"
             ScreenMouseSensitiveAreaTriggerDelay="{DynamicResource ScreenMouseSensitiveAreaTriggerDelay}"

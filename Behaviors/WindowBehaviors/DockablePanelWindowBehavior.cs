@@ -3,6 +3,7 @@
 using DesktopPanelTool.Behaviors.FrameworkElementBehaviors;
 using DesktopPanelTool.Controls;
 using DesktopPanelTool.Lib;
+using DesktopPanelTool.Lib.Models;
 using DesktopPanelTool.Models;
 using DesktopPanelTool.ViewModels;
 using DesktopPanelTool.Views;
@@ -19,7 +20,7 @@ using static DesktopPanelTool.Lib.NativeMethods;
 using static DesktopPanelTool.Models.NativeTypes;
 using w = System.Windows;
 
-namespace DesktopPanelTool.Behaviors.WindowBehaviors.DockableBehavior
+namespace DesktopPanelTool.Behaviors.WindowBehaviors
 {
     public class DockablePanelWindowBehavior
         : Behavior<Window>
