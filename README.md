@@ -8,7 +8,9 @@ Widgets and shortcuts dock manager
 - we should develop widgets now!
 
 <p align="center">
-<img src="https://github.com/franck-gaspoz/WidgetDockXTreme/blob/master/Doc/preview.png"/>
+  <img src="https://github.com/franck-gaspoz/WidgetDockXTreme/blob/master/Doc/preview.png"/>
+  <br><br>
+  <i>a snapshot of the software running in my desktop</i>
 </p>
 
-***a snapshot of the software running in my desktop***
+
