@@ -7,6 +7,8 @@ Widgets and shortcuts dock manager
 - this software is to be completed - DIY 😄
 - we should develop widgets now!
 
-![preview](https://github.com/franck-gaspoz/WidgetDockXTreme/blob/master/Doc/preview.png)
+<p align="center">
+<img src="https://github.com/franck-gaspoz/WidgetDockXTreme/blob/master/Doc/preview.png"/>
+</p>
 
 ***a snapshot of the software running in my desktop***
