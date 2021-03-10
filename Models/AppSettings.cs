@@ -48,7 +48,7 @@ namespace DesktopPanelTool.Models
 
         public static bool EnableNotifications { get; set; } = true;
 
-        public static bool EnableWindowGradientAnimation = false;
+        public static bool EnableWindowGradientAnimation = true;
 
         public static string SettingsSaveLastPath { get; set; }
         public static readonly string UserSettingsFileName = "settings.dat";
